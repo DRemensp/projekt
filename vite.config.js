@@ -8,9 +8,11 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/navbar.js',
-                'recources/js/ranking-search.js',
+                'resources/js/ranking-search.js',
             ],
             refresh: true,
         }),
     ],
 });
+
+
