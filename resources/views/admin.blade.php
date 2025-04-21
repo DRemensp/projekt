@@ -1,176 +1,210 @@
-<!-- resources/views/admin.blade.php -->
+{{-- resources/views/admin.blade.php --}}
 <x-layout>
     <x-slot:heading>
         Admin Dashboard
     </x-slot:heading>
 
-    {{-- Erfolgsmeldung --}}
-    @if(session('success'))
-        <div class="p-4 mb-4 text-green-800 rounded-md bg-green-100">
-            {{ session('success') }}
-        </div>
-    @endif
+    {{-- Haupt-Container (wie Ranking) --}}
+    <div class="bg-gray-100 py-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            {{-- Container für den Inhalt --}}
+            <div class="bg-white overflow-hidden shadow-xl rounded-lg">
+                <div class="p-6 md:p-8 text-gray-900">
 
-    <!-- SCHULE -->
-    <div class="grid grid-cols-2 gap-4 mb-8">
-        <!-- Linke Spalte: Formular für neue Schule -->
-        <div>
-            <x-school-form />
-        </div>
-        <!-- Rechte Spalte: Liste bereits erstellter Schulen -->
-        <div>
-            <h2 class="font-semibold mb-2">Bereits erstellte Schulen:</h2>
-            <ul class="list-disc ml-6">
-                @forelse($schools as $school)
-                    <li class="flex items-center gap-2">
-                        <!-- Schulname -->
-                        <span>{{ $school->name }}</span>
+                    {{-- Allgemeine Überschrift --}}
+                    <h1 class="text-3xl font-bold text-indigo-700 mb-8 text-center border-b pb-4">Verwaltung</h1>
 
-                        <!-- Lösch-Button (klein und grau) -->
-                        <form
-                            action="{{ route('schools.destroy', $school->id) }}"
-                            method="POST"
-                            onsubmit="return confirm('Möchtest du diese Schule wirklich löschen?');"
-                        >
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                type="submit"
-                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
-                            >
-                                Löschen
-                            </button>
-                        </form>
-                    </li>
-                @empty
-                    <li class="italic">Keine Schulen vorhanden.</li>
-                @endforelse
-            </ul>
-        </div>
-    </div>
+                    {{-- Erfolgsmeldung (Gestyled) --}}
+                    @if(session('success'))
+                        <div class="mb-6 p-4 text-sm text-green-700 bg-green-100 rounded-lg border border-green-200 shadow-sm" role="alert">
+                            <span class="font-medium">Erfolg!</span> {{ session('success') }}
+                        </div>
+                    @endif
 
-    <!-- KLASSE -->
-    <div class="grid grid-cols-2 gap-4 mb-8">
-        <!-- Linke Spalte: Formular für neue Klasse -->
-        <div>
-            <x-klasse-form :schools="$schools" />
-        </div>
-        <!-- Rechte Spalte: Liste vorhandener Klassen -->
-        <div>
-            <h2 class="font-semibold mb-2">Bereits erstellte Klassen:</h2>
-            <ul class="list-disc ml-6">
-                @forelse($klasses as $klasse)
-                    <li class="flex items-center gap-2">
-                        <!-- Klassenname -->
-                        <span>{{ $klasse->name }}</span>
+                    {{-- Fehleranzeige (falls Validierungsfehler auftreten) --}}
+                    @if ($errors->any())
+                        <div class="mb-6 p-4 text-sm text-red-700 bg-red-100 rounded-lg border border-red-200 shadow-sm" role="alert">
+                            <span class="font-medium">Fehler!</span> Bitte überprüfe die Eingaben in den Formularen.
+                            <ul class="mt-1.5 list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                        <!-- Lösch-Button (klein und grau) -->
-                        <form
-                            action="{{ route('klasses.destroy', $klasse->id) }}"
-                            method="POST"
-                            onsubmit="return confirm('Möchtest du diese Klasse wirklich löschen?');"
-                        >
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                type="submit"
-                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
-                            >
-                                Löschen
-                            </button>
-                        </form>
-                    </li>
-                @empty
-                    <li class="italic">Keine Klassen vorhanden.</li>
-                @endforelse
-            </ul>
-        </div>
-    </div>
 
-    <!-- TEAM -->
-    <div class="grid grid-cols-2 gap-4 mb-8">
-        <!-- Linke Spalte: Formular für neues Team -->
-        <div>
-            <x-team-form :klasses="$klasses" />
-        </div>
-        <!-- Rechte Spalte: Liste vorhandener Teams -->
-        <div>
-            <h2 class="font-semibold mb-2">Bereits erstellte Teams:</h2>
-            <ul class="list-disc ml-6">
-                @forelse($teams as $team)
-                    <li class="flex items-center gap-2">
-                        <!-- Teamname -->
-                        <span>{{ $team->name }}</span>
+                    {{-- Bereich für die Verwaltungselemente --}}
+                    <div class="space-y-12">
 
-                        <!-- Lösch-Button (klein und grau) -->
-                        <form
-                            action="{{ route('teams.destroy', $team->id) }}"
-                            method="POST"
-                            onsubmit="return confirm('Möchtest du dieses Team wirklich löschen?');"
-                        >
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                type="submit"
-                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
-                            >
-                                Löschen
-                            </button>
-                        </form>
-                    </li>
-                @empty
-                    <li class="italic">Keine Teams vorhanden.</li>
-                @endforelse
-            </ul>
-        </div>
-    </div>
+                        {{-- ==================== SCHULEN VERWALTEN ==================== --}}
+                        <section class="border-t border-gray-200 pt-8">
+                            <h2 class="text-2xl font-semibold mb-6 text-blue-700">Schulen verwalten</h2>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {{-- Formular zum Erstellen --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Neue Schule anlegen</h3>
+                                    <x-school-form />
+                                </div>
+                                {{-- Liste vorhandener Schulen --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Vorhandene Schulen</h3>
+                                    @if($schools->count() > 0)
+                                        <ul class="space-y-2">
+                                            @foreach($schools as $school)
+                                                <li class="flex items-center justify-between bg-white p-3 rounded shadow-sm border border-gray-100">
+                                                    <span class="text-gray-700">{{ $school->name }}</span>
+                                                    {{-- Lösch-Button mit Icon --}}
+                                                    <form action="{{ route('schools.destroy', $school->id) }}" method="POST" onsubmit="return confirm('Schule {{ $school->name }} wirklich löschen? Alle zugehörigen Klassen, Teams und Disziplinen werden ebenfalls gelöscht!');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-red-500 hover:text-red-700 transition-colors duration-150 p-1 rounded hover:bg-red-100" title="Schule löschen">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="italic text-gray-500">Keine Schulen vorhanden.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </section>
 
-    <!-- DISZIPLIN -->
-    <div class="grid grid-cols-2 gap-4 mb-8">
-        <!-- Linke Spalte: Formular für neue Disziplin -->
-        <div>
-            <x-discipline-form :klasses="$klasses" />
-        </div>
-        <!-- Rechte Spalte: Liste vorhandener Disziplinen -->
-        <div>
-            <h2 class="font-semibold mb-2">Bereits erstellte Disziplinen:</h2>
-            <ul class="list-disc ml-6">
-                @forelse($disciplines as $discipline)
-                    <li class="flex items-center gap-2">
-                        <!-- Disziplinname -->
-                        <span>{{ $discipline->name }}</span>
+                        {{-- ==================== KLASSEN VERWALTEN ==================== --}}
+                        <section class="border-t border-gray-200 pt-8">
+                            <h2 class="text-2xl font-semibold mb-6 text-green-700">Klassen verwalten</h2>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {{-- Formular zum Erstellen --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Neue Klasse anlegen</h3>
+                                    @if($schools->count() > 0)
+                                        <x-klasse-form :schools="$schools" />
+                                    @else
+                                        <p class="text-red-600 italic">Bitte zuerst eine Schule anlegen!</p>
+                                    @endif
+                                </div>
+                                {{-- Liste vorhandener Klassen --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Vorhandene Klassen</h3>
+                                    @if($klasses->count() > 0)
+                                        <ul class="space-y-2">
+                                            @foreach($klasses as $klasse)
+                                                <li class="flex items-center justify-between bg-white p-3 rounded shadow-sm border border-gray-100">
+                                                    <div>
+                                                        <span class="text-gray-700">{{ $klasse->name }}</span>
+                                                        <span class="text-xs text-gray-500 ml-2">({{ $klasse->school->name ?? 'Keine Schule' }})</span>
+                                                    </div>
+                                                    {{-- Lösch-Button --}}
+                                                    <form action="{{ route('klasses.destroy', $klasse->id) }}" method="POST" onsubmit="return confirm('Klasse {{ $klasse->name }} wirklich löschen? Alle zugehörigen Teams und Disziplinen werden ebenfalls gelöscht!');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-red-500 hover:text-red-700 transition-colors duration-150 p-1 rounded hover:bg-red-100" title="Klasse löschen">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="italic text-gray-500">Keine Klassen vorhanden.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </section>
 
-                        <!-- Lösch-Button (klein und grau) -->
-                        <form
-                            action="{{ route('disciplines.destroy', $discipline->id) }}"
-                            method="POST"
-                            onsubmit="return confirm('Möchtest du diese Disziplin wirklich löschen?');"
-                        >
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                type="submit"
-                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
-                            >
-                                Löschen
-                            </button>
-                        </form>
-                    </li>
-                @empty
-                    <li class="italic">Keine Disziplinen vorhanden.</li>
-                @endforelse
-            </ul>
-        </div>
-    </div>
+                        {{-- ==================== TEAMS VERWALTEN ==================== --}}
+                        <section class="border-t border-gray-200 pt-8">
+                            <h2 class="text-2xl font-semibold mb-6 text-purple-700">Teams verwalten</h2>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {{-- Formular zum Erstellen --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Neues Team anlegen</h3>
+                                    @if($klasses->count() > 0)
+                                        <x-team-form :klasses="$klasses" />
+                                    @else
+                                        <p class="text-red-600 italic">Bitte zuerst eine Klasse anlegen!</p>
+                                    @endif
+                                </div>
+                                {{-- Liste vorhandener Teams --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Vorhandene Teams</h3>
+                                    @if($teams->count() > 0)
+                                        <ul class="space-y-2">
+                                            @foreach($teams as $team)
+                                                <li class="flex items-center justify-between bg-white p-3 rounded shadow-sm border border-gray-100">
+                                                    <div>
+                                                        <span class="text-gray-700">{{ $team->name }}</span>
+                                                        <span class="text-xs text-gray-500 ml-2">({{ $team->klasse->name ?? 'Keine Klasse' }})</span>
+                                                    </div>
+                                                    {{-- Lösch-Button --}}
+                                                    <form action="{{ route('teams.destroy', $team->id) }}" method="POST" onsubmit="return confirm('Team {{ $team->name }} wirklich löschen?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-red-500 hover:text-red-700 transition-colors duration-150 p-1 rounded hover:bg-red-100" title="Team löschen">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="italic text-gray-500">Keine Teams vorhanden.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </section>
 
-    <!-- TEAM-DISZIPLIN-VERKNÜPFUNG -->
-    <div class="grid grid-cols-2 gap-4 mb-8">
-        <!-- Linke Spalte: Formular für Team-Disziplin-Verknüpfung -->
-        <div>
-            <x-teamtable-form
-                :teams="$teams"
-                :disciplines="$disciplines"
-            />
-        </div>
-    </div>
+                        {{-- ==================== DISZIPLINEN VERWALTEN ==================== --}}
+                        <section class="border-t border-gray-200 pt-8">
+                            <h2 class="text-2xl font-semibold mb-6 text-orange-700">Disziplinen verwalten</h2>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {{-- Formular zum Erstellen --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Neue Disziplin anlegen</h3>
+                                    @if($klasses->count() > 0)
+                                        <x-discipline-form :klasses="$klasses" />
+                                    @else
+                                        <p class="text-red-600 italic">Bitte zuerst eine Klasse anlegen!</p>
+                                    @endif
+                                </div>
+                                {{-- Liste vorhandener Disziplinen --}}
+                                <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Vorhandene Disziplinen</h3>
+                                    @if($disciplines->count() > 0)
+                                        <ul class="space-y-2">
+                                            @foreach($disciplines as $discipline)
+                                                <li class="flex items-center justify-between bg-white p-3 rounded shadow-sm border border-gray-100">
+                                                    <div>
+                                                        <span class="text-gray-700">{{ $discipline->name }}</span>
+                                                        <span class="text-xs text-gray-500 ml-2">({{ $discipline->klasse->name ?? 'Keine Klasse' }})</span>
+                                                    </div>
+                                                    {{-- Lösch-Button --}}
+                                                    <form action="{{ route('disciplines.destroy', $discipline->id) }}" method="POST" onsubmit="return confirm('Disziplin {{ $discipline->name }} wirklich löschen?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-red-500 hover:text-red-700 transition-colors duration-150 p-1 rounded hover:bg-red-100" title="Disziplin löschen">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="italic text-gray-500">Keine Disziplinen vorhanden.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </section>
+
+                        {{-- TEAMTABLE FORM WIRD HIER NICHT EINGEFÜGT --}}
+
+                    </div> {{-- Ende space-y-12 --}}
+                </div> {{-- Ende p-6/p-8 --}}
+            </div> {{-- Ende bg-white --}}
+        </div> {{-- Ende max-w-7xl --}}
+    </div> {{-- Ende bg-gray-100 --}}
 </x-layout>

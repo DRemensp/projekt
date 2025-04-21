@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('name');
             $table->integer('max_score');
             $table->integer('score_step')->default(5);
-            $table->boolean('higher_is_better')->default(true);
+            $table->boolean('higher_is_better');
             $table->string('description')->nullable();
             $table->foreignIdFor(Klasse::class)
+                ->unique()
                 ->constrained()
                 ->cascadeOnDelete();
             $table->timestamps();

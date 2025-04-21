@@ -18,6 +18,11 @@ class SchoolController extends Controller
         return redirect()->back()->with('success', 'School created successfully.');
     }
 
+    public function index(){
+        $schools = School::all();
+        return view('schools.index', compact('schools'));
+    }
+
     public function destroy(School $school){
         $school->delete();
         return redirect()->back()->with('success', 'School deleted successfully.');

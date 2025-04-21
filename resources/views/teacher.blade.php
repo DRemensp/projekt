@@ -1,199 +1,176 @@
-{{-- resources/views/teacher.blade.php --}}
+<!-- resources/views/admin.blade.php -->
 <x-layout>
     <x-slot:heading>
-        Lehrer Dashboard
+        Admin Dashboard
     </x-slot:heading>
 
-    <div class="py-6 px-8 bg-gray-100 min-h-screen">
-        {{-- Überschrift --}}
-        <div class="text-center mb-10">
-            <h1 class="text-5xl font-bold mb-2 text-indigo-700">
-                Aktuelles Ranking
-            </h1>
-            <p class="text-gray-500">
-                (Beispielhafte Darstellung – Dummy-Daten)
-            </p>
+    {{-- Erfolgsmeldung --}}
+    @if(session('success'))
+        <div class="p-4 mb-4 text-green-800 rounded-md bg-green-100">
+            {{ session('success') }}
         </div>
+    @endif
 
-        {{-- Auswahlfelder (Dropdowns) + Button --}}
-        <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-10">
-            {{-- 1. Auswahl: "Team", "Klasse", "Schule" --}}
-            <div>
-                <label for="rankingViewSelect" class="block mb-1 text-sm font-medium text-gray-700">
-                    Ansicht auswählen
-                </label>
-                <select
-                    id="rankingViewSelect"
-                    class="block w-48 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
-                >
-                    <option value="teams">Teams</option>
-                    <option value="klasses">Klassen</option>
-                    <option value="schools">Schulen</option>
-                </select>
-            </div>
-
-
-            <div>
-                <label for="disciplineSelect" class="block mb-1 text-sm font-medium text-gray-700">
-                    Disziplin auswählen
-                </label>
-                <select
-                    id="disciplineSelect"
-                    class="block w-48 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
-                >
-                    <option value="disziplinA">Disziplin A</option>
-                    <option value="disziplinB">Disziplin B</option>
-                    <option value="disziplinC">Disziplin C</option>
-                </select>
-            </div>
-
-            {{-- Button zum Aktualisieren --}}
-            <div>
-                <button
-                    class="mt-2 md:mt-8 px-4 py-2 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700"
-                    onclick="updateRanking()"
-                >
-                    Ranking anzeigen
-                </button>
-            </div>
+    <!-- SCHULE -->
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- Linke Spalte: Formular für neue Schule -->
+        <div>
+            <x-school-form />
         </div>
+        <!-- Rechte Spalte: Liste bereits erstellter Schulen -->
+        <div>
+            <h2 class="font-semibold mb-2">Bereits erstellte Schulen:</h2>
+            <ul class="list-disc ml-6">
+                @forelse($schools as $school)
+                    <li class="flex items-center gap-2">
+                        <!-- Schulname -->
+                        <span>{{ $school->name }}</span>
 
-        {{-- Dynamische Überschrift (per JavaScript gesetzt) --}}
-        <div class="text-center mb-8">
-            <h2 id="rankingTitle" class="text-3xl font-semibold text-gray-800"></h2>
-        </div>
-
-        {{-- Ranking-Liste --}}
-        <div id="rankingList" class="mx-auto max-w-4xl space-y-6">
-            {{-- Inhalte werden per JavaScript eingefügt --}}
+                        <!-- Lösch-Button (klein und grau) -->
+                        <form
+                            action="{{ route('schools.destroy', $school->id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Möchtest du diese Schule wirklich löschen?');"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type="submit"
+                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
+                            >
+                                Löschen
+                            </button>
+                        </form>
+                    </li>
+                @empty
+                    <li class="italic">Keine Schulen vorhanden.</li>
+                @endforelse
+            </ul>
         </div>
     </div>
 
-    <script>
-        // Beispielhafte Datensammlung, um das Ranking pro Ansicht & Disziplin zu simulieren:
-        const mockData = {
-            teams: {
-                disziplinA: [
-                    { place: 1, name: 'Team Alpha', extra: 'Klasse 12A / 100 Punkte', score: 100 },
-                    { place: 2, name: 'Team Bravo', extra: 'Klasse 11B / 95 Punkte', score: 95 },
-                    { place: 3, name: 'Team Charlie', extra: 'Klasse 10C / 90 Punkte', score: 90 },
-                ],
-                disziplinB: [
-                    { place: 1, name: 'Team Bravo', extra: 'Klasse 11B / 88 Punkte', score: 88 },
-                    { place: 2, name: 'Team Alpha', extra: 'Klasse 12A / 80 Punkte', score: 80 },
-                ],
-                disziplinC: [
-                    { place: 1, name: 'Team Delta', extra: 'Klasse 9A / 70 Punkte', score: 70 },
-                    { place: 2, name: 'Team Alpha', extra: 'Klasse 12A / 65 Punkte', score: 65 },
-                    { place: 3, name: 'Team Bravo', extra: 'Klasse 11B / 60 Punkte', score: 60 },
-                ],
-            },
-            klasses: {
-                disziplinA: [
-                    { place: 1, name: 'Klasse 12A', extra: 'Gesamtpunktzahl: 300', score: 300 },
-                    { place: 2, name: 'Klasse 11B', extra: 'Gesamtpunktzahl: 280', score: 280 },
-                ],
-                disziplinB: [
-                    { place: 1, name: 'Klasse 10C', extra: 'Gesamtpunktzahl: 250', score: 250 },
-                    { place: 2, name: 'Klasse 12A', extra: 'Gesamtpunktzahl: 240', score: 240 },
-                ],
-                disziplinC: [
-                    { place: 1, name: 'Klasse 9A', extra: 'Gesamtpunktzahl: 210', score: 210 },
-                    { place: 2, name: 'Klasse 11B', extra: 'Gesamtpunktzahl: 200', score: 200 },
-                ],
-            },
-            schools: {
-                disziplinA: [
-                    { place: 1, name: 'Schule A', extra: 'Diverse Klassen / 900 Punkte', score: 900 },
-                    { place: 2, name: 'Schule B', extra: 'Diverse Klassen / 850 Punkte', score: 850 },
-                ],
-                disziplinB: [
-                    { place: 1, name: 'Schule C', extra: 'Diverse Klassen / 780 Punkte', score: 780 },
-                ],
-                disziplinC: [
-                    { place: 1, name: 'Schule A', extra: 'Diverse Klassen / 600 Punkte', score: 600 },
-                    { place: 2, name: 'Schule B', extra: 'Diverse Klassen / 590 Punkte', score: 590 },
-                ],
-            },
-        };
+    <!-- KLASSE -->
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- Linke Spalte: Formular für neue Klasse -->
+        <div>
+            <x-klasse-form :schools="$schools" />
+        </div>
+        <!-- Rechte Spalte: Liste vorhandener Klassen -->
+        <div>
+            <h2 class="font-semibold mb-2">Bereits erstellte Klassen:</h2>
+            <ul class="list-disc ml-6">
+                @forelse($klasses as $klasse)
+                    <li class="flex items-center gap-2">
+                        <!-- Klassenname -->
+                        <span>{{ $klasse->name }}</span>
 
-        function updateRanking() {
-            const viewSelect = document.getElementById('rankingViewSelect');
-            const disciplineSelect = document.getElementById('disciplineSelect');
-            const rankingTitle = document.getElementById('rankingTitle');
-            const rankingList = document.getElementById('rankingList');
+                        <!-- Lösch-Button (klein und grau) -->
+                        <form
+                            action="{{ route('klasses.destroy', $klasse->id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Möchtest du diese Klasse wirklich löschen?');"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type="submit"
+                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
+                            >
+                                Löschen
+                            </button>
+                        </form>
+                    </li>
+                @empty
+                    <li class="italic">Keine Klassen vorhanden.</li>
+                @endforelse
+            </ul>
+        </div>
+    </div>
 
-            // Ausgewählte Filter holen
-            const viewValue = viewSelect.value;
-            const disciplineValue = disciplineSelect.value;
+    <!-- TEAM -->
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- Linke Spalte: Formular für neues Team -->
+        <div>
+            <x-team-form :klasses="$klasses" />
+        </div>
+        <!-- Rechte Spalte: Liste vorhandener Teams -->
+        <div>
+            <h2 class="font-semibold mb-2">Bereits erstellte Teams:</h2>
+            <ul class="list-disc ml-6">
+                @forelse($teams as $team)
+                    <li class="flex items-center gap-2">
+                        <!-- Teamname -->
+                        <span>{{ $team->name }}</span>
 
-            // Anzeige am Titel:
-            let viewText = '';
-            switch (viewValue) {
-                case 'teams':
-                    viewText = 'Teams';
-                    break;
-                case 'klasses':
-                    viewText = 'Klassen';
-                    break;
-                default:
-                    viewText = 'Schulen';
-            }
+                        <!-- Lösch-Button (klein und grau) -->
+                        <form
+                            action="{{ route('teams.destroy', $team->id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Möchtest du dieses Team wirklich löschen?');"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type="submit"
+                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
+                            >
+                                Löschen
+                            </button>
+                        </form>
+                    </li>
+                @empty
+                    <li class="italic">Keine Teams vorhanden.</li>
+                @endforelse
+            </ul>
+        </div>
+    </div>
 
-            let disciplineText = '';
-            switch (disciplineValue) {
-                case 'disziplinA':
-                    disciplineText = 'Disziplin A';
-                    break;
-                case 'disziplinB':
-                    disciplineText = 'Disziplin B';
-                    break;
-                default:
-                    disciplineText = 'Disziplin C';
-            }
+    <!-- DISZIPLIN -->
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- Linke Spalte: Formular für neue Disziplin -->
+        <div>
+            <x-discipline-form :klasses="$klasses" />
+        </div>
+        <!-- Rechte Spalte: Liste vorhandener Disziplinen -->
+        <div>
+            <h2 class="font-semibold mb-2">Bereits erstellte Disziplinen:</h2>
+            <ul class="list-disc ml-6">
+                @forelse($disciplines as $discipline)
+                    <li class="flex items-center gap-2">
+                        <!-- Disziplinname -->
+                        <span>{{ $discipline->name }}</span>
 
-            // Titel setzen
-            rankingTitle.textContent = `${viewText} – ${disciplineText}`;
+                        <!-- Lösch-Button (klein und grau) -->
+                        <form
+                            action="{{ route('disciplines.destroy', $discipline->id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Möchtest du diese Disziplin wirklich löschen?');"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type="submit"
+                                class="px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300"
+                            >
+                                Löschen
+                            </button>
+                        </form>
+                    </li>
+                @empty
+                    <li class="italic">Keine Disziplinen vorhanden.</li>
+                @endforelse
+            </ul>
+        </div>
+    </div>
 
-            // Ranking-Daten aus mockData ermitteln
-            const data = mockData[viewValue][disciplineValue] || [];
-
-            // Falls keine Daten vorhanden, Listing leeren und ggf. Meldung anzeigen
-            if (!data.length) {
-                rankingList.innerHTML = `
-                    <div class="text-center p-6 text-gray-500">
-                        Keine Daten verfügbar.
-                    </div>
-                `;
-                return;
-            }
-
-            // Neue HTML-Blöcke für das Ranking erstellen
-            let htmlOutput = '';
-            data.forEach((item) => {
-                htmlOutput += `
-                    <div class="p-6 bg-white rounded-lg shadow-lg flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div
-                                class="bg-${item.place == 1 ? 'yellow' : (item.place == 2 ? 'gray' : (item.place == 3 ? 'orange' : 'indigo'))}-400
-                                       text-white font-bold rounded-full h-12 w-12
-                                       flex items-center justify-center mr-4 text-2xl">
-                                ${item.place}
-                            </div>
-                            <div>
-                                <p class="text-2xl font-semibold text-gray-800">${item.name}</p>
-                                <p class="text-sm text-gray-500">${item.extra}</p>
-                            </div>
-                        </div>
-                        <div class="text-4xl font-extrabold text-green-600">
-                            ${item.score}
-                        </div>
-                    </div>
-                `;
-            });
-
-            // HTML in das Element einfügen
-            rankingList.innerHTML = htmlOutput;
-        }
-    </script>
+    <!-- TEAM-DISZIPLIN-VERKNÜPFUNG -->
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- Linke Spalte: Formular für Team-Disziplin-Verknüpfung -->
+        <div>
+            <x-teamtable-form
+                :teams="$teams"
+                :disciplines="$disciplines"
+            />
+        </div>
+    </div>
 </x-layout>

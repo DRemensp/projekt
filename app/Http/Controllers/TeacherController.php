@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\School;
+use App\Models\Klasse;
 use App\Models\Discipline;
+use App\Models\Team;
 use Illuminate\Http\Request;
+// use App\Models\Comment; // Auskommentiert, falls nicht benötigt
 
 class TeacherController extends Controller
 {
-    public function showTeacherDashboard()
+    public function index()
     {
-        // Beispielhafte Abfrage aus der Datenbank:
+        // Lade alle notwendigen Daten für die Formulare und Listen
+        // Optional: Sortiere die Listen für eine bessere Übersicht
+        $schools = School::orderBy('name')->get();
+        $klasses = Klasse::with('school')->orderBy('name')->get(); // Lade Schule für Anzeige
+        $disciplines = Discipline::with('klasse')->orderBy('name')->get(); // Lade Klasse für Anzeige
+        $teams = Team::with('klasse')->orderBy('name')->get(); // Lade Klasse für Anzeige
 
-        $disciplines = Discipline::all();
-
-        // Oder falls du ein Eloquent Model verwendest:
-        // $disciplines = Discipline::all();
-
-        // Anschließend mit der View teilen:
-        return view('teacher', compact('disciplines'));
+        // Gebe die Daten an die neue Admin-View zurück
+        return view('admin', compact('schools', 'klasses', 'disciplines', 'teams'));
     }
 }
