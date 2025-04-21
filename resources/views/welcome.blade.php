@@ -1,49 +1,126 @@
+{{-- resources/views/welcome.blade.php --}}
 <x-layout>
     @livewireStyles
-    <x-slot:heading>
-        Campus Olympiade
-    </x-slot:heading>
-    <section class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8">
-        <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,var(--color-indigo-100),white)] opacity-20"></div>
-        <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white ring-1 shadow-xl shadow-indigo-600/10 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center"></div>
-        <div class="mx-auto max-w-2xl lg:max-w-4xl mb-24">
-            <img class="mx-auto h-12" src="{{asset('Clipped.png')}}" alt="">
-            <figure class="mt-10">
-                <blockquote class="text-center text-xl/8 font-semibold text-gray-900 sm:text-2xl/9">
-                    <p>“Willkommen bei der diesjährigen Olympiade.”</p>
-                    <p>“Wir wünschen euch viel Spaß und ein fairen Kampf.”</p>
-                    <p>“Auf Leben und Tot ;)”</p>
-                </blockquote>
-                <figcaption class="mt-10">
-                    <img class="mx-auto size-10 rounded-full" src="{{ asset('profile.png') }}
-" alt="Profil Bild">
-                    <div class="mt-4 flex items-center justify-center space-x-3 text-base">
-                        <div class="font-semibold text-gray-900">Bernd Jürgen</div>
-                        <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900">
-                            <circle cx="1" cy="1" r="1" />
-                        </svg>
-                        <div class="text-gray-600">CEO of nothing</div>
+
+    {{-- Kein expliziter Header-Slot hier, da der Hero die Überschrift übernimmt --}}
+    {{-- <x-slot:heading>Willkommen</x-slot:heading> --}}
+
+    {{-- Hero Section - Angelehnt an das React-Beispiel --}}
+    <section class="relative pt-24 md:pt-32 pb-16 md:pb-24 bg-gradient-to-b from-indigo-50 via-white to-gray-50 overflow-hidden">
+        {{-- Dekorative Hintergrundelemente (einfacher als im React-Beispiel) --}}
+        <div class="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-96 h-96 bg-indigo-200 rounded-full opacity-30 blur-3xl" aria-hidden="true"></div>
+        <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-80 h-80 bg-blue-200 rounded-full opacity-30 blur-3xl" aria-hidden="true"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col items-center text-center">
+                {{-- Logo oder Haupt-Icon --}}
+                <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                    {{-- Ranking Icon als Hauptsymbol --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                </div>
+
+                {{-- Überschrift und Text --}}
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                    <span class="text-indigo-600">Campus Olympiade</span> - Dein Portal zum Wettbewerb
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    Verfolge live die Ranglisten deiner Schule, Klasse und deines Teams. Lehrer und Admins können sich hier einloggen, um Ergebnisse einzutragen und den Wettbewerb zu verwalten.
+                </p>
+
+                {{-- Buttons --}}
+                <div class="flex flex-wrap justify-center gap-4 mb-16">
+                    <a href="{{ url('/ranking') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white text-base font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        Ranking ansehen
+                    </a>
+                    <a href="{{ url('/login') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-white text-indigo-600 text-base font-medium rounded-lg border border-indigo-300 shadow-sm hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                        Login für Lehrer & Admins
+                    </a>
+                </div>
+
+                {{-- Drei Feature Boxen - Inhalt angepasst --}}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mx-auto">
+                    {{-- Feature 1: Ranking --}}
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center transition-shadow hover:shadow-indigo-100">
+                        <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mb-5">
+                            {{-- Ranking Icon --}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Live Ranglisten</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Sieh jederzeit die aktuellen Platzierungen der Schulen, Klassen und Teams ein. Wer führt gerade?
+                        </p>
                     </div>
-                </figcaption>
-            </figure>
-        </div>
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl"><p>{{ $schoolCount }}</p> beteiligte Schulen</dd>
+
+                    {{-- Feature 2: Teacher --}}
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center transition-shadow hover:shadow-blue-100">
+                        <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-5">
+                            {{-- Teacher Icon --}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Dateneingabe (Lehrer)</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Lehrer können sich anmelden, um die Ergebnisse ihrer Teams in den verschiedenen Disziplinen einzutragen.
+                        </p>
+                    </div>
+
+                    {{-- Feature 3: Admin --}}
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center transition-shadow hover:shadow-green-100">
+                        <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-5">
+                            {{-- Admin Icon --}}
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-7 w-7 text-green-600"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Verwaltung (Admin)</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Administratoren legen Schulen, Klassen, Teams und Disziplinen an und verwalten die Stammdaten.
+                        </p>
+                    </div>
                 </div>
-                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl"><p>{{ $klasseCount }}</p> teilnehmende Klassen</dd>
-                </div>
-                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl"><p>{{ $teamCount }}</p> versuchende Teams</dd>
-                </div>
-            </dl>
+            </div>
         </div>
     </section>
 
-    @livewire('comments')
+    {{-- Community / Kommentar Sektion - Design etwas angepasst --}}
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
+                    Community Diskussionen
+                </h2>
+                {{-- Livewire Comments Component --}}
+                @livewire('comments')
+            </div>
+        </div>
+    </section>
+
+    {{-- Footer - Angelehnt an das React-Beispiel --}}
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <div class="flex items-center mb-4 md:mb-0">
+                    {{-- Kleines Logo --}}
+                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                        <span class="text-indigo-600 font-bold text-sm">CO</span>
+                    </div>
+                    <span class="font-semibold text-lg text-white">CampusOlympiade</span>
+                </div>
+                <div class="flex flex-wrap justify-center space-x-6 text-sm">
+                    {{-- Footer Links (Beispiele) --}}
+                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Über uns</a>
+                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Kontakt</a>
+                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Datenschutz</a>
+                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Impressum</a>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-gray-400 text-xs">
+                &copy; {{ date('Y') }} CampusOlympiade. Alle Rechte vorbehalten.
+            </div>
+        </div>
+    </footer>
+
     @livewireScripts
-
 </x-layout>
-
