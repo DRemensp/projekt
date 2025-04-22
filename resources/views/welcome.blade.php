@@ -97,30 +97,5 @@
         </div>
     </section>
 
-    {{-- Footer - Angelehnt an das React-Beispiel --}}
-    <footer class="bg-gray-800 text-gray-300 py-8">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                <div class="flex items-center mb-4 md:mb-0">
-                    {{-- Kleines Logo --}}
-                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                        <span class="text-indigo-600 font-bold text-sm">CO</span>
-                    </div>
-                    <span class="font-semibold text-lg text-white">CampusOlympiade</span>
-                </div>
-                <div class="flex flex-wrap justify-center space-x-6 text-sm">
-                    {{-- Footer Links (Beispiele) --}}
-                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Über uns</a>
-                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Kontakt</a>
-                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Datenschutz</a>
-                    <a href="#" class="hover:text-indigo-300 transition-colors duration-200">Impressum</a>
-                </div>
-            </div>
-            <div class="mt-6 text-center text-gray-400 text-xs">
-                &copy; {{ date('Y') }} CampusOlympiade. Alle Rechte vorbehalten.
-            </div>
-        </div>
-    </footer>
-
     @livewireScripts
 </x-layout>

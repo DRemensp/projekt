@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\School;
-use App\Models\Klasse;
 use App\Models\Discipline;
 use App\Models\Team;
 use Illuminate\Http\Request;
-// use App\Models\Comment; // Auskommentiert, falls nicht benötigt
+use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
 {
     public function index()
     {
-        // Lade alle notwendigen Daten für die Formulare und Listen
-        // Optional: Sortiere die Listen für eine bessere Übersicht
-        $schools = School::orderBy('name')->get();
-        $klasses = Klasse::with('school')->orderBy('name')->get(); // Lade Schule für Anzeige
-        $disciplines = Discipline::with('klasse')->orderBy('name')->get(); // Lade Klasse für Anzeige
-        $teams = Team::with('klasse')->orderBy('name')->get(); // Lade Klasse für Anzeige
+        $teams = Team::with('klasse')->orderBy('name')->get();
+        $disciplines = Discipline::orderBy('name')->get();
 
-        // Gebe die Daten an die neue Admin-View zurück
-        return view('admin', compact('schools', 'klasses', 'disciplines', 'teams'));
+        $allScoresRaw = DB::table('discipline_team')
+            ->select('discipline_id', 'team_id', 'score_1', 'score_2')
+            ->get();
+
+        $allScores = [];
+        foreach ($allScoresRaw as $score) {
+            $key = $score->discipline_id . '_' . $score->team_id;
+            $allScores[$key] = [
+                'score_1' => $score->score_1 !== null ? (float)$score->score_1 : null,
+                'score_2' => $score->score_2 !== null ? (float)$score->score_2 : null,
+            ];
+        }
+
+        return view('teacher', compact(
+            'teams',
+            'disciplines',
+            'allScores'
+        ));
     }
 }
