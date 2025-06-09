@@ -11,6 +11,7 @@ class Comment extends Model
 
     protected $fillable = [
         'message',
+        'author_name',
         'ip_address'
     ];
 }

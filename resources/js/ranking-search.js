@@ -1,6 +1,5 @@
-// public/js/ranking-search.js oder resources/js/ranking-search.js
+// resources/js/ranking-search.js
 
-// Sicherstellen, dass DOM geladen ist (wichtig, wenn das Skript im <head> steht)
 document.addEventListener('DOMContentLoaded', () => {
 
     // DOM-Elemente holen (nur wenn sie existieren)
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Prüfen, ob die Elemente und Daten auf der Seite vorhanden sind
     if (!searchInput || !resultsContainer || typeof allTeamsData === 'undefined' || typeof colorMap === 'undefined') {
-        // console.error('Search elements or data not found. Exiting search script.');
         return; // Skript beenden, wenn etwas fehlt
     }
 
@@ -19,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funktion zum Abrufen der Farbklassen (JS-Version)
     function getJsSchoolColorClasses(schoolId) {
-        // Stelle sicher, dass schoolId eine Zahl ist oder 0, falls undefiniert/null
         const id = Number(schoolId) || 0;
         return colorMap[id] || colorMap['default'];
     }
@@ -36,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
     }
-
 
     // Suchfunktion
     function filterAndDisplayTeams() {
@@ -79,10 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Tabellenzeilen generieren
             filteredTeams.forEach((team, index) => {
                 const colors = getJsSchoolColorClasses(team.school_id);
-                // Stelle sicher, dass die Klassen sicher angewendet werden
-                const hoverClass = colors.bg_light ? escapeHtml(colors.bg_light) : 'bg-gray-50/60'; // Fallback für bg_light
-                const textClass = colors.text ? escapeHtml(colors.text) : 'text-gray-700'; // Fallback für text
-                const pointsClass = colors.text_points ? escapeHtml(colors.text_points) : 'text-gray-800'; // Fallback für text_points
+                // KORREKTUR: Bindestrich-Notation für JavaScript verwenden
+                const hoverClass = colors['bg-light'] ? escapeHtml(colors['bg-light']) : 'bg-gray-50/60';
+                const textClass = colors.text ? escapeHtml(colors.text) : 'text-gray-700';
+                const pointsClass = colors['text-points'] ? escapeHtml(colors['text-points']) : 'text-gray-800';
 
                 // Disziplinen sicher ausgeben
                 const disciplinesHtml = team.disciplines_list
@@ -112,4 +108,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialen Zustand beim Laden setzen
     resultsContainer.innerHTML = initialMessage;
 
-}); // Ende DOMContentLoaded
+});

@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Klasse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Services\PasswordGenerator;
+
 
 class KlasseController extends Controller
 {
+    protected $passwordGenerator;
 
+    public function __construct(PasswordGenerator $passwordGenerator)
+    {
+        $this->passwordGenerator = $passwordGenerator;
+    }
 
     public function store(Request $request)
     {
@@ -16,12 +25,32 @@ class KlasseController extends Controller
             'klasse_name'  => 'required|max:255',
             'school_id'    => 'required|integer|exists:schools,id',
         ]);
+
+        // Generate a random password
+        $password = $this->passwordGenerator->generate();
+
+        // Create a user account for the class
+        $user = User::create([
+            'name'     => $validated['klasse_name'],
+            'password' => Hash::make($password)
+        ]);
+
+        // Create the class with the password
         Klasse::create([
             'name'      => $validated['klasse_name'],
             'school_id' => $validated['school_id'],
+            'user_id'   => $user->id,
+            'password'  => $password
         ]);
 
-        return redirect()->back()->with('success', 'Klasse created successfully.');
+
+        // Return with success message and the generated password
+        return redirect()->back()->with([
+            'success' => 'Klasse created successfully.',
+            'user_created' => true,
+            'username' => $validated['klasse_name'],
+            'password' => $password,
+        ]);
     }
 
     public function destroy($klasseId)
@@ -31,29 +60,22 @@ class KlasseController extends Controller
 
         // 2. Prüfe, ob das Model überhaupt gefunden wurde
         if (!$klasse) {
-            // Optional: Logge den Fehler
-            // Log::warning("Versuch, nicht existierende Klasse ID " . $klasseId . " zu löschen.");
             return redirect()->back()->with('error', 'Klasse nicht gefunden.');
         }
 
-        // 3. Versuche das gefundene Model zu löschen (mit Fehlerbehandlung)
-        try {
+            // Find and delete the associated user if exists
+            $user = User::where('name', $klasse->name)->first();
+            if ($user) {
+                $user->delete();
+            }
+
             $deleted = $klasse->delete(); // Führe das Löschen aus
 
             // Prüfe, ob das Löschen erfolgreich war (delete() gibt true/false zurück)
             if ($deleted) {
                 return redirect()->back()->with('success', 'Klasse erfolgreich gelöscht.');
             } else {
-                // Sollte selten passieren, z.B. wenn ein 'deleting' Event false zurückgibt
-                Log::error("Klasse ID " . $klasseId . " konnte nicht gelöscht werden (delete() gab false zurück).");
                 return redirect()->back()->with('error', 'Klasse konnte nicht gelöscht werden.');
             }
-        } catch (\Exception $e) {
-            // Fange alle anderen Fehler ab (z.B. Datenbankprobleme)
-            // Logge den spezifischen Fehler für die Fehlersuche
-            Log::error("Fehler beim Löschen von Klasse ID " . $klasseId . ": " . $e->getMessage());
-            // Gib dem Benutzer eine allgemeine Fehlermeldung
-            return redirect()->back()->with('error', 'Ein Datenbankfehler ist beim Löschen der Klasse aufgetreten.');
-        }
     }
 }

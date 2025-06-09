@@ -11,8 +11,9 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->text('message');          // Kommentartext
-            $table->string('ip_address', 45); // Für IPv4/IPv6
+            $table->text('message');                    // Kommentartext
+            $table->string('author_name', 50)->nullable(); // Autor Name (optional)
+            $table->string('ip_address', 45);           // Für IPv4/IPv6 (privat)
             $table->timestamps();
         });
     }

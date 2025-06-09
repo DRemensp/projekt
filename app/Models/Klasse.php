@@ -3,13 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Klasse extends Model
 {
     protected $fillable = [
         'school_id',
         'name',
+        'password',
         ];
+
+    /**
+     * Get the user associated with the klasse.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
     public function school(){

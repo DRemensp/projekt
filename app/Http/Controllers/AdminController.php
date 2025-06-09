@@ -13,8 +13,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // Lade alle notwendigen Daten für die Formulare und Listen
-        // Optional: Sortiere die Listen für eine bessere Übersicht
+        // Lade alle notwendigen Daten für die Formulare und Listen und sortiert diese
         $schools = School::orderBy('name')->get();
         $klasses = Klasse::with('school')->orderBy('name')->get(); // Lade Schule für Anzeige
         $disciplines = Discipline::with('klasse')->orderBy('name')->get(); // Lade Klasse für Anzeige

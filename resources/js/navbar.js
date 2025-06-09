@@ -1,25 +1,20 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const navbar = document.getElementById('navbar');
-    const mobileMenuButton = document.getElementById('mobileMenuButton');
-    const mobileMenu = document.getElementById('mobileMenu');
+// resources/js/navbar.js
+function initNavbar() {
+    const navbar            = document.getElementById('navbar');
+    const mobileMenuButton  = document.getElementById('mobileMenuButton');
+    const mobileMenu        = document.getElementById('mobileMenu');
 
-    // Ändert das Navbar-Design beim Scrollen
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 10) {
-            navbar.classList.add('bg-white/90', 'shadow-lg');
-            navbar.classList.remove('bg-transparent');
-        } else {
-            navbar.classList.remove('bg-white/90', 'shadow-lg');
-            navbar.classList.add('bg-transparent');
-        }
-    });
+    if (!navbar || !mobileMenuButton || !mobileMenu) return;   // Sicherheitsnetz
 
-    // Klick auf den Burger-Button öffnet/schließt das Mobile-Menü
+    // Burger-Button
     mobileMenuButton.addEventListener('click', () => {
-        if (mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.remove('hidden');
-        } else {
-            mobileMenu.classList.add('hidden');
-        }
+        mobileMenu.classList.toggle('hidden');
     });
-});
+}
+
+//notwendig da durch redirect logik DOM schneller als Navbar.js geladen wird
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+} else {
+    initNavbar();
+}

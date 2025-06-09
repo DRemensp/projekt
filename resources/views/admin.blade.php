@@ -18,6 +18,24 @@
                     @if(session('success'))
                         <div class="mb-6 p-4 text-sm text-green-700 bg-green-100 rounded-lg border border-green-200 shadow-sm" role="alert">
                             <span class="font-medium">Erfolg!</span> {{ session('success') }}
+
+                            {{-- Anzeige der generierten Anmeldedaten für Klasse --}}
+                            @if(session('user_created'))
+                                <div class="mt-2 p-3 bg-blue-50 border border-blue-200 rounded">
+                                    <p class="font-medium text-blue-700">Anmeldedaten für die Klasse wurden erstellt:</p>
+                                    <div class="mt-1 grid grid-cols-2 gap-2">
+                                        <div>
+                                            <span class="font-medium">Benutzername:</span>
+                                            <span class="font-mono bg-white px-2 py-1 rounded border border-gray-200">{{ session('username') }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium">Passwort:</span>
+                                            <span class="font-mono bg-white px-2 py-1 rounded border border-gray-200">{{ session('password') }}</span>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-xs text-gray-600">Bitte notieren Sie sich diese Daten, sie werden nur einmal angezeigt!</p>
+                                </div>
+                            @endif
                         </div>
                     @endif
 
@@ -97,6 +115,9 @@
                                                     <div>
                                                         <span class="text-gray-700">{{ $klasse->name }}</span>
                                                         <span class="text-xs text-gray-500 ml-2">({{ $klasse->school->name ?? 'Keine Schule' }})</span>
+                                                        @if($klasse->password)
+                                                            <span class="text-xs text-blue-500 ml-2">Password: {{ $klasse->password }}</span>
+                                                        @endif
                                                     </div>
                                                     {{-- Lösch-Button --}}
                                                     <form action="{{ route('klasses.destroy', $klasse->id) }}" method="POST" onsubmit="return confirm('Klasse {{ $klasse->name }} wirklich löschen? Alle zugehörigen Teams und Disziplinen werden ebenfalls gelöscht!');">
@@ -199,8 +220,6 @@
                                 </div>
                             </div>
                         </section>
-
-                        {{-- TEAMTABLE FORM WIRD HIER NICHT EINGEFÜGT --}}
 
                     </div> {{-- Ende space-y-12 --}}
                 </div> {{-- Ende p-6/p-8 --}}

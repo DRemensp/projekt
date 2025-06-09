@@ -7,36 +7,64 @@ use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\KlasseController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\TeamController;
-use App\Http\Controllers\TeamTableController; // Behalten, falls verwendet
+use App\Http\Controllers\TeamTableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 
 
-Route::view('dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
-Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
+Route::get('/dashboard', function () {
+    $user = auth()->user();
+    if ($user->hasRole('admin')) {
+        return redirect('/admin');}
+    elseif ($user->hasRole('teacher')) {
+        return redirect('/teacher');}
+    return app(DashboardController::class)->index();
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::delete('/klasses/{klasseId}', [KlasseController::class, 'destroy'])->name('klasses.destroy');
-Route::post('/klasses', [KlasseController::class, 'store'])->name('klasses.store');
+
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+
+Route::delete('/klasses/{klasseId}', [KlasseController::class, 'destroy'])
+    ->name('klasses.destroy');
+Route::post('/klasses', [KlasseController::class, 'store'])
+    ->name('klasses.store');
+
 
 require __DIR__.'/auth.php';
+
 
 Route::get('/', [HomeController::class, 'index'])
     ->name('welcome');
 
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index'); // Auth hinzugefügt + Name korrigiert
+Route::get('/teacher', function () {
+    $user = auth()->user();
+    if (!$user->hasRole('admin') && !$user->hasRole('teacher')) {
+        return redirect('/');}
+    return app(TeacherController::class)->index();
+})->middleware(['auth'])->name('teacher.index');
 
 
-Route::get('/teacher', [TeacherController::class, 'index'])
-    ->name('teacher.index');
+Route::get('/admin', function () {
+    if (!auth()->user()->hasRole('admin')) {
+        return redirect('/');}
+    return app(AdminController::class)->index();
+})->middleware(['auth'])->name('admin.index');
+
 
 Route::post('/disciplines-teams', [TeamTableController::class, 'storeOrUpdate'])
     ->name('teamTable.storeOrUpdate');
 
+
 Route::post('/ranking/recalculate', [RankingController::class, 'recalculateAllScores'])
     ->name('ranking.recalculate');
-
 Route::get('/ranking', [RankingController::class, 'index'])
     ->name('ranking.index');
+
+
 
 Route::resources([
     'schools'     => SchoolController::class,

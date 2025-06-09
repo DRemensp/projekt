@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Prüfen, ob die benötigten Daten vorhanden sind
     if (typeof window.allScoresData === 'undefined') {
-        console.error('Teacher Scores Error: allScoresData is not defined. Make sure it is set in the Blade template.');
         return; // Skript beenden, wenn Daten fehlen
     }
 

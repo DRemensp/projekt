@@ -41,6 +41,10 @@ class TeamTableController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Werte gespeichert oder aktualisiert!');
+        // *** NEU: Automatische Score-Neuberechnung ***
+        $rankingController = new \App\Http\Controllers\RankingController();
+        $rankingController->recalculateAllScores();
+
+        return redirect()->back()->with('success', 'Werte gespeichert und Ranking automatisch aktualisiert!');
     }
 }
