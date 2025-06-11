@@ -11,6 +11,7 @@ use App\Http\Controllers\TeamTableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaufzettelController;
 
 
 Route::get('/dashboard', function () {
@@ -63,6 +64,14 @@ Route::post('/ranking/recalculate', [RankingController::class, 'recalculateAllSc
     ->name('ranking.recalculate');
 Route::get('/ranking', [RankingController::class, 'index'])
     ->name('ranking.index');
+
+
+Route::get('/laufzettel', [LaufzettelController::class, 'index'])
+    ->name('laufzettel.index');
+Route::get('/laufzettel/{team}', [LaufzettelController::class, 'show'])
+    ->name('laufzettel.show');
+
+
 
 
 

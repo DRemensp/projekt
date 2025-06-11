@@ -5,10 +5,9 @@
     </x-slot:heading>
 
     {{-- Haupt-Container (wie Ranking) --}}
-    <div class="bg-gray-100 py-8">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             {{-- Container für den Inhalt --}}
-            <div class="bg-white overflow-hidden shadow-xl rounded-lg">
                 <div class="p-6 md:p-8 text-gray-900">
 
                     {{-- Allgemeine Überschrift --}}
@@ -223,7 +222,7 @@
 
                     </div> {{-- Ende space-y-12 --}}
                 </div> {{-- Ende p-6/p-8 --}}
-            </div> {{-- Ende bg-white --}}
+
         </div> {{-- Ende max-w-7xl --}}
     </div> {{-- Ende bg-gray-100 --}}
 </x-layout>

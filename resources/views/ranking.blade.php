@@ -3,8 +3,19 @@
         Ranking Dashboard
     </x-slot:heading>
 
+
+    <div class="hidden
+        bg-blue-100 bg-blue-50 text-blue-700 text-blue-600 text-blue-800 border-blue-500 border-blue-300 hover:text-blue-900 hover:border-blue-700
+        bg-green-100 bg-green-50 text-green-700 text-green-600 text-green-800 border-green-500 border-green-300 hover:text-green-900 hover:border-green-700
+        bg-orange-100 bg-orange-50 text-orange-700 text-orange-600 text-orange-800 border-orange-500 border-orange-300 hover:text-orange-900 hover:border-orange-700
+        bg-purple-100 bg-purple-50 text-purple-700 text-purple-600 text-purple-800 border-purple-500 border-purple-300 hover:text-purple-900 hover:border-purple-700
+        "></div>
+
+
+
+
     {{-- Haupt-Container mit leicht grauem Hintergrund --}}
-    <div class="bg-gray-100 py-8">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             {{-- Container für den Inhalt: Weiß mit Schatten --}}
             <div class="bg-white overflow-hidden shadow-xl rounded-lg">
@@ -45,7 +56,7 @@
                                             $firstOtherSchoolId = $schools->slice(3)->first()->id ?? null;
                                             $detailColors = \App\Services\SchoolColorService::getColorClasses($firstOtherSchoolId);
                                         @endphp
-                                        <details class="bg-white rounded-lg shadow p-4 border {{ $detailColors['border-light'] }}">
+                                        <details class=" bg-white rounded-lg shadow p-4 border {{ $detailColors['border-light'] }}">
                                             <summary class="text-md font-semibold cursor-pointer {{ $detailColors['text'] }} {{ $detailColors['text-hover'] }} list-none">
                                                 <span class="inline-block border-b-2 border-transparent {{ $detailColors['border-hover'] }}">Weitere Schulen anzeigen</span>
                                                 <svg class="h-5 w-5 inline-block ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>

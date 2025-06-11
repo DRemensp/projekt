@@ -8,7 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/navbar.js',
-                'resources/js/ranking-search.js',
+                'resources/js/laufzettel-search.js',
                 'resources/js/teacher-scores.js',
             ],
             refresh: true,

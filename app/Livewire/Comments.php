@@ -60,4 +60,17 @@ class Comments extends Component
     {
         $this->commentsToShow = 5;
     }
+
+    public function destroy(Comment $comment)
+    {
+        // Nur Admin und Teacher dürfen löschen
+        if (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('teacher')) {
+            abort(403, 'Keine Berechtigung zum Löschen von Kommentaren');
+        }
+
+        $comment->delete();
+
+        return redirect()->back()->with('success', 'Kommentar erfolgreich gelöscht!');
+    }
+
 }

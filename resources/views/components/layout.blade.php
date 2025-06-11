@@ -6,7 +6,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/navbar.js', 'resources/js/ranking-search.js', 'resources/js/teacher-scores.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/navbar.js', 'resources/js/laufzettel-search.js', 'resources/js/teacher-scores.js'])
 </head>
 
 <body class="antialiased">
@@ -38,11 +38,16 @@
                     🏆 Ranking
                 </a>
 
+                <a href="{{ url('/laufzettel') }}"
+                   class="w-32 py-3 rounded text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:scale-105 transition-all duration-200 text-lg font-medium text-center {{ Request::is('laufzettel*') ? 'bg-blue-100 text-blue-600' : '' }}">
+                    📋 Laufzettel
+                </a>
+
                 @auth
                     @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher'))
                         <a href="{{ url('/teacher') }}"
                            class="w-32 py-3 rounded text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:scale-105 transition-all duration-200 text-lg font-medium text-center {{ Request::is('teacher') ? 'bg-blue-100 text-blue-600' : '' }}">
-                            📚 Teacher
+                            📊 Lehrer
                         </a>
                     @endif
 
@@ -93,12 +98,15 @@
             <a href="{{ url('/ranking') }}"
                class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded transition-all duration-200"
             >🏆 Ranking</a>
+            <a href="{{ url('/laufzettel') }}"
+               class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded transition-all duration-200"
+            >📋 Laufzettel</a>
 
             @auth
                 @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher'))
                     <a href="{{ url('/teacher') }}"
                        class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded transition-all duration-200"
-                    >📚 Teacher</a>
+                    >📊 Lehrer</a>
                 @endif
                 @if(auth()->user()->hasRole('admin'))
                     <a href="{{ url('/admin') }}"

@@ -4,9 +4,8 @@
         Teacher Dashboard - Score Eingabe
     </x-slot:heading>
 
-    <div class="bg-gray-100 py-8">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl rounded-lg">
                 <div class="p-6 md:p-8 text-gray-900">
 
                     <h1 class="text-3xl font-bold text-indigo-700 mb-8 text-center border-b pb-4">
@@ -45,7 +44,7 @@
                         </div>
 
                 </div>
-            </div>
+
         </div>
     </div>
 

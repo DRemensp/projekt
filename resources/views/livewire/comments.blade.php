@@ -29,7 +29,7 @@
                     maxlength="50"
                 >
                 @error('authorName')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -56,7 +56,7 @@
                     @input="resize()"
                 ></textarea>
                 @error('message')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -100,7 +100,7 @@
                 @foreach($comments as $comment)
                     <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
                         <div class="flex justify-between items-start mb-2">
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-grow">
                                 <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
                                     {{ strtoupper(substr($comment->author_name ?? 'A', 0, 1)) }}
                                 </div>
@@ -113,6 +113,22 @@
                                     </p>
                                 </div>
                             </div>
+
+                            {{-- Lösch-Button nur für Admin und Teacher --}}
+                            @auth
+                                @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher'))
+                                    <button
+                                        wire:click="destroy({{ $comment->id }})"
+                                        wire:confirm="Kommentar von {{ $comment->author_name ?? 'Anonym' }} wirklich löschen?"
+                                        class="ml-2 text-red-500 hover:text-red-700 transition-colors duration-150 p-1 rounded hover:bg-red-100 flex-shrink-0"
+                                        title="Kommentar löschen"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                @endif
+                            @endauth
                         </div>
                         <p class="text-gray-700 break-words whitespace-pre-wrap leading-relaxed">{{ $comment->message }}</p>
                     </div>

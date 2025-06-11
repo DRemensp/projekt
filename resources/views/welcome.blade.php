@@ -5,7 +5,7 @@
     {{-- <x-slot:heading>Willkommen</x-slot:heading> --}}
 
     {{-- Hero Section - Angelehnt an das React-Beispiel --}}
-    <section class="relative pt-24 md:pt-32 pb-16 md:pb-24 bg-gradient-to-b from-indigo-50 via-white to-gray-50 overflow-hidden">
+    <section class="relative pt-24 md:pt-32 pb-16 md:pb-24 bg-gradient-to-br from-blue-100 to-green-100 overflow-hidden">
         {{-- Dekorative Hintergrundelemente (einfacher als im React-Beispiel) --}}
         <div class="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-96 h-96 bg-indigo-200 rounded-full opacity-30 blur-3xl" aria-hidden="true"></div>
         <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-80 h-80 bg-blue-200 rounded-full opacity-30 blur-3xl" aria-hidden="true"></div>
