@@ -1,4 +1,34 @@
+Unten sehen sie was ursprünglich hier stand, keine ahnung was das ist.
+
+Hier sind paar Infos über die Struktur
+1. wenn sie es selber hosten wollen brauchen sie die befehle 
+    php artisan serve
+    npm run dev (oder build beides geht lokal)
+2. Die standart elemente habe ich von Laravel drin gelassen das umschließt einige daten bei Views(components)
+    Warum? weil ich dinge wie /profile drinnen gelassen hab für Passwort änderungen die auf diese components angewiesen sind
+    Und, ich bekam ein Haufen an Problemen sobald ich da zeug mal gelöscht hab also merke:
+        ich hab alles mit xxx-form ind components gemacht, dazu auch die layout.blade selbst gemacht genau so wie der Login oder logout button
+        mit dem Rest hatte ich nichts zu tun, oder sehr wenig
+3. In Ordnern wie config, vendor, tests, factories, bootstrap oder nodemodules genau so wie tests habe ich nie anrühren müssen
+    PhpStorm selber blendet solche Dateien gerne mal aus, als ich beim löschen immer iweder probleme bekam entschied ich mich
+    dazu das zeug einfach drin zu lassen
+4. wie vorher erwähnt habe ich / profile drinnen gelassen, wenn sie also sich eingeloggt haben mit:
+    Admin | admin123npm run build
+    Teacher | teacher123
+    können sie in die Adresszeile /profile hinzufügen und kommen zu der Standartmäßigen Breeze seite, und ja dort habe ich
+    nichts verändert, alles funktioniert also aber emails verschicken benötigt nen email server oder so ähnlich
+
+    
+
+
+
+
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>

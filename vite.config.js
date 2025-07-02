@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/navbar.js',
                 'resources/js/laufzettel-search.js',
                 'resources/js/teacher-scores.js',
+                'resources/js/admin-carousel.js',
             ],
             refresh: true,
         }),
