@@ -1,5 +1,4 @@
 <?php
-// database/migrations/2023_01_01_000000_create_comments_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -11,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->text('message');                    // Kommentartext
-            $table->string('author_name', 50)->nullable(); // Autor Name (optional)
-            $table->string('ip_address', 45);           // Für IPv4/IPv6 (privat)
+            $table->text('message');
+            $table->string('author_name', 50)->nullable();
+            $table->string('ip_address', 45);           // nur in datenbank sichtbar
             $table->timestamps();
         });
     }

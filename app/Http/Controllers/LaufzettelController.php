@@ -10,159 +10,184 @@ class LaufzettelController extends Controller
 {
     public function index()
     {
-        // Teams für JavaScript-Suche vorbereiten
+        // Lade alle Teams mit Schuldaten
         $teams = Team::with(['klasse.school'])->orderBy('name')->get();
 
-        $teamsForJs = $teams->map(function ($team) {
-            return [
+        // Teams für die JavaScript Suche aufbereiten
+        $jsTeams = [];
+        foreach ($teams as $team) {
+            $jsTeams[] = [
                 'id' => $team->id,
                 'name' => $team->name,
-                'klasse_name' => $team->klasse->name ?? 'N/A',
-                'school_name' => $team->klasse->school->name ?? '-',
-                'school_id' => $team->klasse->school_id ?? 0,
+                'klasse_name' => $team->klasse ? $team->klasse->name : 'N/A',
+                'school_name' => ($team->klasse && $team->klasse->school) ? $team->klasse->school->name : '-',
+                'school_id' => $team->klasse ? $team->klasse->school_id : 0,
             ];
-        });
+        }
 
-        // Farb-Map für JavaScript erstellen
-        $colorMapForJs = SchoolColorService::getAllColorsForJs();
+        // Farben für JS laden
+        $jsColors = SchoolColorService::getAllColorsForJs();
 
         return view('laufzettel', [
             'selectedTeam' => null,
             'teamResults' => [],
-            'teamsForJs' => $teamsForJs,
-            'colorMapForJs' => $colorMapForJs,
+            'teamsForJs' => $jsTeams,
+            'colorMapForJs' => $jsColors,
         ]);
     }
 
     public function show($teamId)
     {
-        // Ausgewähltes Team laden
-        $selectedTeam = Team::with(['klasse.school', 'disciplines'])->findOrFail($teamId);
+        // Das gewählte Team mit allen nötigen Relationen laden
+        $team = Team::with(['klasse.school', 'disciplines'])->findOrFail($teamId);
 
-        // Teams für JavaScript-Suche vorbereiten
-        $teams = Team::with(['klasse.school'])->orderBy('name')->get();
+        // Alle Teams für die Suche laden
+        $allTeams = Team::with(['klasse.school'])->orderBy('name')->get();
 
-        $teamsForJs = $teams->map(function ($team) {
-            return [
-                'id' => $team->id,
-                'name' => $team->name,
-                'klasse_name' => $team->klasse->name ?? 'N/A',
-                'school_name' => $team->klasse->school->name ?? '-',
-                'school_id' => $team->klasse->school_id ?? 0,
-            ];
-        });
-
-        // Alle Disziplinen laden
-        $disciplines = Discipline::with('teams')->get();
-
-        $teamResults = [];
-
-        foreach ($disciplines as $discipline) {
-            // Alle Teams in dieser Disziplin mit ihren Scores
-            $teamsInDiscipline = $discipline->teams->map(function ($team) use ($discipline) {
-                $score1 = $team->pivot->score_1;
-                $score2 = $team->pivot->score_2;
-
-                // Besten Score berechnen
-                if ($discipline->higher_is_better) {
-                    $bestScore = ($score1 === null && $score2 === null) ? null : max($score1 ?? -INF, $score2 ?? -INF);
-                } else {
-                    if ($score1 === null && $score2 === null) {
-                        $bestScore = null;
-                    } else {
-                        $bestScore = min($score1 ?? INF, $score2 ?? INF);
-                        if ($bestScore === INF) $bestScore = null;
-                    }
-                }
-
-                return [
-                    'team_id' => $team->id,
-                    'best_score' => $bestScore,
-                    'score_1' => $score1,
-                    'score_2' => $score2,
-                    'has_scores' => $score1 !== null || $score2 !== null
-                ];
-            })->filter(function ($teamData) {
-                return $teamData['has_scores']; // Nur Teams mit Scores für Ranking
-            });
-
-            // Nach bestem Score sortieren (für Platzierung)
-            $sortedTeams = $discipline->higher_is_better
-                ? $teamsInDiscipline->sortByDesc('best_score')
-                : $teamsInDiscipline->sortBy('best_score');
-
-            // Highscore (beste Leistung aller Teams) berechnen
-            $highscore = null;
-            if ($teamsInDiscipline->count() > 0) {
-                if ($discipline->higher_is_better) {
-                    $highscore = $teamsInDiscipline->max('best_score');
-                } else {
-                    $highscore = $teamsInDiscipline->min('best_score');
-                }
-            }
-
-            // Platzierung des ausgewählten Teams finden
-            $teamPosition = null;
-            $teamScores = null;
-            $hasParticipated = false;
-
-            // Zuerst prüfen, ob das Team überhaupt teilgenommen hat
-            $teamInDiscipline = $discipline->teams->where('id', $selectedTeam->id)->first();
-            if ($teamInDiscipline) {
-                $score1 = $teamInDiscipline->pivot->score_1;
-                $score2 = $teamInDiscipline->pivot->score_2;
-                $hasParticipated = $score1 !== null || $score2 !== null;
-
-                if ($hasParticipated) {
-                    // Besten Score für dieses Team berechnen
-                    if ($discipline->higher_is_better) {
-                        $teamBestScore = max($score1 ?? -INF, $score2 ?? -INF);
-                    } else {
-                        $teamBestScore = min($score1 ?? INF, $score2 ?? INF);
-                        if ($teamBestScore === INF) $teamBestScore = null;
-                    }
-
-                    $teamScores = [
-                        'score_1' => $score1,
-                        'score_2' => $score2,
-                        'best_score' => $teamBestScore
-                    ];
-
-                    // Platzierung berechnen
-                    $teamPosition = 1;
-                    foreach ($sortedTeams as $teamData) {
-                        if ($teamData['team_id'] == $selectedTeam->id) {
-                            break;
-                        }
-                        $teamPosition++;
-                    }
-                }
-            }
-
-            $teamResults[] = [
-                'discipline_name' => $discipline->name,
-                'discipline_unit' => $discipline->unit ?? '',
-                'higher_is_better' => $discipline->higher_is_better,
-                'position' => $teamPosition,
-                'scores' => $teamScores,
-                'has_participated' => $hasParticipated,
-                'total_participants' => $teamsInDiscipline->count(),
-                'highscore' => $highscore
+        // Teams für JavaScript vorbereiten
+        $teamList = [];
+        foreach ($allTeams as $t) {
+            $teamList[] = [
+                'id' => $t->id,
+                'name' => $t->name,
+                'klasse_name' => $t->klasse ? $t->klasse->name : 'N/A',
+                'school_name' => ($t->klasse && $t->klasse->school) ? $t->klasse->school->name : '-',
+                'school_id' => $t->klasse ? $t->klasse->school_id : 0,
             ];
         }
 
-        // Schulfarben laden - korrekter Methodenname verwenden
-        $schoolColors = SchoolColorService::getColorClasses($selectedTeam->klasse->school_id ?? 0);
+        // Alle Disziplinen mit Teams laden
+        $allDisciplines = Discipline::with('teams')->get();
 
-        // Farb-Map für JavaScript erstellen
-        $colorMapForJs = SchoolColorService::getAllColorsForJs();
+        $results = [];
+
+        // Durch jede Disziplin gehen
+        foreach ($allDisciplines as $disziplin) {
+            // Teams der Disziplin verarbeiten
+            $participatingTeams = [];
+
+            foreach ($disziplin->teams as $teamInDisc) {
+                $ergebnis1 = $teamInDisc->pivot->score_1;
+                $ergebnis2 = $teamInDisc->pivot->score_2;
+
+                // Bestes Ergebnis ermitteln
+                $bestResult = null;
+                if ($disziplin->higher_is_better) {
+                    // Bei "höher ist besser"
+                    if ($ergebnis1 !== null || $ergebnis2 !== null) {
+                        $bestResult = max($ergebnis1 ?? -999999, $ergebnis2 ?? -999999);
+                    }
+                } else {
+                    // Bei "niedriger ist besser"
+                    if ($ergebnis1 !== null || $ergebnis2 !== null) {
+                        $temp = min($ergebnis1 ?? 999999, $ergebnis2 ?? 999999);
+                        $bestResult = ($temp == 999999) ? null : $temp;
+                    }
+                }
+
+                // Nur Teams mit Ergebnissen
+                if ($ergebnis1 !== null || $ergebnis2 !== null) {
+                    $participatingTeams[] = [
+                        'team_id' => $teamInDisc->id,
+                        'best_score' => $bestResult,
+                        'score_1' => $ergebnis1,
+                        'score_2' => $ergebnis2,
+                        'has_results' => true
+                    ];
+                }
+            }
+
+            // Teams sortieren für Ranking
+            if ($disziplin->higher_is_better) {
+                usort($participatingTeams, function($a, $b) {
+                    return $b['best_score'] <=> $a['best_score'];
+                });
+            } else {
+                usort($participatingTeams, function($a, $b) {
+                    return $a['best_score'] <=> $b['best_score'];
+                });
+            }
+
+            // Rekord der Disziplin finden
+            $record = null;
+            if (count($participatingTeams) > 0) {
+                $record = $disziplin->higher_is_better
+                    ? max(array_column($participatingTeams, 'best_score'))
+                    : min(array_column($participatingTeams, 'best_score'));
+            }
+
+            // Position und Daten des aktuellen Teams ermitteln
+            $position = null;
+            $teamData = null;
+            $teilgenommen = false;
+
+            // Prüfen ob unser Team teilgenommen hat
+            $teamInThisDiscipline = null;
+            foreach ($disziplin->teams as $t) {
+                if ($t->id == $team->id) {
+                    $teamInThisDiscipline = $t;
+                    break;
+                }
+            }
+
+            if ($teamInThisDiscipline) {
+                $s1 = $teamInThisDiscipline->pivot->score_1;
+                $s2 = $teamInThisDiscipline->pivot->score_2;
+
+                if ($s1 !== null || $s2 !== null) {
+                    $teilgenommen = true;
+
+                    // Bestes Ergebnis für unser Team
+                    $teamBest = null;
+                    if ($disziplin->higher_is_better) {
+                        $teamBest = max($s1 ?? -999999, $s2 ?? -999999);
+                    } else {
+                        $temp = min($s1 ?? 999999, $s2 ?? 999999);
+                        $teamBest = ($temp == 999999) ? null : $temp;
+                    }
+
+                    $teamData = [
+                        'score_1' => $s1,
+                        'score_2' => $s2,
+                        'best_score' => $teamBest
+                    ];
+
+                    // Position finden
+                    $pos = 1;
+                    foreach ($participatingTeams as $participatingTeam) {
+                        if ($participatingTeam['team_id'] == $team->id) {
+                            $position = $pos;
+                            break;
+                        }
+                        $pos++;
+                    }
+                }
+            }
+
+            $results[] = [
+                'discipline_name' => $disziplin->name,
+                'discipline_unit' => $disziplin->unit ?? '',
+                'higher_is_better' => $disziplin->higher_is_better,
+                'position' => $position,
+                'scores' => $teamData,
+                'has_participated' => $teilgenommen,
+                'total_participants' => count($participatingTeams),
+                'highscore' => $record
+            ];
+        }
+
+        // Farben für die Schule laden
+        $colors = SchoolColorService::getColorClasses($team->klasse->school_id ?? 0);
+
+        // JavaScript Farben
+        $jsColors = SchoolColorService::getAllColorsForJs();
 
         return view('laufzettel', [
-            'selectedTeam' => $selectedTeam,
-            'teamResults' => $teamResults,
-            'schoolColors' => $schoolColors,
-            'teamsForJs' => $teamsForJs,
-            'colorMapForJs' => $colorMapForJs,
+            'selectedTeam' => $team,
+            'teamResults' => $results,
+            'schoolColors' => $colors,
+            'teamsForJs' => $teamList,
+            'colorMapForJs' => $jsColors,
         ]);
     }
 }

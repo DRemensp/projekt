@@ -15,10 +15,7 @@ class TeamController extends Controller
             'klasse_id' => 'required|integer|exists:klasses,id',
         ]);
 
-        /*
-         * Hole den Text aus dem Textarea-Feld namens 'members'.
-         * Zerlege den String anhand von Zeilenumbrüchen in ein Array.
-         */
+        //erlaubt das schreiben von mitglieder namen und Enter für Trennung
         $membersRaw = $request->input('members', ''); // Standard leer
         $membersArray = preg_split('/\r\n|\r|\n/', $membersRaw, -1, PREG_SPLIT_NO_EMPTY);
 

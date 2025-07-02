@@ -9,7 +9,7 @@ class LogoutButton extends Component
 {
     public function logout(Logout $logoutAction)
     {
-        $logoutAction(); // Ruft die __invoke-Methode der Action auf
+        $logoutAction(); // Ruft die __invoke-Methode der Action auf weil Laravel absolut weird ist
         return redirect('/')->with('success', 'You are logged out.');
     }
 

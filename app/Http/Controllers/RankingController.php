@@ -7,6 +7,8 @@ use App\Models\Klasse;
 use App\Models\School;
 use App\Models\Team;
 use App\Services\SchoolColorService;
+use PhpParser\Node\Stmt\Switch_;
+use App\Models\Scoresystem;
 
 class RankingController extends Controller
 {
@@ -20,44 +22,42 @@ class RankingController extends Controller
 
         // Bestes Team pro Disziplin
         $bestTeamsPerDiscipline = [];
+
         foreach ($disciplines as $discipline) {
             if ($discipline->teams->isEmpty()) continue;
-            $teamWithBestValue = $discipline->teams->reduce(function ($carry, $current) use ($discipline) {
-                if (!$carry) return $current;
-                $carryScore1 = $carry->pivot->score_1 ?? ($discipline->higher_is_better ? -INF : INF);
-                $carryScore2 = $carry->pivot->score_2 ?? ($discipline->higher_is_better ? -INF : INF);
-                $currentScore1 = $current->pivot->score_1 ?? ($discipline->higher_is_better ? -INF : INF);
-                $currentScore2 = $current->pivot->score_2 ?? ($discipline->higher_is_better ? -INF : INF);
-                if ($discipline->higher_is_better) {
-                    $carryBest = max($carryScore1, $carryScore2);
-                    $currentBest = max($currentScore1, $currentScore2);
-                    return $currentBest > $carryBest ? $current : $carry;
-                } else {
-                    $carryBest = ($carry->pivot->score_1 === null && $carry->pivot->score_2 === null) ? INF : min($carryScore1, $carryScore2);
-                    $currentBest = ($current->pivot->score_1 === null && $current->pivot->score_2 === null) ? INF : min($currentScore1, $currentScore2);
-                    if ($carryBest === INF && $currentBest === INF) return $carry;
-                    return $currentBest < $carryBest ? $current : $carry;
+
+            $bestTeam = null;
+            $bestScore = null;
+
+            // Durch alle Teams der Disziplin gehen
+            foreach ($discipline->teams as $team) {
+                $score1 = $team->pivot->score_1;
+                $score2 = $team->pivot->score_2;
+
+                // Besten Score des Teams ermitteln
+                $teamBestScore = $this->getTeamBestScore($score1, $score2, $discipline->higher_is_better);
+
+
+                if ($bestTeam === null || $this->isScoreBetter($teamBestScore, $bestScore, $discipline->higher_is_better)) {
+                    $bestTeam = $team;
+                    $bestScore = $teamBestScore;
                 }
-            });
-            if ($teamWithBestValue) {
-                $score1 = $teamWithBestValue->pivot->score_1;
-                $score2 = $teamWithBestValue->pivot->score_2;
-                if ($discipline->higher_is_better) {
-                    $bestValue = ($score1 === null && $score2 === null) ? 0 : max($score1 ?? -INF, $score2 ?? -INF);
-                } else {
-                    $bestValue = ($score1 === null && $score2 === null) ? 0 : min($score1 ?? INF, $score2 ?? INF);
-                    if ($bestValue === INF) $bestValue = 0;
-                }
+            }
+
+            // Ergebnis hinzufügen
+            if ($bestTeam && $bestScore !== null) {
                 $bestTeamsPerDiscipline[] = [
-                    'discipline_id' => $discipline->id, 'discipline_name' => $discipline->name,
-                    'team_id' => $teamWithBestValue->id, 'team_name' => $teamWithBestValue->name,
-                    'best_score' => $bestValue,
+                    'discipline_id' => $discipline->id,
+                    'discipline_name' => $discipline->name,
+                    'team_id' => $bestTeam->id,
+                    'team_name' => $bestTeam->name,
+                    'best_score' => $bestScore,
                 ];
             }
         }
         usort($bestTeamsPerDiscipline, fn($a, $b) => strcmp($a['discipline_name'], $b['discipline_name']));
 
-        // Daten speziell für JavaScript-Suche vorbereiten
+        // für java suche
         $teamsForJs = $teams->map(function ($team) {
             return [
                 'id' => $team->id,
@@ -85,15 +85,41 @@ class RankingController extends Controller
         ]);
     }
 
+
+    private function getTeamBestScore($score1, $score2, $higherIsBetter)
+    {
+        if ($score1 === null && $score2 === null) return null; // Geändert von 0 zu null
+        if ($score1 === null) return $score2;
+        if ($score2 === null) return $score1;
+        return $higherIsBetter ? max($score1, $score2) : min($score1, $score2);
+    }
+
+
+    private function isScoreBetter($newScore, $currentBestScore, $higherIsBetter)
+    {
+        // Neuer Score ist null = nie besser
+        if ($newScore === null) return false;
+
+        // Aktueller bester Score ist null = neuer ist automatisch besser
+        if ($currentBestScore === null) return true;
+
+        // Beide haben Werte = vergleichen
+        return $higherIsBetter ? ($newScore > $currentBestScore) : ($newScore < $currentBestScore);
+    }
+
     public function recalculateAllScores()
     {
         Team::query()->update(['score' => 0]);
         Klasse::query()->update(['score' => 0]);
         School::query()->update(['score' => 0]);
+
+        $scoresystem = Scoresystem::all('first_place', 'second_place', 'third_place', 'score_step', 'max_score')->first();
+
         $disciplines = Discipline::with('teams:id')->get();
+
         foreach ($disciplines as $discipline) {
             if ($discipline->teams->isEmpty()) continue;
-            $teamsScores = $discipline->teams->map(function ($team) use ($discipline) {
+            $teamsScores = $discipline->teams->map(function ($team) use ($discipline, $scoresystem) {
                 $score1 = $team->pivot->score_1;
                 $score2 = $team->pivot->score_2;
                 $best_score = 0;
@@ -105,16 +131,39 @@ class RankingController extends Controller
                 }
                 return ['team_id' => $team->id, 'best_score' => $best_score];
             })->filter(fn($data) => true);
+
             $teamsScores = $discipline->higher_is_better ? $teamsScores->sortByDesc('best_score') : $teamsScores->sortBy('best_score');
             $platz = 1;
             $processedTeams = [];
+
             foreach ($teamsScores as $teamData) {
-                if (in_array($teamData['team_id'], $processedTeams)) continue;
-                $punkte = max($discipline->max_score - ($platz - 1) * $discipline->score_step, 0);
-                Team::where('id', $teamData['team_id'])->increment('score', $punkte);
-                $processedTeams[] = $teamData['team_id'];
+                $teamId = $teamData['team_id'];
+                if (isset($processedTeams[$teamId])) continue;
+
+                switch ($platz) {
+                    case 1:
+                        $punkte = $scoresystem->first_place;
+                        break;
+                    case 2:
+                        $punkte = $scoresystem->second_place;
+                        break;
+                    case 3:
+                        $punkte = $scoresystem->third_place;
+                        break;
+                    default:
+                        $punkte = max($scoresystem->max_score - ($platz - 4) * $scoresystem->score_step, 0);
+                        break;
+                }
+
+                $updates[$teamId] = $punkte;
+                $processedTeams[$teamId] = true;
                 $platz++;
             }
+
+            foreach ($updates as $teamId => $punkte) {
+                Team::where('id', $teamId)->increment('score', $punkte);
+            }
+
         }
         $klasses = Klasse::with(['teams' => fn($query) => $query->select('id', 'score', 'klasse_id')])->select('id', 'school_id')->get();
         foreach ($klasses as $klasse) {

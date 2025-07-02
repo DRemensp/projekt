@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Prüfen, ob die benötigten Daten vorhanden sind
     if (typeof window.allScoresData === 'undefined') {
-        return; // Skript beenden, wenn Daten fehlen
+        return;
     }
 
     // Referenzen zu den DOM-Elementen holen

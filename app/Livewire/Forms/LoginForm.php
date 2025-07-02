@@ -12,9 +12,6 @@ use Livewire\Form;
 
 class LoginForm extends Form
 {
-    // Verwende z. B. 'required|string|max:255',
-    // statt 'required|string|name', falls du
-    // keine eigene 'validateName' Methode brauchst.
     #[Validate('required|string|max:255')]
     public string $name = '';
 

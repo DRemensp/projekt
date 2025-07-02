@@ -18,30 +18,29 @@ class TeamTableController extends Controller
             'score_2'       => 'nullable|numeric',
         ]);
 
-        // Disziplin laden
+        // Disziplin finden
         $discipline = Discipline::findOrFail($validated['discipline_id']);
 
         // Schauen, ob in der Pivot-Tabelle schon Einträge existieren
-        // (d.h. ob für diese Disziplin + Team bereits ein Datensatz angelegt ist)
         $existingPivot = $discipline->teams()
             ->where('team_id', $validated['team_id'])
             ->first();
 
         if ($existingPivot) {
-            // Falls es existiert: updateExistingPivot
+            // Falls es existiert: gibt möglichkeit zu überschreibemn
             $discipline->teams()->updateExistingPivot(
                 $validated['team_id'],
                 ['score_1' => $validated['score_1'], 'score_2' => $validated['score_2']]
             );
         } else {
-            // Falls nein: attach
+            // Falls nein: hinzufügen bzw einfügen
             $discipline->teams()->attach($validated['team_id'], [
                 'score_1' => $validated['score_1'],
                 'score_2' => $validated['score_2'],
             ]);
         }
 
-        // *** NEU: Automatische Score-Neuberechnung ***
+        // sorgt dafür das beim drücken des buttons automatisch neu berechnet wird (wie bei Lehrer seite)
         $rankingController = new \App\Http\Controllers\RankingController();
         $rankingController->recalculateAllScores();
 

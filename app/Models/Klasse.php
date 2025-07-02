@@ -15,9 +15,7 @@ class Klasse extends Model
         'password',
         ];
 
-    /**
-     * Get the user associated with the klasse.
-     */
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -13,7 +13,7 @@ class Comments extends Component
 
     protected $rules = [
         'message' => 'required|string|max:200',
-        'authorName' => 'nullable|string|max:50|regex:/^[a-zA-ZäöüÄÖÜß0-9\s\-_\.]+$/',
+        'authorName' => 'nullable|string|max:10',
     ];
 
     protected $messages = [

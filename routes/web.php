@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScoresystemController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SchoolController;
@@ -71,9 +72,10 @@ Route::get('/laufzettel', [LaufzettelController::class, 'index'])
 Route::get('/laufzettel/{team}', [LaufzettelController::class, 'show'])
     ->name('laufzettel.show');
 
+Route::post('/scoresystem', [ScoresystemController::class, 'store'])->name('scoresystem.store');
 
-
-
+//nicht wundern wenn manche Index nicht in Ressourcen angezeigt wird, hatte ganz komischen bug und fehler nicht gefunden,
+//also einfach sepperat gemacht
 
 Route::resources([
     'schools'     => SchoolController::class,

@@ -30,7 +30,7 @@
 
                             {{-- Disziplin-Informationen --}}
                             <div class="bg-green-50 border border-green-200 p-4 rounded-lg mb-6">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                     <div>
                                         <span class="font-semibold text-green-700">Bewertung:</span>
                                         <span class="text-green-600">
@@ -39,16 +39,18 @@
                                     </div>
                                     <div>
                                         <span class="font-semibold text-green-700">Max. Punkte:</span>
-                                        <span class="text-green-600">{{ $discipline->max_score }}</span>
+                                        <span class="text-green-600">{{ $discipline->score_first }}</span>
                                     </div>
-                                    <div>
-                                        <span class="font-semibold text-green-700">Punkte-Schritt:</span>
-                                        <span class="text-green-600">{{ $discipline->score_step }}</span>
+
+                                    <div class="col-span-2">
+                                        <span class="font-semibold text-green-700">Anmerkung</span>
+                                        <span class="text-green-600">{{ $discipline->description }}</span>
                                     </div>
                                 </div>
+
                             </div>
 
-                            {{-- Erfolgs-/Fehlermeldungen --}}
+
                             @if(session('success'))
                                 <div class="mb-6 p-4 text-sm text-green-700 bg-green-100 rounded-lg border border-green-200 shadow-sm" role="alert">
                                     <span class="font-medium">Erfolg!</span> {{ session('success') }}
@@ -71,7 +73,7 @@
                                 </div>
                             @endif
 
-                            {{-- Score-Eingabe Formular --}}
+                            {{-- Formular --}}
                             <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
                                 <h4 class="text-lg font-semibold mb-4 text-gray-800">Scores für Teams eintragen</h4>
 
@@ -79,10 +81,10 @@
                                 <form method="POST" action="{{ route('teamTable.storeOrUpdate') }}" class="space-y-6">
                                     @csrf
 
-                                    {{-- Hidden field für die Disziplin (fest eingestellt) --}}
+                                    {{-- Disziplin--}}
                                     <input type="hidden" name="discipline_id" value="{{ $discipline->id }}">
 
-                                    {{-- WICHTIG: Verstecktes Dropdown für JavaScript (damit teacher-scores.js funktioniert) --}}
+                                    {{-- für teacher-score --}}
                                     <select id="discipline_id_select" style="display: none;">
                                         <option value="{{ $discipline->id }}" selected>{{ $discipline->name }}</option>
                                     </select>
@@ -122,7 +124,7 @@
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                                 placeholder="z.B. 12.5"
                                             >
-                                            {{-- Aktuelle Score Anzeige --}}
+                                            {{-- Aktuelle score anzeigen lassen --}}
                                             <div id="loaded_score_1_display" class="mt-1 text-xs text-gray-600" style="display: none;">
                                                 Aktuell gespeichert: <span class="font-medium"></span>
                                             </div>
@@ -141,14 +143,14 @@
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                                 placeholder="z.B. 11.8"
                                             >
-                                            {{-- Aktuelle Score Anzeige --}}
+
                                             <div id="loaded_score_2_display" class="mt-1 text-xs text-gray-600" style="display: none;">
                                                 Aktuell gespeichert: <span class="font-medium"></span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {{-- Submit Button --}}
+
                                     <div class="flex justify-end">
                                         <button
                                             type="submit"
@@ -162,7 +164,7 @@
 
                         </div>
                     @else
-                        {{-- Keine Disziplin vorhanden --}}
+                        {{-- exception wenn meine disziplinen da sind --}}
                         <div class="border-t border-gray-200 pt-8">
                             <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-lg text-center">
                                 <div class="text-yellow-600 mb-2">

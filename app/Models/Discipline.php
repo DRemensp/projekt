@@ -9,8 +9,6 @@ class Discipline extends Model
     protected $fillable = [
         'klasse_id',
         'name',
-        'max_score',
-        'score_step',
         'description',
         'higher_is_better'
     ];

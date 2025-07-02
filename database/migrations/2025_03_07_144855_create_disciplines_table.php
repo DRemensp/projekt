@@ -15,8 +15,6 @@ return new class extends Migration
         Schema::create('disciplines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('max_score');
-            $table->integer('score_step')->default(5);
             $table->boolean('higher_is_better');
             $table->string('description')->nullable();
             $table->foreignIdFor(Klasse::class)
