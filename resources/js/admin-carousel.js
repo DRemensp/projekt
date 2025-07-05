@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (e.key === 'ArrowRight') this.nextSlide();
             });
 
+        },
 
         updateCarousel() {
             // Move slides
