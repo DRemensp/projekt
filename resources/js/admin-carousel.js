@@ -55,9 +55,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             this.slidesContainer.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                e.preventDefault();
-            });
+    if (!isDragging) return;
+    // Nur blockieren, wenn horizontale Bewegung deutlich größer als vertikale ist
+    const diffX = Math.abs(e.touches[0].clientX - startX);
+    const diffY = Math.abs(e.touches[0].clientY - startY);
+    if (diffX > diffY) {
+        e.preventDefault();
+    }
+});
 
             this.slidesContainer.addEventListener('touchend', (e) => {
                 if (!isDragging) return;
