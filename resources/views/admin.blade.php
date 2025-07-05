@@ -8,8 +8,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-6 md:p-8 text-gray-900">
 
-                <h1 class="text-3xl font-bold text-indigo-700 mb-8 text-center border-b pb-4">Verwaltung</h1>
-
                 @if(session('success'))
                     <div class="mb-6 p-4 text-sm text-green-700 bg-green-100 rounded-lg border border-green-200 shadow-sm" role="alert">
                         <span class="font-medium">Erfolg!</span> {{ session('success') }}
