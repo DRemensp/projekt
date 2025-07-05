@@ -41,7 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') this.previousSlide();
                 if (e.key === 'ArrowRight') this.nextSlide();
-            }); 
+            });
+
 
         updateCarousel() {
             // Move slides
