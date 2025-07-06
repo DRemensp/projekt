@@ -2,10 +2,8 @@
     <div class="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 py-8">
         <div class="container mx-auto px-4">
 
-
             <div class="text-center mb-8">
                 <h1 class="text-4xl font-bold text-gray-800 mb-2">📋 Laufzettel</h1>
-                <p class="text-lg text-gray-600">Suche nach einem Team, um dessen Ergebnisse zu sehen</p>
             </div>
 
             @if(!$selectedTeam)
@@ -25,20 +23,8 @@
                     <div id="team-search-results" class="mt-4">
 
                     </div>
-
                 </div>
             @else
-                {{--route rückwerts für button --}}
-                <div class="max-w-4xl mx-auto mb-6">
-                    <a href="{{ route('laufzettel.index') }}"
-                       class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                        Anderes Team suchen
-                    </a>
-                </div>
-
                 {{-- team info --}}
                 <div class="max-w-4xl mx-auto mb-8">
                     <div class="bg-white rounded-lg shadow-md p-6 {{ $schoolColors['bg-light'] ?? 'bg-blue-50' }}">
@@ -58,7 +44,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="max-w-6xl mx-auto">
                     @if(empty($teamResults))
@@ -208,6 +193,17 @@
                             @endforeach
                         </div>
                     @endif
+                </div>
+
+                {{-- Der Button jetzt ganz unten --}}
+                <div class="max-w-4xl mx-auto mt-8">
+                    <a href="{{ route('laufzettel.index') }}"
+                       class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Anderes Team suchen
+                    </a>
                 </div>
             @endif
         </div>
