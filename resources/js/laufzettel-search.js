@@ -1,7 +1,5 @@
 // resources/js/laufzettel-search.js
-
-document.addEventListener('DOMContentLoaded', () => {
-
+function initLaufzettelSearch() {
     // DOM-Elemente holen (nur wenn sie existieren)
     const searchInput = document.getElementById('team-search-input');
     const resultsContainer = document.getElementById('team-search-results');
@@ -10,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!searchInput || !resultsContainer || typeof allTeamsData === 'undefined' || typeof colorMap === 'undefined') {
         return; // Skript beenden, wenn etwas fehlt
     }
+
+    // Prüfen ob bereits initialisiert
+    if (searchInput.hasAttribute('data-search-initialized')) return;
+    searchInput.setAttribute('data-search-initialized', 'true');
 
     // Nachrichten-Templates
     const initialMessage = '<p class="text-center text-gray-500 italic py-4">Bitte gib einen Teamnamen ein, um zu suchen.</p>';
@@ -54,9 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsContainer.innerHTML = noResultsMessage;
         } else {
             // Container für Ergebnisse erstellen
-            let resultsHtml = `
-                <div class="space-y-3">
-            `;
+            let resultsHtml = `<div class="space-y-3">`;
 
             // Team-Cards generieren
             filteredTeams.forEach((team) => {
@@ -89,15 +89,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Globale Funktion für Team-Auswahl
-    window.selectTeam = function(teamId) {
-        window.location.href = `/laufzettel/${teamId}`;
-    };
+    // Globale Funktion für Team-Auswahl (nur einmal definieren)
+    if (!window.selectTeam) {
+        window.selectTeam = function(teamId) {
+            window.location.href = `/laufzettel/${teamId}`;
+        };
+    }
 
     // Event Listener hinzufügen (bei jeder Eingabe filtern)
     searchInput.addEventListener('input', filterAndDisplayTeams);
 
     // Initialen Zustand beim Laden setzen
     resultsContainer.innerHTML = initialMessage;
+}
 
-});
+// Initialisierung nach DOM-Laden oder sofort wenn bereits geladen
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLaufzettelSearch);
+} else {
+    initLaufzettelSearch();
+}

@@ -1,12 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
+// resources/js/admin-carousel.js
+function initAdminCarousel() {
+    const slidesContainer = document.getElementById('carouselSlides');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slideIndicator = document.getElementById('slideIndicator');
+
+    // Prüfen ob alle Elemente vorhanden sind
+    if (!slidesContainer || !prevBtn || !nextBtn || !slideIndicator || dots.length === 0) {
+        return; // Nicht auf dieser Seite vorhanden
+    }
+
+    // Prüfen ob bereits initialisiert
+    if (slidesContainer.hasAttribute('data-carousel-initialized')) return;
+    slidesContainer.setAttribute('data-carousel-initialized', 'true');
+
     const carousel = {
         currentSlide: 0,
         totalSlides: 5,
-        slidesContainer: document.getElementById('carouselSlides'),
-        dots: document.querySelectorAll('.dot'),
-        prevBtn: document.getElementById('prevBtn'),
-        nextBtn: document.getElementById('nextBtn'),
-        slideIndicator: document.getElementById('slideIndicator'),
+        slidesContainer: slidesContainer,
+        dots: dots,
+        prevBtn: prevBtn,
+        nextBtn: nextBtn,
+        slideIndicator: slideIndicator,
 
         init() {
             // Restore slide position from localStorage if available
@@ -42,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (e.key === 'ArrowLeft') this.previousSlide();
                 if (e.key === 'ArrowRight') this.nextSlide();
             });
-
         },
 
         updateCarousel() {
@@ -107,4 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     carousel.init();
-});
+}
+
+// Initialisierung nach DOM-Laden oder sofort wenn bereits geladen
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAdminCarousel);
+} else {
+    initAdminCarousel();
+}

@@ -1,8 +1,5 @@
 // resources/js/teacher-scores.js
-
-// Sicherstellen, dass das Skript erst nach dem Laden des DOMs ausgeführt wird
-document.addEventListener('DOMContentLoaded', function () {
-
+function initTeacherScores() {
     // Prüfen, ob die benötigten Daten vorhanden sind
     if (typeof window.allScoresData === 'undefined') {
         return;
@@ -15,18 +12,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const score2Input = document.getElementById('score_2_input');
     const score1Display = document.getElementById('loaded_score_1_display');
     const score2Display = document.getElementById('loaded_score_2_display');
+
+    // Prüfen ob alle Elemente vorhanden sind
+    if (!disciplineSelect || !teamSelect || !score1Input || !score2Input) {
+        return;
+    }
+
+    // Prüfen ob bereits initialisiert
+    if (disciplineSelect.hasAttribute('data-scores-initialized')) return;
+    disciplineSelect.setAttribute('data-scores-initialized', 'true');
+
     // Sicherstellen, dass die Span-Elemente existieren, bevor auf textContent zugegriffen wird
     const score1DisplayText = score1Display ? score1Display.querySelector('span:last-child') : null;
     const score2DisplayText = score2Display ? score2Display.querySelector('span:last-child') : null;
 
     // Funktion zum Aktualisieren der Score-Felder und der Anzeige
     function updateScoresDisplay() {
-        // Prüfen, ob alle Elemente gefunden wurden
-        if (!disciplineSelect || !teamSelect || !score1Input || !score2Input) {
-            console.error('Teacher Scores Error: Could not find all required form elements.');
-            return;
-        }
-
         // Aktuelle Werte aus den Dropdowns holen
         const selectedDisciplineId = disciplineSelect.value;
         const selectedTeamId = teamSelect.value;
@@ -63,27 +64,27 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Setze die Input-Werte IMMER auf die (ggf. leeren) DB-Werte.
-            // Der `value`-Attribut im Blade hat nur den `old()`-Wert oder leer gesetzt.
-            // Wenn der User hier was auswählt, wird der Input überschrieben.
             score1Input.value = dbScore1;
             score2Input.value = dbScore2;
 
         } else {
-            // Wenn Auswahl unvollständig ist, Felder leeren (respektiert nicht mehr `old` für Scores)
+            // Wenn Auswahl unvollständig ist, Felder leeren
             score1Input.value = '';
             score2Input.value = '';
         }
     }
 
-    // Event Listener zu den Dropdowns hinzufügen (nur wenn Elemente existieren)
-    if (disciplineSelect) {
-        disciplineSelect.addEventListener('change', updateScoresDisplay);
-    }
-    if (teamSelect) {
-        teamSelect.addEventListener('change', updateScoresDisplay);
-    }
+    // Event Listener zu den Dropdowns hinzufügen
+    disciplineSelect.addEventListener('change', updateScoresDisplay);
+    teamSelect.addEventListener('change', updateScoresDisplay);
 
     // Initial einmal aufrufen, um Scores für evtl. per old() vorausgewählte Kombination zu laden
     updateScoresDisplay();
+}
 
-}); // Ende DOMContentLoaded
+// Initialisierung nach DOM-Laden oder sofort wenn bereits geladen
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTeacherScores);
+} else {
+    initTeacherScores();
+}

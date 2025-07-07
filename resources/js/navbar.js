@@ -6,13 +6,17 @@ function initNavbar() {
 
     if (!navbar || !mobileMenuButton || !mobileMenu) return;   // Sicherheitsnetz
 
+    // Prüfen ob bereits initialisiert (verhindert doppelte Event Listener)
+    if (mobileMenuButton.hasAttribute('data-navbar-initialized')) return;
+    mobileMenuButton.setAttribute('data-navbar-initialized', 'true');
+
     // Burger-Button
     mobileMenuButton.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
 }
 
-//notwendig da durch redirect logik DOM schneller als Navbar.js geladen wird
+// Initialisierung nach DOM-Laden oder sofort wenn bereits geladen
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initNavbar);
 } else {
