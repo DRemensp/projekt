@@ -24,6 +24,7 @@ function initAdminCarousel() {
         nextBtn: nextBtn,
         slideIndicator: slideIndicator,
         touchStartX: 0,
+        touchStartY: 0,
         touchEndX: 0,
         isDragging: false,
 
@@ -62,21 +63,26 @@ function initAdminCarousel() {
                 if (e.key === 'ArrowRight') this.nextSlide();
             });
 
-            // Touch/Swipe Events für Mobile
+            // Touch/Swipe Events für Mobile - VERBESSERT
             this.slidesContainer.addEventListener('touchstart', (e) => {
                 this.touchStartX = e.changedTouches[0].screenX;
+                this.touchStartY = e.changedTouches[0].screenY;
                 this.isDragging = true;
             }, { passive: true });
 
             this.slidesContainer.addEventListener('touchmove', (e) => {
                 if (!this.isDragging) return;
-                // Prevent default scrolling during horizontal swipe
-                const touchCurrentX = e.changedTouches[0].screenX;
-                const diffX = Math.abs(this.touchStartX - touchCurrentX);
-                const diffY = Math.abs(e.changedTouches[0].screenY - (e.changedTouches[0].screenY || 0));
 
-                // If horizontal movement is greater than vertical, prevent default
-                if (diffX > diffY) {
+                const touchCurrentX = e.changedTouches[0].screenX;
+                const touchCurrentY = e.changedTouches[0].screenY;
+
+                const diffX = Math.abs(this.touchStartX - touchCurrentX);
+                const diffY = Math.abs(this.touchStartY - touchCurrentY);
+
+                // Nur horizontal swipe verhindern wenn die horizontale Bewegung
+                // DEUTLICH größer ist als die vertikale Bewegung
+                // UND es ist eine signifikante horizontale Bewegung (>30px)
+                if (diffX > 30 && diffX > diffY * 2) {
                     e.preventDefault();
                 }
             }, { passive: false });
@@ -88,9 +94,6 @@ function initAdminCarousel() {
                 this.handleSwipe();
                 this.isDragging = false;
             }, { passive: true });
-
-            // ENTFERNT: Alle Mouse-Events für Desktop-Drag
-            // Diese verursachten das Problem mit den Textfeldern
         },
 
         handleSwipe() {
