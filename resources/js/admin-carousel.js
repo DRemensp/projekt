@@ -62,7 +62,7 @@ function initAdminCarousel() {
                 if (e.key === 'ArrowRight') this.nextSlide();
             });
 
-            // Touch/Swipe Events
+            // Touch/Swipe Events für Mobile
             this.slidesContainer.addEventListener('touchstart', (e) => {
                 this.touchStartX = e.changedTouches[0].screenX;
                 this.isDragging = true;
@@ -89,32 +89,8 @@ function initAdminCarousel() {
                 this.isDragging = false;
             }, { passive: true });
 
-            // Mouse events for desktop (optional)
-            this.slidesContainer.addEventListener('mousedown', (e) => {
-                this.touchStartX = e.screenX;
-                this.isDragging = true;
-                e.preventDefault(); // Prevent text selection
-            });
-
-            this.slidesContainer.addEventListener('mousemove', (e) => {
-                if (!this.isDragging) return;
-                e.preventDefault();
-            });
-
-            this.slidesContainer.addEventListener('mouseup', (e) => {
-                if (!this.isDragging) return;
-
-                this.touchEndX = e.screenX;
-                this.handleSwipe();
-                this.isDragging = false;
-            });
-
-            // Prevent context menu on long press
-            this.slidesContainer.addEventListener('contextmenu', (e) => {
-                if (this.isDragging) {
-                    e.preventDefault();
-                }
-            });
+            // ENTFERNT: Alle Mouse-Events für Desktop-Drag
+            // Diese verursachten das Problem mit den Textfeldern
         },
 
         handleSwipe() {
