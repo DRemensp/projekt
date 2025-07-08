@@ -23,6 +23,9 @@ function initAdminCarousel() {
         prevBtn: prevBtn,
         nextBtn: nextBtn,
         slideIndicator: slideIndicator,
+        touchStartX: 0,
+        touchEndX: 0,
+        isDragging: false,
 
         init() {
             // Restore slide position from localStorage if available
@@ -58,6 +61,77 @@ function initAdminCarousel() {
                 if (e.key === 'ArrowLeft') this.previousSlide();
                 if (e.key === 'ArrowRight') this.nextSlide();
             });
+
+            // Touch/Swipe Events
+            this.slidesContainer.addEventListener('touchstart', (e) => {
+                this.touchStartX = e.changedTouches[0].screenX;
+                this.isDragging = true;
+            }, { passive: true });
+
+            this.slidesContainer.addEventListener('touchmove', (e) => {
+                if (!this.isDragging) return;
+                // Prevent default scrolling during horizontal swipe
+                const touchCurrentX = e.changedTouches[0].screenX;
+                const diffX = Math.abs(this.touchStartX - touchCurrentX);
+                const diffY = Math.abs(e.changedTouches[0].screenY - (e.changedTouches[0].screenY || 0));
+
+                // If horizontal movement is greater than vertical, prevent default
+                if (diffX > diffY) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            this.slidesContainer.addEventListener('touchend', (e) => {
+                if (!this.isDragging) return;
+
+                this.touchEndX = e.changedTouches[0].screenX;
+                this.handleSwipe();
+                this.isDragging = false;
+            }, { passive: true });
+
+            // Mouse events for desktop (optional)
+            this.slidesContainer.addEventListener('mousedown', (e) => {
+                this.touchStartX = e.screenX;
+                this.isDragging = true;
+                e.preventDefault(); // Prevent text selection
+            });
+
+            this.slidesContainer.addEventListener('mousemove', (e) => {
+                if (!this.isDragging) return;
+                e.preventDefault();
+            });
+
+            this.slidesContainer.addEventListener('mouseup', (e) => {
+                if (!this.isDragging) return;
+
+                this.touchEndX = e.screenX;
+                this.handleSwipe();
+                this.isDragging = false;
+            });
+
+            // Prevent context menu on long press
+            this.slidesContainer.addEventListener('contextmenu', (e) => {
+                if (this.isDragging) {
+                    e.preventDefault();
+                }
+            });
+        },
+
+        handleSwipe() {
+            const swipeThreshold = 50; // Minimum distance for a swipe
+            const swipeDistance = this.touchEndX - this.touchStartX;
+
+            if (Math.abs(swipeDistance) < swipeThreshold) {
+                return; // Not a significant swipe
+            }
+
+            if (swipeDistance > 0) {
+                // Swipe right - go to previous slide
+                this.previousSlide();
+            } else {
+                // Swipe left - go to next slide
+                this.nextSlide();
+            }
         },
 
         updateCarousel() {

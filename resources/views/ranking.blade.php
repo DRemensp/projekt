@@ -10,7 +10,7 @@
 
             <!-- Hero Section -->
             <div class="text-center mb-12">
-                <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <div class="bg-white rounded-2xl shadow-xl p-5 mb-8">
                     <h1 class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-emerald-600 bg-clip-text text-transparent mb-4">
                         Live Rangliste
                     </h1>
@@ -30,8 +30,8 @@
             </div>
 
             <!-- Navigation Tabs -->
-            <div class="flex justify-center mb-8">
-                <nav class="bg-white rounded-full shadow-lg p-2 border border-gray-200">
+            <div class="flex justify-center mb-8 ">
+                <nav class="bg-white rounded-full shadow-lg p-1 border border-gray-200">
                     <div class="flex space-x-1">
                         <button onclick="showSection('schools')" class="ranking-tab px-6 py-3 rounded-full text-sm font-medium transition-all duration-200 bg-indigo-600 text-white">
                             Schulen
@@ -56,29 +56,58 @@
                         <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🏫 Schulen Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
-                        <div class="flex justify-center items-end mb-8 space-x-4">
-                            @foreach($schools->take(3) as $index => $school)
-                                @php
-                                    $colors = SchoolColorService::getColorClasses($school->id);
-                                    $heights = ['h-32', 'h-40', 'h-28'];
-                                    $positions = [1, 0, 2]; // 2nd, 1st, 3rd
-                                @endphp
-                                <div class="flex flex-col items-center {{ $positions[$index] == 0 ? 'order-2' : ($positions[$index] == 1 ? 'order-1' : 'order-3') }}">
-                                    <div class="text-4xl mb-2">{{ ['🥇', '🥈', '🥉'][$index] }}</div>
-                                    <div class="bg-gradient-to-t {{ $colors['bg'] }} {{ $heights[$positions[$index]] }} w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-2">
-                                        <div class="text-center">
-                                            <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">{{ $index + 1 }}.</div>
-                                            <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($school->name, 10) }}</div>
-                                            <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $school->score }}P</div>
+                        <div class="flex justify-center items-end mb-12">
+                            <div class="flex items-end space-x-8">
+                                <!-- 2. Platz (Links) -->
+                                @if(isset($schools[1]))
+                                    @php $colors = SchoolColorService::getColorClasses($schools[1]->id); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥈</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($schools[1]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $schools[1]->score }}P</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endif
+
+                                <!-- 1. Platz (Mitte) -->
+                                @if(isset($schools[0]))
+                                    @php $colors = SchoolColorService::getColorClasses($schools[0]->id); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥇</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($schools[0]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $schools[0]->score }}P</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <!-- 3. Platz (Rechts) -->
+                                @if(isset($schools[2]))
+                                    @php $colors = SchoolColorService::getColorClasses($schools[2]->id); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥉</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($schools[2]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $schools[2]->score }}P</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
 
                         <!-- Weitere Schulen -->
                         @if($schools->count() > 3)
-                            <div class="space-y-2">
+                            <div class="space-y-3">
                                 @foreach($schools->slice(3) as $index => $school)
                                     @php $colors = SchoolColorService::getColorClasses($school->id); @endphp
                                     <div class="flex items-center justify-between p-4 rounded-lg {{ $colors['bg-light'] }} border-l-4 {{ $colors['border-light'] }} hover:shadow-md transition-shadow">
@@ -107,29 +136,58 @@
                         <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🎯 Klassen Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
-                        <div class="flex justify-center items-end mb-8 space-x-4">
-                            @foreach($klasses->take(3) as $index => $klasse)
-                                @php
-                                    $colors = SchoolColorService::getColorClasses($klasse->school_id ?? 0);
-                                    $heights = ['h-32', 'h-40', 'h-28'];
-                                    $positions = [1, 0, 2];
-                                @endphp
-                                <div class="flex flex-col items-center {{ $positions[$index] == 0 ? 'order-2' : ($positions[$index] == 1 ? 'order-1' : 'order-3') }}">
-                                    <div class="text-4xl mb-2">{{ ['🥇', '🥈', '🥉'][$index] }}</div>
-                                    <div class="bg-gradient-to-t {{ $colors['bg'] }} {{ $heights[$positions[$index]] }} w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-2">
-                                        <div class="text-center">
-                                            <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">{{ $index + 1 }}.</div>
-                                            <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($klasse->name, 10) }}</div>
-                                            <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $klasse->score }}P</div>
+                        <div class="flex justify-center items-end mb-12">
+                            <div class="flex items-end space-x-8">
+                                <!-- 2. Platz (Links) -->
+                                @if(isset($klasses[1]))
+                                    @php $colors = SchoolColorService::getColorClasses($klasses[1]->school_id ?? 0); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥈</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($klasses[1]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $klasses[1]->score }}P</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endif
+
+                                <!-- 1. Platz (Mitte) -->
+                                @if(isset($klasses[0]))
+                                    @php $colors = SchoolColorService::getColorClasses($klasses[0]->school_id ?? 0); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥇</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($klasses[0]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $klasses[0]->score }}P</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <!-- 3. Platz (Rechts) -->
+                                @if(isset($klasses[2]))
+                                    @php $colors = SchoolColorService::getColorClasses($klasses[2]->school_id ?? 0); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥉</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($klasses[2]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $klasses[2]->score }}P</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
 
                         <!-- Weitere Klassen -->
                         @if($klasses->count() > 3)
-                            <div class="space-y-2">
+                            <div class="space-y-3">
                                 @foreach($klasses->slice(3) as $index => $klasse)
                                     @php $colors = SchoolColorService::getColorClasses($klasse->school_id ?? 0); @endphp
                                     <div class="flex items-center justify-between p-4 rounded-lg {{ $colors['bg-light'] }} border-l-4 {{ $colors['border-light'] }} hover:shadow-md transition-shadow">
@@ -158,42 +216,58 @@
                         <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🏆 Teams Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
-                        <div class="flex justify-center items-end mb-8 space-x-4">
-                            @foreach($teams->take(3) as $index => $team)
-                                @php
-                                    $colors = SchoolColorService::getColorClasses($team->klasse->school_id ?? 0);
-                                    $heights = ['h-32', 'h-40', 'h-28'];
-                                    $positions = [1, 0, 2];
-                                @endphp
-                                <div class="flex flex-col items-center {{ $positions[$index] == 0 ? 'order-2' : ($positions[$index] == 1 ? 'order-1' : 'order-3') }}">
-                                    <div class="text-4xl mb-2">{{ ['🥇', '🥈', '🥉'][$index] }}</div>
-                                    <div class="bg-gradient-to-t {{ $colors['bg'] }} {{ $heights[$positions[$index]] }} w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-2">
-                                        <div class="text-center">
-                                            <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">{{ $index + 1 }}.</div>
-                                            <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($team->name, 10) }}</div>
-                                            <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $team->score }}P</div>
+                        <div class="flex justify-center items-end mb-12">
+                            <div class="flex items-end space-x-8">
+                                <!-- 2. Platz (Links) -->
+                                @if(isset($teams[1]))
+                                    @php $colors = SchoolColorService::getColorClasses($teams[1]->klasse->school_id ?? 0); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥈</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($teams[1]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $teams[1]->score }}P</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endif
 
-                        <!-- Team Suche -->
-                        <div class="mb-6">
-                            <div class="relative">
-                                <input type="text" id="team-search-input" placeholder="Team suchen..."
-                                       class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
-                                    </svg>
-                                </div>
+                                <!-- 1. Platz (Mitte) -->
+                                @if(isset($teams[0]))
+                                    @php $colors = SchoolColorService::getColorClasses($teams[0]->klasse->school_id ?? 0); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥇</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($teams[0]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $teams[0]->score }}P</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <!-- 3. Platz (Rechts) -->
+                                @if(isset($teams[2]))
+                                    @php $colors = SchoolColorService::getColorClasses($teams[2]->klasse->school_id ?? 0); @endphp
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <div class="text-4xl">🥉</div>
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-28 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                            <div class="text-center">
+                                                <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
+                                                <div class="text-xs font-semibold text-gray-800 truncate">{{ Str::limit($teams[2]->name, 12) }}</div>
+                                                <div class="text-xs {{ $colors['text-points'] }} font-bold">{{ $teams[2]->score }}P</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
                         <!-- Weitere Teams -->
-                        <div id="team-search-results" class="space-y-2">
-                            @if($teams->count() > 3)
+                        @if($teams->count() > 3)
+                            <div class="space-y-3">
                                 @foreach($teams->slice(3) as $index => $team)
                                     @php $colors = SchoolColorService::getColorClasses($team->klasse->school_id ?? 0); @endphp
                                     <div class="flex items-center justify-between p-4 rounded-lg {{ $colors['bg-light'] }} border-l-4 {{ $colors['border-light'] }} hover:shadow-md transition-shadow">
@@ -201,10 +275,7 @@
                                             <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center font-bold text-gray-700 text-sm">
                                                 {{ $index + 4 }}
                                             </div>
-                                            <div>
-                                                <div class="font-medium text-gray-800">{{ $team->name }}</div>
-                                                <div class="text-xs text-gray-500">{{ $team->klasse->name ?? 'N/A' }} • {{ $team->klasse->school->name ?? '-' }}</div>
-                                            </div>
+                                            <span class="font-medium text-gray-800">{{ $team->name }}</span>
                                         </div>
                                         <div class="text-right">
                                             <div class="font-bold {{ $colors['text-points'] }}">{{ $team->score }}</div>
@@ -212,8 +283,27 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            @endif
+                            </div>
+                        @endif
+
+                        <!-- Team-Suche -->
+                        <div class="max-w-2xl mx-auto mt-12">
+                            <div class="bg-white rounded-lg shadow-md p-6 border-2 border-gray-300">
+                                <label for="team-search-input" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Team suchen:
+                                </label>
+                                <input type="text"
+                                       id="team-search-input"
+                                       placeholder="Teamname eingeben..."
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+
+                            {{--suchergebnisse --}}
+                            <div id="team-search-results" class="mt-4">
+
+                            </div>
                         </div>
+
                     </div>
                 </div>
             @endif
@@ -224,19 +314,34 @@
                     <div class="bg-white rounded-2xl shadow-xl p-8">
                         <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🎯 Beste Teams pro Disziplin</h2>
 
-                        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            @foreach($bestTeamsPerDiscipline as $best)
-                                <div class="bg-gradient-to-br from-indigo-50 to-emerald-50 rounded-xl p-6 border border-indigo-200 hover:shadow-lg transition-shadow">
-                                    <div class="flex items-center justify-between mb-4">
-                                        <div class="text-2xl">🏅</div>
-                                        <div class="text-right">
-                                            <div class="text-2xl font-bold text-indigo-600">{{ $best['best_score'] }}</div>
-                                            <div class="text-xs text-gray-500">Punkte</div>
-                                        </div>
+                        <div class="space-y-4">
+                            @foreach($bestTeamsPerDiscipline as $champion)
+                                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                    <div class="absolute top-4 right-4">
+                                        <span class="text-2xl">🏆</span>
                                     </div>
-                                    <div class="space-y-2">
-                                        <div class="text-sm font-medium text-gray-600">{{ $best['discipline_name'] ?? 'Disziplin ' . $best['discipline_id'] }}</div>
-                                        <div class="text-lg font-bold text-gray-800">{{ $best['team_name'] ?? 'Team ' . $best['team_id'] }}</div>
+
+                                    <div class="p-6">
+                                        <div class="flex items-start space-x-4">
+                                            <div class="flex-shrink-0 w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center text-2xl font-bold text-white">
+                                                👑
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <h3 class="text-xl font-bold text-gray-800 mb-1">
+                                                    {{ $champion['discipline_name'] ?? 'Disziplin ' . $champion['discipline_id'] }}
+                                                </h3>
+                                                <p class="text-lg font-semibold text-orange-700 mb-2">
+                                                    Team: {{ $champion['team_name'] ?? 'Team ' . $champion['team_id'] }}
+                                                </p>
+                                                <div class="flex items-center space-x-1">
+                                                    <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                    </svg>
+                                                    <span class="text-lg font-bold text-orange-800">{{ $champion['best_score'] }}</span>
+                                                    <span class="text-sm text-gray-500">Bestleistung</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -248,7 +353,9 @@
         </div>
     </div>
 
+    <!-- JavaScript für Tab-Navigation und externe Suchfunktionalität -->
     <script>
+        // Daten für laufzettel-search.js bereitstellen
         const allTeamsData = @json($teamsForJs ?? []);
         const colorMap = @json($colorMapForJs ?? ['default' => []]);
 
@@ -272,74 +379,8 @@
             event.target.classList.remove('text-gray-600', 'hover:text-indigo-600');
             event.target.classList.add('bg-indigo-600', 'text-white');
         }
-
-        // Team Search
-        const teamSearchInput = document.getElementById('team-search-input');
-        const teamSearchResults = document.getElementById('team-search-results');
-
-        if (teamSearchInput && teamSearchResults) {
-            teamSearchInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase().trim();
-
-                if (searchTerm === '') {
-                    // Show original teams list
-                    teamSearchResults.innerHTML = `
-                        @if($teams->count() > 3)
-                    @foreach($teams->slice(3) as $index => $team)
-                    @php $colors = SchoolColorService::getColorClasses($team->klasse->school_id ?? 0); @endphp
-                    <div class="flex items-center justify-between p-4 rounded-lg {{ $colors['bg-light'] }} border-l-4 {{ $colors['border-light'] }} hover:shadow-md transition-shadow">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center font-bold text-gray-700 text-sm">
-                                            {{ $index + 4 }}
-                    </div>
-                    <div>
-                        <div class="font-medium text-gray-800">{{ $team->name }}</div>
-                                            <div class="text-xs text-gray-500">{{ $team->klasse->name ?? 'N/A' }} • {{ $team->klasse->school->name ?? '-' }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="font-bold {{ $colors['text-points'] }}">{{ $team->score }}</div>
-                                        <div class="text-xs text-gray-500">Punkte</div>
-                                    </div>
-                                </div>
-                            @endforeach
-                    @endif
-                    `;
-                    return;
-                }
-
-                const filteredTeams = allTeamsData.filter(team =>
-                    team.name.toLowerCase().includes(searchTerm) ||
-                    team.klasse_name.toLowerCase().includes(searchTerm) ||
-                    team.school_name.toLowerCase().includes(searchTerm)
-                );
-
-                if (filteredTeams.length === 0) {
-                    teamSearchResults.innerHTML = '<p class="text-center text-gray-500 py-8">Keine Teams gefunden</p>';
-                    return;
-                }
-
-                teamSearchResults.innerHTML = filteredTeams.map((team, index) => {
-                    const colors = colorMap[team.school_id] || colorMap['default'] || {};
-                    return `
-                        <div class="flex items-center justify-between p-4 rounded-lg ${colors['bg-light'] || 'bg-gray-50'} border-l-4 ${colors['border-light'] || 'border-gray-300'} hover:shadow-md transition-shadow">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center font-bold text-gray-700 text-sm">
-                                    ${index + 1}
-                                </div>
-                                <div>
-                                    <div class="font-medium text-gray-800">${team.name}</div>
-                                    <div class="text-xs text-gray-500">${team.klasse_name} • ${team.school_name}</div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-bold ${colors['text-points'] || 'text-indigo-600'}">${team.score}</div>
-                                <div class="text-xs text-gray-500">Punkte</div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            });
-        }
     </script>
+
+    <!-- Import der laufzettel-search.js für Suchfunktionalität -->
+    @vite(['resources/js/laufzettel-search.js'])
 </x-layout>
