@@ -18,8 +18,8 @@
                 <a href="{{ url('/') }}"
                    class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
                     <div
-                        class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200">
-                        <span class="text-white font-bold text-lg">C</span>
+                        class="w-11 h-11 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 overflow-hidden">
+                        <img src="{{ asset('Linux_Nein_Danke.png')}}" alt="CampusOlympiade Logo" class="w-12 h-12 object-cover">
                     </div>
                     <span class="font-bold text-xl text-gray-800">
                         Campus<span class="text-blue-600">Olympiade</span>
@@ -142,11 +142,14 @@
 <footer class="bg-gray-800 text-white py-6 duration-300">
     <div class="container mx-auto px-4 text-center">
         <div class="flex justify-center items-center mb-4">
-            <div
-                class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-2 hover:bg-blue-500 transition-colors duration-200">
-                <span class="text-white font-bold text-sm">C</span>
-            </div>
-            <span class="font-semibold hover:text-blue-300 transition-colors duration-200 cursor-default">CampusOlympiade</span>
+            <a href="{{ url('/') }}"
+               class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
+                <div
+                    class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 overflow-hidden">
+                    <img src="{{ asset('Linux_Nein_Danke.png')}}" alt="CampusOlympiade Logo" class="w-10 h-10 object-cover">
+                </div>
+                <span class="font-semibold hover:text-blue-300 transition-colors duration-200 cursor-default">CampusOlympiade</span>
+            </a>
         </div>
         <div class="text-sm text-gray-400 hover:text-gray-300 transition-colors duration-200">
             <a href="https://youtu.be/xvFZjo5PgG0?si=f-8cYCSRPThugYsm"

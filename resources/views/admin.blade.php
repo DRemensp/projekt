@@ -49,7 +49,7 @@
                     {{-- Navigation Arrows --}}
                     <button
                         id="prevBtn"
-                        class="absolute left-[-24px] top-1/2 -translate-y-1/2 z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:left-[-24px] sm:left-[-20px] sm:w-10 sm:h-10"
+                        class="absolute left-[-24px] z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:left-[-24px] sm:left-[-20px] sm:w-10 sm:h-10"
                         aria-label="Vorheriger Bereich"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,7 +59,7 @@
 
                     <button
                         id="nextBtn"
-                        class="absolute right-[-24px] top-1/2 -translate-y-1/2 z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:right-[-24px] sm:right-[-20px] sm:w-10 sm:h-10"
+                        class="absolute right-[-24px] z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:right-[-24px] sm:right-[-20px] sm:w-10 sm:h-10"
                         aria-label="Nächster Bereich"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,7 +68,7 @@
                     </button>
 
                     {{-- Carousel Content --}}
-                    <div class="overflow-hidden rounded-xl bg-white shadow-lg">
+                    <div class="overflow-hidden">
                         <div
                             class="flex transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] w-[500%]"
                             id="carouselSlides"
@@ -77,7 +77,7 @@
 
                             {{-- SLIDE 1: Punktesystem --}}
                             <div class="w-[20%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
-                                <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         ⚙️ Punktesystem
                                     </h2>
@@ -87,7 +87,7 @@
 
                             {{-- SLIDE 2: Schulen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         🏫 Schulen
                                     </h2>
@@ -125,7 +125,7 @@
 
                             {{-- SLIDE 3: Klassen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         👥 Klassen
                                     </h2>
@@ -148,7 +148,7 @@
                                                                 <span class="text-gray-700">{{ $klasse->name }}</span>
                                                                 <span class="text-xs text-gray-500 ml-2">({{ $klasse->school->name ?? 'Keine Schule' }})</span>
                                                                 <br>
-                                                                    <span class="text-xs text-blue-500 ml-2">Password: {{ $klasse->password }}</span>
+                                                                <span class="text-xs text-blue-500 ml-2">Password: {{ $klasse->password }}</span>
                                                             </div>
                                                             <form action="{{ route('klasses.destroy', $klasse->id) }}" method="POST" onsubmit="return confirm('Klasse {{ $klasse->name }} wirklich löschen? Alle zugehörigen Teams und Disziplinen werden ebenfalls gelöscht!');">
                                                                 @csrf
@@ -170,7 +170,7 @@
 
                             {{-- SLIDE 4: Teams --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         🏆 Teams
                                     </h2>
@@ -213,7 +213,7 @@
 
                             {{-- SLIDE 5: Disziplinen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         ⚡ Disziplinen
                                     </h2>
