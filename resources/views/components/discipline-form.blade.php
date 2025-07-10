@@ -26,11 +26,6 @@
                         </option>
                     @endforeach
                 </select>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </div>
             </div>
             @error('klasse_id')
             <div class="flex items-center gap-2 mt-2 text-red-600">
@@ -61,11 +56,6 @@
                     value="{{ old('discipline_name') }}"
                     class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300"
                 >
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <svg class="w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
             </div>
             @error('discipline_name')
             <div class="flex items-center gap-2 mt-2 text-red-600">
@@ -96,11 +86,6 @@
                     <option value="1" {{ old('higher_is_better', '1') == '1' ? 'selected' : '' }} class="text-gray-800">Ja (z.B. Weitwurf, Hochsprung)</option>
                     <option value="0" {{ old('higher_is_better') == '0' ? 'selected' : '' }} class="text-gray-800">Nein (z.B. Sprintzeit)</option>
                 </select>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </div>
             </div>
             @error('higher_is_better')
             <div class="flex items-center gap-2 mt-2 text-red-600">

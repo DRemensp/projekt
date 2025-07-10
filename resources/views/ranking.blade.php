@@ -132,7 +132,7 @@
             @if($klasses->count() > 0)
                 <div id="klasses-section" class="ranking-section hidden">
                     <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-                        <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🎯 Klassen Rangliste</h2>
+                        <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">👥 Klassen Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
                         <div class="flex justify-center mb-12">

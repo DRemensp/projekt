@@ -40,6 +40,13 @@
                                         {{ $selectedTeam->score }}
                                     </span>
                                 </p>
+                                @if($overallRanking)
+                                    <p><strong>Platzierung:</strong>
+                                        <span class="font-bold {{ $schoolColors['text-points'] ?? 'text-yellow-300' }}">
+                                            {{ $overallRanking }}/{{ $totalTeams }}
+                                        </span>
+                                    </p>
+                                @endif
                             </div>
                         </div>
                     </div>

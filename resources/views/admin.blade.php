@@ -79,7 +79,7 @@
                             <div class="w-[20%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
                                 <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
-                                        ⚙️ Punktesystem konfigurieren
+                                        ⚙️ Punktesystem
                                     </h2>
                                     <x-scoresystem-form />
                                 </div>
@@ -89,7 +89,7 @@
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
-                                        🏫 Schulen verwalten
+                                        🏫 Schulen
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                         <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
@@ -127,7 +127,7 @@
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
-                                        👥 Klassen verwalten
+                                        👥 Klassen
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                         <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
@@ -147,9 +147,8 @@
                                                             <div>
                                                                 <span class="text-gray-700">{{ $klasse->name }}</span>
                                                                 <span class="text-xs text-gray-500 ml-2">({{ $klasse->school->name ?? 'Keine Schule' }})</span>
-                                                                @if($klasse->password)
+                                                                <br>
                                                                     <span class="text-xs text-blue-500 ml-2">Password: {{ $klasse->password }}</span>
-                                                                @endif
                                                             </div>
                                                             <form action="{{ route('klasses.destroy', $klasse->id) }}" method="POST" onsubmit="return confirm('Klasse {{ $klasse->name }} wirklich löschen? Alle zugehörigen Teams und Disziplinen werden ebenfalls gelöscht!');">
                                                                 @csrf
@@ -173,7 +172,7 @@
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
-                                        🏆 Teams verwalten
+                                        🏆 Teams
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                         <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
@@ -216,7 +215,7 @@
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="p-8 sm:p-3 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
-                                        ⚡ Disziplinen verwalten
+                                        ⚡ Disziplinen
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                         <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">

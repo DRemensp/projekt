@@ -12,6 +12,7 @@ class Team extends Model
         'klasse_id',
         'name',
         'members',
+        'bonus',
     ];
 
     protected $casts = [

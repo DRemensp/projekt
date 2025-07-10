@@ -17,6 +17,7 @@ class ScoresystemController extends Controller
             'third_place' => 'required|integer|min:0',
             'max_score' => 'required|integer|min:0',
             'score_step' => 'required|integer|min:1',
+            'bonus_score' => 'required|integer|min:0',
         ]);
 
         // Korrekte updateOrCreate Syntax

@@ -12,5 +12,6 @@ class Scoresystem extends Model
         'third_place',
         'max_score',
         'score_step',
+        'bonus_score',
     ];
 }

@@ -56,6 +56,18 @@ class LaufzettelController extends Controller
             ];
         }
 
+        // Gesamtplatzierung berechnen
+        $allTeamsForRanking = Team::orderBy('score', 'DESC')->get();
+        $overallRanking = null;
+        $totalTeams = $allTeamsForRanking->count();
+
+        foreach ($allTeamsForRanking as $index => $rankingTeam) {
+            if ($rankingTeam->id == $team->id) {
+                $overallRanking = $index + 1;
+                break;
+            }
+        }
+
         // Alle Disziplinen mit Teams laden
         $allDisciplines = Discipline::with('teams')->get();
 
@@ -188,6 +200,8 @@ class LaufzettelController extends Controller
             'schoolColors' => $colors,
             'teamsForJs' => $teamList,
             'colorMapForJs' => $jsColors,
+            'overallRanking' => $overallRanking,
+            'totalTeams' => $totalTeams,
         ]);
     }
 }

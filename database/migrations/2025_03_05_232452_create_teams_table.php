@@ -18,6 +18,7 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnDelete();
             $table->integer('score')->default(0);
+            $table->boolean('bonus')->default(false);
             $table->string('name');
             $table->json('members')->nullable();
             $table->timestamps();

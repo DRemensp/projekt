@@ -7,6 +7,7 @@ use App\Models\Klasse;
 use App\Models\School;
 use App\Models\Team;
 use App\Services\SchoolColorService;
+use phpDocumentor\Reflection\Types\True_;
 use PhpParser\Node\Stmt\Switch_;
 use App\Models\Scoresystem;
 
@@ -115,7 +116,7 @@ class RankingController extends Controller
         Klasse::query()->update(['score' => 0]);
         School::query()->update(['score' => 0]);
 
-        $scoresystem = Scoresystem::all('first_place', 'second_place', 'third_place', 'score_step', 'max_score')->first();
+        $scoresystem = Scoresystem::all('first_place', 'second_place', 'third_place', 'score_step', 'max_score', 'bonus_score')->first();
 
         $disciplines = Discipline::with('teams:id')->get();
 
@@ -137,6 +138,7 @@ class RankingController extends Controller
             $teamsScores = $discipline->higher_is_better ? $teamsScores->sortByDesc('best_score') : $teamsScores->sortBy('best_score');
             $platz = 1;
             $processedTeams = [];
+            $updates = [];
 
             foreach ($teamsScores as $teamData) {
                 $teamId = $teamData['team_id'];
@@ -165,8 +167,14 @@ class RankingController extends Controller
             foreach ($updates as $teamId => $punkte) {
                 Team::where('id', $teamId)->increment('score', $punkte);
             }
-
         }
+
+        // Bonusscores für Teams mit bonus = true hinzufügen
+        $bonusTeams = Team::where('bonus', true)->get();
+        foreach ($bonusTeams as $team) {
+            Team::where('id', $team->id)->increment('score', $scoresystem->bonus_score);
+        }
+
         $klasses = Klasse::with(['teams' => fn($query) => $query->select('id', 'score', 'klasse_id')])->select('id', 'school_id')->get();
         foreach ($klasses as $klasse) {
             $teams = $klasse->teams;

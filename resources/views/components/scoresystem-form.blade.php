@@ -174,6 +174,48 @@
             </div>
         </div>
 
+        {{-- Bonus Punkte Section --}}
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-100">
+            <div class="grid grid-cols-1 gap-4">
+                <div class="group">
+                    <label for="bonus_score" class="block text-sm font-semibold text-gray-800 mb-2 transition-colors group-focus-within:text-green-600">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                </svg>
+                Bonus Punkte
+                        </span>
+                    </label>
+                    <div class="relative">
+                        <input
+                            type="number"
+                            name="bonus_score"
+                            id="bonus_score"
+                            placeholder="z.B. 50"
+                            required
+                            min="0"
+                            value="{{ old('bonus_score') }}"
+                            class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 text-sm hover:border-gray-300"
+                        >
+                    </div>
+                    <p class="mt-2 text-xs text-gray-600 flex items-center gap-1">
+                        <svg class="w-3 h-3 mr-2 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Zusätzliche Punkte für Einheitliche Outfits
+                    </p>
+                    @error('bonus_score')
+                    <div class="flex items-center gap-2 mt-2 text-red-600">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-xs font-medium">{{ $message }}</span>
+                    </div>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
         <button
             type="submit"
             class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"

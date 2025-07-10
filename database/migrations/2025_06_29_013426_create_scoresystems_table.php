@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('third_place');
             $table->integer('max_score');
             $table->integer('score_step');
+            $table->integer('bonus_score');
             $table->timestamps();
         });
     }
