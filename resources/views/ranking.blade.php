@@ -62,7 +62,7 @@
                                     @if(isset($schools[1]))
                                         @php $colors = SchoolColorService::getColorClasses($schools[1]->id); @endphp
                                         <div class="text-4xl mb-3">🥈</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 128px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $schools[1]->name }}</div>
@@ -77,7 +77,7 @@
                                     @if(isset($schools[0]))
                                         @php $colors = SchoolColorService::getColorClasses($schools[0]->id); @endphp
                                         <div class="text-4xl mb-3">🥇</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 160px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $schools[0]->name }}</div>
@@ -92,7 +92,7 @@
                                     @if(isset($schools[2]))
                                         @php $colors = SchoolColorService::getColorClasses($schools[2]->id); @endphp
                                         <div class="text-4xl mb-3">🥉</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 112px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $schools[2]->name }}</div>
@@ -142,7 +142,7 @@
                                     @if(isset($klasses[1]))
                                         @php $colors = SchoolColorService::getColorClasses($klasses[1]->school_id ?? 0); @endphp
                                         <div class="text-4xl mb-3">🥈</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 128px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $klasses[1]->name }}</div>
@@ -157,7 +157,7 @@
                                     @if(isset($klasses[0]))
                                         @php $colors = SchoolColorService::getColorClasses($klasses[0]->school_id ?? 0); @endphp
                                         <div class="text-4xl mb-3">🥇</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 160px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $klasses[0]->name }}</div>
@@ -172,7 +172,7 @@
                                     @if(isset($klasses[2]))
                                         @php $colors = SchoolColorService::getColorClasses($klasses[2]->school_id ?? 0); @endphp
                                         <div class="text-4xl mb-3">🥉</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 112px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $klasses[2]->name }}</div>
@@ -222,7 +222,7 @@
                                     @if(isset($teams[1]))
                                         @php $colors = SchoolColorService::getColorClasses($teams[1]->klasse->school_id ?? 0); @endphp
                                         <div class="text-4xl mb-3">🥈</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 128px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $teams[1]->name }}</div>
@@ -238,7 +238,7 @@
                                     @if(isset($teams[0]))
                                         @php $colors = SchoolColorService::getColorClasses($teams[0]->klasse->school_id ?? 0); @endphp
                                         <div class="text-4xl mb-3">🥇</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 160px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $teams[0]->name }}</div>
@@ -254,7 +254,7 @@
                                     @if(isset($teams[2]))
                                         @php $colors = SchoolColorService::getColorClasses($teams[2]->klasse->school_id ?? 0); @endphp
                                         <div class="text-4xl mb-3">🥉</div>
-                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
+                                        <div class="bg-gradient-to-t {{ $colors['bg'] }} rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg" style="height: 112px; width: 96px;">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
                                                 <div class="text-xs font-semibold text-gray-800 break-words leading-tight">{{ $teams[2]->name }}</div>
