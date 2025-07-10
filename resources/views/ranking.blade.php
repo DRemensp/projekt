@@ -55,13 +55,13 @@
                         <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🏫 Schulen Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
-                        <div class="flex justify-center items-end mb-12">
-                            <div class="flex items-end space-x-4">
+                        <div class="flex justify-center mb-12">
+                            <div class="flex items-end space-x-4" style="height: 208px;">
                                 <!-- 2. Platz (Links) -->
-                                @if(isset($schools[1]))
-                                    @php $colors = SchoolColorService::getColorClasses($schools[1]->id); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥈</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($schools[1]))
+                                        @php $colors = SchoolColorService::getColorClasses($schools[1]->id); @endphp
+                                        <div class="text-4xl mb-3">🥈</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
@@ -69,14 +69,14 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $schools[1]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
 
                                 <!-- 1. Platz (Mitte) -->
-                                @if(isset($schools[0]))
-                                    @php $colors = SchoolColorService::getColorClasses($schools[0]->id); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥇</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($schools[0]))
+                                        @php $colors = SchoolColorService::getColorClasses($schools[0]->id); @endphp
+                                        <div class="text-4xl mb-3">🥇</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
@@ -84,14 +84,14 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $schools[0]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
 
                                 <!-- 3. Platz (Rechts) -->
-                                @if(isset($schools[2]))
-                                    @php $colors = SchoolColorService::getColorClasses($schools[2]->id); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥉</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($schools[2]))
+                                        @php $colors = SchoolColorService::getColorClasses($schools[2]->id); @endphp
+                                        <div class="text-4xl mb-3">🥉</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
@@ -99,8 +99,8 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $schools[2]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
@@ -135,13 +135,13 @@
                         <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🎯 Klassen Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
-                        <div class="flex justify-center items-end mb-12">
-                            <div class="flex items-end space-x-4">
+                        <div class="flex justify-center mb-12">
+                            <div class="flex items-end space-x-4" style="height: 208px;">
                                 <!-- 2. Platz (Links) -->
-                                @if(isset($klasses[1]))
-                                    @php $colors = SchoolColorService::getColorClasses($klasses[1]->school_id ?? 0); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥈</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($klasses[1]))
+                                        @php $colors = SchoolColorService::getColorClasses($klasses[1]->school_id ?? 0); @endphp
+                                        <div class="text-4xl mb-3">🥈</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
@@ -149,14 +149,14 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $klasses[1]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
 
                                 <!-- 1. Platz (Mitte) -->
-                                @if(isset($klasses[0]))
-                                    @php $colors = SchoolColorService::getColorClasses($klasses[0]->school_id ?? 0); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥇</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($klasses[0]))
+                                        @php $colors = SchoolColorService::getColorClasses($klasses[0]->school_id ?? 0); @endphp
+                                        <div class="text-4xl mb-3">🥇</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
@@ -164,14 +164,14 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $klasses[0]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
 
                                 <!-- 3. Platz (Rechts) -->
-                                @if(isset($klasses[2]))
-                                    @php $colors = SchoolColorService::getColorClasses($klasses[2]->school_id ?? 0); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥉</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($klasses[2]))
+                                        @php $colors = SchoolColorService::getColorClasses($klasses[2]->school_id ?? 0); @endphp
+                                        <div class="text-4xl mb-3">🥉</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
@@ -179,8 +179,8 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $klasses[2]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
@@ -215,13 +215,13 @@
                         <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">🏆 Teams Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
-                        <div class="flex justify-center items-end mb-12">
-                            <div class="flex items-end space-x-4">
+                        <div class="flex justify-center mb-12">
+                            <div class="flex items-end space-x-4" style="height: 208px;">
                                 <!-- 2. Platz (Links) -->
-                                @if(isset($teams[1]))
-                                    @php $colors = SchoolColorService::getColorClasses($teams[1]->klasse->school_id ?? 0); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥈</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($teams[1]))
+                                        @php $colors = SchoolColorService::getColorClasses($teams[1]->klasse->school_id ?? 0); @endphp
+                                        <div class="text-4xl mb-3">🥈</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-32 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">2.</div>
@@ -230,14 +230,14 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $teams[1]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
 
                                 <!-- 1. Platz (Mitte) -->
-                                @if(isset($teams[0]))
-                                    @php $colors = SchoolColorService::getColorClasses($teams[0]->klasse->school_id ?? 0); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥇</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($teams[0]))
+                                        @php $colors = SchoolColorService::getColorClasses($teams[0]->klasse->school_id ?? 0); @endphp
+                                        <div class="text-4xl mb-3">🥇</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-40 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">1.</div>
@@ -246,14 +246,14 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $teams[0]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
 
                                 <!-- 3. Platz (Rechts) -->
-                                @if(isset($teams[2]))
-                                    @php $colors = SchoolColorService::getColorClasses($teams[2]->klasse->school_id ?? 0); @endphp
-                                    <div class="flex flex-col items-center space-y-3">
-                                        <div class="text-4xl">🥉</div>
+                                <div class="flex flex-col items-center" style="width: 96px;">
+                                    @if(isset($teams[2]))
+                                        @php $colors = SchoolColorService::getColorClasses($teams[2]->klasse->school_id ?? 0); @endphp
+                                        <div class="text-4xl mb-3">🥉</div>
                                         <div class="bg-gradient-to-t {{ $colors['bg'] }} h-28 w-24 rounded-t-lg border-4 {{ $colors['border'] }} flex flex-col justify-end p-3 shadow-lg">
                                             <div class="text-center">
                                                 <div class="text-xs font-bold {{ $colors['text-subtle'] }} mb-1">3.</div>
@@ -262,8 +262,8 @@
                                                 <div class="text-xs {{ $colors['text-points'] }} font-bold mt-1">{{ $teams[2]->score }}P</div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
