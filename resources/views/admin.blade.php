@@ -44,12 +44,10 @@
                     </div>
                 @endif
 
-                {{-- CAROUSEL CONTAINER --}}
-                <div class="relative max-w-full mx-auto" id="adminCarousel">
                     {{-- Navigation Arrows --}}
                     <button
                         id="prevBtn"
-                        class="absolute left-[-24px] z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:left-[-24px] sm:left-[-20px] sm:w-10 sm:h-10"
+                        class="absolute left-[-24px] top-1/2 transform -translate-y-1/2 z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:left-[-24px] sm:left-[-20px] sm:w-10 sm:h-10"
                         aria-label="Vorheriger Bereich"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,7 +57,7 @@
 
                     <button
                         id="nextBtn"
-                        class="absolute right-[-24px] z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:right-[-24px] sm:right-[-20px] sm:w-10 sm:h-10"
+                        class="absolute right-[-24px] top-1/2 transform -translate-y-1/2 z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:right-[-24px] sm:right-[-20px] sm:w-10 sm:h-10"
                         aria-label="Nächster Bereich"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
