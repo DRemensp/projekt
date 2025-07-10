@@ -18,4 +18,32 @@ export default {
     },
 
     plugins: [forms],
+
+    // Safelist für dynamische Klassen
+    safelist: [
+        // Alle Farbvarianten die dynamisch verwendet werden
+        {
+            pattern: /bg-(blue|yellow|green|orange|purple|gray)-(50|100|200|300|500|700|800)/,
+        },
+        {
+            pattern: /text-(blue|yellow|green|orange|purple|gray)-(600|700|800)/,
+        },
+        {
+            pattern: /border-(blue|yellow|green|orange|purple|gray)-(200|300|400|500)/,
+        },
+        {
+            pattern: /from-(blue|yellow|green|orange|purple|gray)-(50)/,
+        },
+        {
+            pattern: /to-(blue|yellow|green|orange|purple|gray)-(100|300)/,
+        },
+
+        // Spezifische Klassen
+        'bg-blue-50',
+        'bg-yellow-50',
+        'bg-green-50',
+        'bg-orange-50',
+        'bg-purple-50',
+        'bg-gray-50',
+    ]
 };

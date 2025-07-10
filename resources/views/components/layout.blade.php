@@ -149,7 +149,8 @@
             <span class="font-semibold hover:text-blue-300 transition-colors duration-200 cursor-default">CampusOlympiade</span>
         </div>
         <div class="text-sm text-gray-400 hover:text-gray-300 transition-colors duration-200">
-            © {{ date('Y') }} CampusOlympiade. Alle Rechte vorbehalten.
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+               class="hover:text-blue-300 transition-colors duration-200">Probleme? Such nach dem aktuellen Administrator <br> © {{ date('Y') }} CampusOlympiade. Alle Rechte vorbehalten.</a>
         </div>
     </div>
 </footer>

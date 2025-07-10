@@ -18,7 +18,9 @@ class RankingController extends Controller
         $schools = School::orderBy('score', 'DESC')->get();
         $klasses = Klasse::with('school')->orderBy('score', 'DESC')->get();
         $teams = Team::with(['disciplines', 'klasse.school'])->orderBy('score', 'DESC')->get();
-        $disciplines = Discipline::with('teams')->get();
+        $disciplines = Discipline::with(['teams' => function($query) {
+            $query->with('klasse.school');
+        }])->get();
 
         // Bestes Team pro Disziplin
         $bestTeamsPerDiscipline = [];
@@ -37,7 +39,6 @@ class RankingController extends Controller
                 // Besten Score des Teams ermitteln
                 $teamBestScore = $this->getTeamBestScore($score1, $score2, $discipline->higher_is_better);
 
-
                 if ($bestTeam === null || $this->isScoreBetter($teamBestScore, $bestScore, $discipline->higher_is_better)) {
                     $bestTeam = $team;
                     $bestScore = $teamBestScore;
@@ -51,6 +52,7 @@ class RankingController extends Controller
                     'discipline_name' => $discipline->name,
                     'team_id' => $bestTeam->id,
                     'team_name' => $bestTeam->name,
+                    'team_school_id' => $bestTeam->klasse->school_id ?? 0,
                     'best_score' => $bestScore,
                 ];
             }
