@@ -75,7 +75,7 @@
 
                             {{-- SLIDE 1: Punktesystem --}}
                             <div class="w-[20%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
-                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         ⚙️ Punktesystem
                                     </h2>
@@ -85,7 +85,7 @@
 
                             {{-- SLIDE 2: Schulen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         🏫 Schulen
                                     </h2>
@@ -123,7 +123,7 @@
 
                             {{-- SLIDE 3: Klassen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         👥 Klassen
                                     </h2>
@@ -168,7 +168,7 @@
 
                             {{-- SLIDE 4: Teams --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         🏆 Teams
                                     </h2>
@@ -211,7 +211,7 @@
 
                             {{-- SLIDE 5: Disziplinen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
-                                <div class="px-4 py-8 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
+                                <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
                                         ⚡ Disziplinen
                                     </h2>
