@@ -4,7 +4,7 @@
         @csrf
 
         {{-- Platz 1-3 Section --}}
-        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-100">
+        <div class="bg-white p-4 rounded-xl border border-gray-300">
             <h3 class="text-sm font-semibold text-gray-800 mb-4 flex items-center gap-2">
                 <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
@@ -102,7 +102,7 @@
         </div>
 
         {{-- Weitere Plätze Section --}}
-        <div class="bg-gradient-to-br from-slate-50 to-gray-50 p-4 rounded-xl border border-slate-200">
+        <div class="bg-white p-4 rounded-xl border border-slate-200">
             <h3 class="text-sm font-semibold text-gray-800 mb-4 flex items-center gap-2">
                 <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -175,7 +175,7 @@
         </div>
 
         {{-- Bonus Punkte Section --}}
-        <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-100">
+        <div class="bg-white p-4 rounded-xl border border-gray-300">
             <div class="grid grid-cols-1 gap-4">
                 <div class="group">
                     <label for="bonus_score" class="block text-sm font-semibold text-gray-800 mb-2 transition-colors group-focus-within:text-green-600">
@@ -198,7 +198,7 @@
                             class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 text-sm hover:border-gray-300"
                         >
                     </div>
-                    <p class="mt-2 text-xs text-gray-600 flex items-center gap-1">
+                    <p class="mt-2 text-xs text-black flex items-center gap-1">
                         <svg class="w-3 h-3 mr-2 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -218,7 +218,7 @@
 
         <button
             type="submit"
-            class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+            class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-orange-400 to-amber-700 hover:from-orange-500 hover:to-amber-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
         >
             <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

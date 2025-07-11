@@ -47,21 +47,21 @@
                     {{-- Navigation Arrows --}}
                     <button
                         id="prevBtn"
-                        class="absolute left-[-24px] top-1/2 transform -translate-y-1/2 z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:left-[-24px] sm:left-[-20px] sm:w-10 sm:h-10"
+                        class="absolute left-[5px] top-1/2 transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 border-2 border-gray-500 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 hover:border-blue-700 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 disabled:border-gray-500 shadow-md"
                         aria-label="Vorheriger Bereich"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
 
                     <button
                         id="nextBtn"
-                        class="absolute right-[-24px] top-1/2 transform -translate-y-1/2 z-10 bg-white/90 border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 md:right-[-24px] sm:right-[-20px] sm:w-10 sm:h-10"
+                        class="absolute right-[5px] top-1/2 transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 border-2 border-gray-500 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 hover:border-blue-700 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 disabled:border-gray-500 shadow-md"
                         aria-label="Nächster Bereich"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
 
@@ -76,7 +76,7 @@
                             {{-- SLIDE 1: Punktesystem --}}
                             <div class="w-[20%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
                                 <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
+                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-amber-500 pb-4">
                                         ⚙️ Punktesystem
                                     </h2>
                                     <x-scoresystem-form />
@@ -86,7 +86,7 @@
                             {{-- SLIDE 2: Schulen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
+                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-purple-400 pb-4">
                                         🏫 Schulen
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -124,7 +124,7 @@
                             {{-- SLIDE 3: Klassen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="px-4sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
+                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-green-500 pb-4">
                                         👥 Klassen
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -169,7 +169,7 @@
                             {{-- SLIDE 4: Teams --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
+                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-pink-500 pb-4">
                                         🏆 Teams
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -212,7 +212,7 @@
                             {{-- SLIDE 5: Disziplinen --}}
                             <div class="w-[20%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                                 <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-gray-200 pb-4">
+                                    <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-orange-400 pb-4">
                                         ⚡ Disziplinen
                                     </h2>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -272,5 +272,4 @@
 
             </div>
         </div>
-    </div>
 </x-layout>

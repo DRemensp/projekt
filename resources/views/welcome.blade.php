@@ -157,13 +157,11 @@
     {{-- Kommentare --}}
     <section class="py-16 bg-gradient-to-br from-blue-100 to-green-100">
         <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto bg-gradient-to-br from-blue-100 to-green-100 p-8 rounded-xl shadow-lg border border-gray-100">
                 <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
                     Community Diskussionen
                 </h2>
 
                 @livewire('comments')
-            </div>
         </div>
     </section>
 
