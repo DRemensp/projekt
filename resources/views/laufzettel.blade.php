@@ -1,4 +1,6 @@
 <x-layout>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <div class="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 py-8">
         <div class="container mx-auto px-4">
 
@@ -27,7 +29,21 @@
             @else
                 {{-- team info --}}
                 <div class="max-w-4xl mx-auto mb-8">
-                    <div class="bg-white rounded-lg shadow-md p-6 {{ $schoolColors['bg-light'] ?? 'bg-blue-50' }}">
+                    <div class="relative bg-white rounded-lg shadow-md p-6 {{ $schoolColors['bg-light'] ?? 'bg-blue-50' }}">
+
+                        <!-- Bonus-Indikator in der oberen rechten Ecke -->
+                        @if($selectedTeam->bonus)
+                            <div class="absolute top-4 right-4">
+                                <div class="bonus-indicator bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-all duration-200 shadow-sm border border-green-200"
+                                     onclick="showBonusInfo(event)"
+                                     onmouseover="this.style.transform='scale(1.05)'"
+                                     onmouseout="this.style.transform='scale(1)'"
+                                     title="Klicken für mehr Informationen">
+                                    ⭐ Bonus
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="text-center">
                             <h2 class="text-3xl font-bold {{ $schoolColors['text'] ?? 'text-gray-800' }} mb-2">
                                 {{ $selectedTeam->name }}
@@ -221,6 +237,128 @@
             // Daten für JavaScript verfügbar machen
             const allTeamsData = @json($teamsForJs);
             const colorMap = @json($colorMapForJs);
+            const isAdmin = @json($isAdmin ?? false);
         </script>
     @endif
+
+    <!-- Bonus Info Popup Script -->
+    <script>
+        // Bonus Info Tooltip Funktionen
+        function showBonusInfo(event) {
+            event.stopPropagation();
+
+            // Tooltip erstellen
+            const tooltip = document.createElement('div');
+            tooltip.id = 'bonus-tooltip';
+            tooltip.className = 'fixed z-50 bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-w-sm animate-fade-in';
+            tooltip.style.animation = 'fadeIn 0.2s ease-out';
+            tooltip.innerHTML = `
+                <div class="flex items-start space-x-2">
+                    <div class="text-green-600 text-xl">👕</div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-1">Bonus für passende Outfits</h4>
+                        <p class="text-sm text-gray-600">
+                            Dieses Team hat passende Outfits als Team getragen und erhält dafür Bonus-Punkte in der Gesamtwertung.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-2 pt-2 border-t border-gray-100">
+                    <p class="text-xs text-gray-500">💡 Klicke irgendwo anders, um das Fenster zu schließen</p>
+                </div>
+            `;
+
+            // Position berechnen
+            const rect = event.target.getBoundingClientRect();
+            const tooltipWidth = 280;
+            const tooltipHeight = 120;
+
+            let left = rect.left + window.scrollX;
+            let top = rect.bottom + window.scrollY + 8;
+
+            // Auf der linken Seite anzeigen, wenn rechts kein Platz
+            if (left + tooltipWidth > window.innerWidth) {
+                left = rect.left + window.scrollX - tooltipWidth - 8;
+            }
+
+            // Nach oben verschieben, wenn unten kein Platz
+            if (top + tooltipHeight > window.innerHeight + window.scrollY) {
+                top = rect.top + window.scrollY - tooltipHeight - 8;
+            }
+
+            // Mindestabstand zu den Rändern
+            left = Math.max(10, Math.min(left, window.innerWidth - tooltipWidth - 10));
+            top = Math.max(10, top);
+
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+
+            // Vorheriges Tooltip entfernen
+            const existingTooltip = document.getElementById('bonus-tooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
+
+            document.body.appendChild(tooltip);
+
+            // Debug-Ausgabe
+            console.log('Bonus-Tooltip erstellt und positioniert');
+
+            // Tooltip nach 8 Sekunden automatisch ausblenden
+            setTimeout(() => {
+                const currentTooltip = document.getElementById('bonus-tooltip');
+                if (currentTooltip) {
+                    currentTooltip.style.animation = 'fadeOut 0.2s ease-in';
+                    setTimeout(() => {
+                        if (currentTooltip.parentNode) {
+                            currentTooltip.remove();
+                        }
+                    }, 200);
+                }
+            }, 8000);
+        }
+
+        function hideBonusInfo() {
+            const tooltip = document.getElementById('bonus-tooltip');
+            if (tooltip) {
+                tooltip.style.animation = 'fadeOut 0.2s ease-in';
+                setTimeout(() => {
+                    if (tooltip.parentNode) {
+                        tooltip.remove();
+                    }
+                }, 200);
+            }
+        }
+
+        // Event Listener für Klicks außerhalb des Tooltips
+        document.addEventListener('click', function(event) {
+            const tooltip = document.getElementById('bonus-tooltip');
+            if (tooltip && !tooltip.contains(event.target) && !event.target.closest('.bonus-indicator')) {
+                hideBonusInfo();
+            }
+        });
+
+        // ESC-Taste zum Schließen
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                hideBonusInfo();
+            }
+        });
+
+        // CSS-Animationen hinzufügen
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Test ob die Funktion geladen wurde
+        console.log('Bonus Info Script geladen');
+    </script>
 </x-layout>

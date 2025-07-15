@@ -36,6 +36,61 @@ function initLaufzettelSearch() {
             .replace(/'/g, "&#039;");
     }
 
+    // Toggle Bonus Funktion
+    function toggleBonus(teamId, buttonElement) {
+        const team = allTeamsData.find(t => t.id === teamId);
+        if (!team) return;
+
+        // Button visuell deaktivieren während der Anfrage
+        buttonElement.disabled = true;
+        const originalContent = buttonElement.innerHTML;
+        buttonElement.innerHTML = '<span class="animate-spin">⏳</span>';
+
+        fetch(`/team/${teamId}/toggle-bonus`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Lokale Daten aktualisieren
+                    team.bonus = data.bonus;
+
+                    // Button-Status aktualisieren
+                    if (data.bonus) {
+                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 transition-colors cursor-pointer';
+                        buttonElement.innerHTML = '✅ Bonus';
+                    } else {
+                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer';
+                        buttonElement.innerHTML = '⭕ Kein Bonus';
+                    }
+
+                    // Kurze Bestätigungsanimation
+                    const card = buttonElement.closest('.team-card');
+                    if (card) {
+                        card.style.backgroundColor = data.bonus ? '#dcfce7' : '#fef3c7';
+                        setTimeout(() => {
+                            card.style.backgroundColor = '';
+                        }, 300);
+                    }
+                } else {
+                    alert('Fehler beim Aktualisieren des Bonus-Status');
+                    buttonElement.innerHTML = originalContent;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Fehler beim Aktualisieren des Bonus-Status');
+                buttonElement.innerHTML = originalContent;
+            })
+            .finally(() => {
+                buttonElement.disabled = false;
+            });
+    }
+
     // Suchfunktion
     function filterAndDisplayTeams() {
         const searchTerm = searchInput.value.toLowerCase().trim();
@@ -64,20 +119,48 @@ function initLaufzettelSearch() {
                 const hoverClass = colors['bg-light'] ? escapeHtml(colors['bg-light']) : 'bg-gray-50/60';
                 const textClass = colors.text ? escapeHtml(colors.text) : 'text-gray-700';
 
+                // Bonus Button HTML - nur für Admins
+                let bonusButtonHtml = '';
+                if (typeof isAdmin !== 'undefined' && isAdmin) {
+                    const bonusButtonClass = team.bonus
+                        ? 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 transition-colors cursor-pointer'
+                        : 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer';
+
+                    const bonusButtonText = team.bonus ? '✅ Bonus' : '⭕ Kein Bonus';
+
+                    bonusButtonHtml = `
+                        <button class="${bonusButtonClass}"
+                                onclick="toggleBonus(${team.id}, this)">
+                            ${bonusButtonText}
+                        </button>
+                    `;
+                } else if (team.bonus) {
+                    // Für Nicht-Admins: Bonus-Status nur anzeigen (nicht klickbar)
+                    bonusButtonHtml = `
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                            ✅ Bonus
+                        </span>
+                    `;
+                }
+
                 resultsHtml += `
-                    <div class="bg-white rounded-lg shadow-md p-4 hover:${hoverClass} hover:shadow-lg transition-all duration-200 cursor-pointer border border-gray-200"
-                         onclick="selectTeam(${team.id})">
+                    <div class="team-card bg-white rounded-lg shadow-md p-4 hover:${hoverClass} hover:shadow-lg transition-all duration-200 border border-gray-200">
                         <div class="flex justify-between items-center">
-                            <div>
+                            <div class="flex-1 cursor-pointer" onclick="selectTeam(${team.id})">
                                 <h3 class="text-lg font-semibold ${textClass}">${escapeHtml(team.name)}</h3>
                                 <p class="text-sm text-gray-600">
                                     ${escapeHtml(team.klasse_name)} - ${escapeHtml(team.school_name)}
                                 </p>
                             </div>
-                            <div class="text-blue-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
+                            <div class="flex items-center space-x-3">
+                                <!-- Bonus Button/Anzeige -->
+                                ${bonusButtonHtml}
+                                <!-- Pfeil für Team-Auswahl -->
+                                <div class="text-blue-600 cursor-pointer" onclick="selectTeam(${team.id})">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -89,11 +172,15 @@ function initLaufzettelSearch() {
         }
     }
 
-    // Globale Funktion für Team-Auswahl (nur einmal definieren)
+    // Globale Funktionen für Team-Auswahl und Bonus-Toggle
     if (!window.selectTeam) {
         window.selectTeam = function(teamId) {
             window.location.href = `/laufzettel/${teamId}`;
         };
+    }
+
+    if (!window.toggleBonus) {
+        window.toggleBonus = toggleBonus;
     }
 
     // Event Listener hinzufügen (bei jeder Eingabe filtern)

@@ -74,6 +74,9 @@ Route::get('/laufzettel/{team}', [LaufzettelController::class, 'show'])
 
 Route::post('/scoresystem', [ScoresystemController::class, 'store'])->name('scoresystem.store');
 
+// Füge diese Route zu deiner routes/web.php hinzu:
+Route::post('/team/{team}/toggle-bonus', [LaufzettelController::class, 'toggleBonus'])->name('team.toggle-bonus');
+
 //nicht wundern wenn manche Index nicht in Ressourcen angezeigt wird, hatte ganz komischen bug und fehler nicht gefunden,
 //also einfach sepperat gemacht
 

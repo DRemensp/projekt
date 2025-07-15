@@ -18,8 +18,8 @@
                 <a href="{{ url('/') }}"
                    class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
                     <div
-                        class="w-11 h-11 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 overflow-hidden">
-                        <img src="{{ asset('Linux_Nein_Danke.png')}}" alt="CampusOlympiade Logo" class="w-12 h-12 object-cover">
+                        class="w-11 h-11 border border-2 border-blue-400 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 overflow-hidden">
+                        <img src="{{ asset('img.png')}}" alt="CampusOlympiade Logo" class="w-12 h-12 object-cover">
                     </div>
                     <span class="font-bold text-xl text-gray-800">
                         Campus<span class="text-blue-600">Olympiade</span>
@@ -142,14 +142,12 @@
 <footer class="bg-gray-800 text-white py-6 duration-300">
     <div class="container mx-auto px-4 text-center">
         <div class="flex justify-center items-center mb-4">
-            <a href="{{ url('/') }}"
-               class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
-                <div
-                    class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 overflow-hidden">
-                    <img src="{{ asset('Linux_Nein_Danke.png')}}" alt="CampusOlympiade Logo" class="w-10 h-10 object-cover">
+            <button id="footerButton" class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200 cursor-pointer">
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 text-xl">
+                    ❤️
                 </div>
-                <span class="font-semibold hover:text-blue-300 transition-colors duration-200 cursor-default">CampusOlympiade</span>
-            </a>
+                <span class="font-semibold hover:text-blue-300 transition-colors duration-200">CampusOlympiade</span>
+            </button>
         </div>
         <div class="text-sm text-gray-400 hover:text-gray-300 transition-colors duration-200">
             <a href="https://youtu.be/xvFZjo5PgG0?si=f-8cYCSRPThugYsm"
@@ -157,6 +155,52 @@
         </div>
     </div>
 </footer>
+
+<!-- Pop-up Modal -->
+<div id="heartModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg p-6 max-w-md mx-4 relative">
+        <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+        <div class="text-center">
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Dankeschön ❤️</h3>
+            <p class="text-gray-600 leading-relaxed">
+                Mein herzlicher Dank gilt Herrn Haist für die Möglichkeit, dieses Projekt zu entwickeln.
+                Die Arbeit daran hat mir unerwartet viel Freude bereitet und war eine tolle Erfahrung.
+                Als Schüler der 2BKI2/2 2025 war dies ein wunderbarer Abschluss meiner Schulzeit hier.
+                Ich hoffe, dass die CampusOlympiade von den Schulen aktiv genutzt wird und allen Beteiligten gefällt.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const footerButton = document.getElementById('footerButton');
+        const heartModal = document.getElementById('heartModal');
+        const closeModal = document.getElementById('closeModal');
+
+        footerButton.addEventListener('click', function() {
+            heartModal.classList.remove('hidden');
+        });
+
+        closeModal.addEventListener('click', function() {
+            heartModal.classList.add('hidden');
+        });
+
+        // Schließen beim Klick außerhalb des Modals
+        heartModal.addEventListener('click', function(e) {
+            if (e.target === heartModal) {
+                heartModal.classList.add('hidden');
+            }
+        });
+
+        // Schließen mit Escape-Taste
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !heartModal.classList.contains('hidden')) {
+                heartModal.classList.add('hidden');
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

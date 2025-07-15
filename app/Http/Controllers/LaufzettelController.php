@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\Discipline;
 use App\Services\SchoolColorService;
+use Illuminate\Http\Request;
 
 class LaufzettelController extends Controller
 {
@@ -22,17 +23,22 @@ class LaufzettelController extends Controller
                 'klasse_name' => $team->klasse ? $team->klasse->name : 'N/A',
                 'school_name' => ($team->klasse && $team->klasse->school) ? $team->klasse->school->name : '-',
                 'school_id' => $team->klasse ? $team->klasse->school_id : 0,
+                'bonus' => $team->bonus, // Bonus-Status hinzufügen
             ];
         }
 
         // Farben für JS laden
         $jsColors = SchoolColorService::getAllColorsForJs();
 
+        // Prüfen ob der User ein Admin ist
+        $isAdmin = auth()->check() && auth()->user()->hasRole('admin');
+
         return view('laufzettel', [
             'selectedTeam' => null,
             'teamResults' => [],
             'teamsForJs' => $jsTeams,
             'colorMapForJs' => $jsColors,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -53,6 +59,7 @@ class LaufzettelController extends Controller
                 'klasse_name' => $t->klasse ? $t->klasse->name : 'N/A',
                 'school_name' => ($t->klasse && $t->klasse->school) ? $t->klasse->school->name : '-',
                 'school_id' => $t->klasse ? $t->klasse->school_id : 0,
+                'bonus' => $t->bonus, // Bonus-Status hinzufügen
             ];
         }
 
@@ -194,6 +201,9 @@ class LaufzettelController extends Controller
         // JavaScript Farben
         $jsColors = SchoolColorService::getAllColorsForJs();
 
+        // Prüfen ob der User ein Admin ist
+        $isAdmin = auth()->check() && auth()->user()->hasRole('admin');
+
         return view('laufzettel', [
             'selectedTeam' => $team,
             'teamResults' => $results,
@@ -202,6 +212,30 @@ class LaufzettelController extends Controller
             'colorMapForJs' => $jsColors,
             'overallRanking' => $overallRanking,
             'totalTeams' => $totalTeams,
+            'isAdmin' => $isAdmin,
+        ]);
+    }
+
+    /**
+     * Toggle bonus status for a team (nur für Admins)
+     */
+    public function toggleBonus(Request $request, Team $team)
+    {
+        // Prüfen ob der User ein Admin ist
+        if (!auth()->check() || !auth()->user()->hasRole('admin')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Keine Berechtigung'
+            ], 403);
+        }
+
+        $team->bonus = !$team->bonus;
+        $team->save();
+
+        return response()->json([
+            'success' => true,
+            'bonus' => $team->bonus,
+            'message' => 'Bonus-Status erfolgreich aktualisiert'
         ]);
     }
 }
