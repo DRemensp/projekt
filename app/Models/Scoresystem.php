@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Scoresystem extends Model
 {
     protected $fillable = [
+        'is_active',
         'first_place',
         'second_place',
         'third_place',
@@ -14,4 +15,16 @@ class Scoresystem extends Model
         'score_step',
         'bonus_score',
     ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    /**
+     * Gibt das aktuell aktive Scoresystem zurück
+     */
+    public static function getActive()
+    {
+        return static::where('is_active', true)->first();
+    }
 }

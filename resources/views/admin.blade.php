@@ -79,7 +79,8 @@
                                     <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 border-b-2 border-amber-500 pb-4">
                                         ⚙️ Punktesystem
                                     </h2>
-                                    <x-scoresystem-form />
+                                    <x-scoresystem-form :scoresystem="$scoresystem"
+                                    />
                                 </div>
                             </div>
 

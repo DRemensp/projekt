@@ -27,7 +27,7 @@
                             placeholder="z.B. 200"
                             required
                             min="0"
-                            value="{{ old('first_place') }}"
+                            value="{{ old('first_place', $scoresystem->first_place ?? '') }}"
                             class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 text-sm hover:border-gray-300"
                         >
                     </div>
@@ -56,7 +56,7 @@
                             placeholder="z.B. 150"
                             required
                             min="0"
-                            value="{{ old('second_place') }}"
+                            value="{{ old('second_place', $scoresystem->second_place ?? '') }}"
                             class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 text-sm hover:border-gray-300"
                         >
                     </div>
@@ -85,7 +85,7 @@
                             placeholder="z.B. 120"
                             required
                             min="0"
-                            value="{{ old('third_place') }}"
+                            value="{{ old('third_place', $scoresystem->third_place ?? '') }}"
                             class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 text-sm hover:border-gray-300"
                         >
                     </div>
@@ -127,7 +127,7 @@
                             placeholder="z.B. 100"
                             required
                             min="0"
-                            value="{{ old('max_score') }}"
+                            value="{{ old('max_score', $scoresystem->max_score ?? '') }}"
                             class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-sm hover:border-gray-300"
                         >
                     </div>
@@ -158,7 +158,7 @@
                             placeholder="z.B. 10"
                             required
                             min="1"
-                            value="{{ old('score_step') }}"
+                            value="{{ old('score_step', $scoresystem->score_step ?? '') }}"
                             class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-sm hover:border-gray-300"
                         >
                     </div>
@@ -181,9 +181,9 @@
                     <label for="bonus_score" class="block text-sm font-semibold text-gray-800 mb-2 transition-colors group-focus-within:text-green-600">
                         <span class="flex items-center gap-2">
                             <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                </svg>
-                Bonus Punkte
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            </svg>
+                            Bonus Punkte
                         </span>
                     </label>
                     <div class="relative">
@@ -194,7 +194,7 @@
                             placeholder="z.B. 50"
                             required
                             min="0"
-                            value="{{ old('bonus_score') }}"
+                            value="{{ old('bonus_score', $scoresystem->bonus_score ?? '') }}"
                             class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 text-sm hover:border-gray-300"
                         >
                     </div>
@@ -216,15 +216,23 @@
             </div>
         </div>
 
-        <button
-            type="submit"
-            class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-orange-400 to-amber-700 hover:from-orange-500 hover:to-amber-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-        >
-            <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            Scoresystem konfigurieren
-            <div class="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-200"></div>
-        </button>
+        {{-- Submit Button --}}
+        <div class="flex justify-center">
+            <button
+                type="submit"
+                class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            >
+                <span class="flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    @if($scoresystem)
+                        Punktesystem aktualisieren
+                    @else
+                        Punktesystem erstellen
+                    @endif
+                </span>
+            </button>
+        </div>
     </form>
 </div>
