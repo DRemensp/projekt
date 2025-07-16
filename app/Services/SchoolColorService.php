@@ -18,6 +18,18 @@ class SchoolColorService
             'gradient' => 'from-blue-50 to-blue-300'
         ],
         2 => [
+            'text' => 'text-orange-700',
+            'border' => 'border-orange-400',
+            'bg' => 'bg-orange-100',
+            'border-light' => 'border-orange-300',
+            'bg-light' => 'bg-orange-100',
+            'text-subtle' => 'text-orange-600',
+            'text-points' => 'text-orange-800',
+            'text-hover' => 'hover:text-orange-900',
+            'border-hover' => 'hover:border-orange-700',
+            'gradient' => 'from-orange-50 to-orange-300'
+        ],
+        3 => [
             'text' => 'text-green-700',
             'border' => 'border-green-500',
             'bg' => 'bg-green-100',
@@ -29,7 +41,7 @@ class SchoolColorService
             'border-hover' => 'hover:border-green-700',
             'gradient' => 'from-green-50 to-green-300'
         ],
-        3 => [
+        4 => [
             'text' => 'text-purple-700',
             'border' => 'border-purple-500',
             'bg' => 'bg-purple-100',
@@ -40,18 +52,6 @@ class SchoolColorService
             'text-hover' => 'hover:text-purple-900',
             'border-hover' => 'hover:border-purple-700',
             'gradient' => 'from-purple-50 to-purple-300'
-        ],
-        4 => [
-            'text' => 'text-orange-700',
-            'border' => 'border-orange-400',
-            'bg' => 'bg-orange-100',
-            'border-light' => 'border-orange-300',
-            'bg-light' => 'bg-orange-100',
-            'text-subtle' => 'text-orange-600',
-            'text-points' => 'text-orange-800',
-            'text-hover' => 'hover:text-orange-900',
-            'border-hover' => 'hover:border-orange-700',
-            'gradient' => 'from-orange-50 to-orange-300'
         ],
         5 => [
             'text' => 'text-yellow-700',
