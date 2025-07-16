@@ -232,10 +232,15 @@ class LaufzettelController extends Controller
         $team->bonus = !$team->bonus;
         $team->save();
 
+        // Ranking automatisch neu berechnen (wie bei TeacherController und Dashboard)
+        $rankingController = new \App\Http\Controllers\RankingController();
+        $rankingController->recalculateAllScores();
+
         return response()->json([
             'success' => true,
             'bonus' => $team->bonus,
-            'message' => 'Bonus-Status erfolgreich aktualisiert'
+            'message' => 'Bonus-Status erfolgreich aktualisiert und Ranking automatisch neu berechnet'
         ]);
     }
+
 }
