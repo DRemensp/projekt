@@ -38,30 +38,31 @@
                 <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
                     Nachricht <span class="text-red-500">*</span>
                 </label>
-                <textarea
+                <input
                     wire:model.defer="message"
+                    type="text"
                     id="message"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none overflow-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                    placeholder="Schreibe einen Kommentar... (max 200 Zeichen)"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                    placeholder="Schreibe einen Kommentar... (max 150 Zeichen)"
                     required
-                    maxlength="200"
-                    style="min-height: 80px;"
+                    maxlength="150"
                     x-data="{
-                        resize() {
-                            $el.style.height = '80px';
-                            $el.style.height = $el.scrollHeight + 'px';
+                        handleKeydown(event) {
+                            if (event.key === 'Enter') {
+                                event.preventDefault();
+                                $wire.store();
+                            }
                         }
                     }"
-                    x-init="resize()"
-                    @input="resize()"
-                ></textarea>
+                    @keydown="handleKeydown($event)"
+                >
                 @error('message')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="flex justify-between items-center">
-                <span class="text-xs text-gray-500" x-data x-text="$wire.message ? $wire.message.length + '/200' : '0/200'" x-on:input.window="$el.textContent = $wire.message ? $wire.message.length + '/200' : '0/200'"></span>
+                <span class="text-xs text-gray-500" x-data x-text="$wire.message ? $wire.message.length + '/150' : '0/150'" x-on:input.window="$el.textContent = $wire.message ? $wire.message.length + '/150' : '0/150'"></span>
                 <button
                     type="submit"
                     class="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
@@ -70,9 +71,8 @@
                 >
                     <span wire:loading.remove>
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/>
-</svg>
-
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/>
+                        </svg>
                     </span>
                     <span wire:loading>
                         <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -131,7 +131,7 @@
                                 @endif
                             @endauth
                         </div>
-                        <p class="text-gray-700 break-words whitespace-pre-wrap leading-relaxed">{{ $comment->message }}</p>
+                        <p class="text-gray-700 break-words leading-relaxed">{{ $comment->message }}</p>
                     </div>
                 @endforeach
 

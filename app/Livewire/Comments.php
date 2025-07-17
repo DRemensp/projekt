@@ -12,13 +12,14 @@ class Comments extends Component
     public $commentsToShow = 5; // Anzahl der anzuzeigenden Kommentare
 
     protected $rules = [
-        'message' => 'required|string|max:200',
+        'message' => 'required|string|max:150|regex:/^[^\\r\\n]*$/',
         'authorName' => 'nullable|string|max:10',
     ];
 
     protected $messages = [
         'message.required' => 'Bitte geben Sie eine Nachricht ein.',
-        'message.max' => 'Die Nachricht darf maximal 200 Zeichen lang sein.',
+        'message.max' => 'Die Nachricht darf maximal 150 Zeichen lang sein.',
+        'message.regex' => 'Zeilenumbrüche sind nicht erlaubt.',
         'authorName.max' => 'Der Name darf maximal 50 Zeichen lang sein.',
         'authorName.regex' => 'Der Name darf nur Buchstaben, Zahlen und grundlegende Sonderzeichen enthalten.',
     ];
@@ -72,5 +73,4 @@ class Comments extends Component
 
         return redirect()->back()->with('success', 'Kommentar erfolgreich gelöscht!');
     }
-
 }

@@ -220,7 +220,7 @@
                                         <div class="bg-gray-50 p-6 rounded-lg shadow border border-gray-200">
                                             <h3 class="text-lg font-semibold mb-4 text-gray-800">Neue Disziplin anlegen</h3>
                                             @if($klasses->count() > 0)
-                                                <x-discipline-form :klasses="$klasses" />
+                                                <x-discipline-form :disciplineklasses="$disciplineklasses" />
                                             @else
                                                 <p class="text-red-600 italic">Bitte zuerst eine Klasse anlegen!</p>
                                             @endif

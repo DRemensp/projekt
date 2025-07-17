@@ -1,4 +1,4 @@
-@props(['klasses'])
+@props(['disciplineklasses'])
 
 <div class="max-w-full">
     <form action="{{ route('disciplines.store') }}" method="POST" class="space-y-6">
@@ -20,9 +20,9 @@
                     class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300 appearance-none cursor-pointer"
                     required>
                     <option value="" disabled {{ old('klasse_id') ? '' : 'selected' }} class="text-gray-400">-- Bitte wählen --</option>
-                    @foreach($klasses as $klasse)
-                        <option value="{{ $klasse->id }}" {{ old('klasse_id') == $klasse->id ? 'selected' : '' }} class="text-gray-800">
-                            {{ $klasse->name }} ({{ $klasse->school->name ?? '?' }})
+                    @foreach($disciplineklasses as $disciplineklasse)
+                        <option value="{{ $disciplineklasse->id }}" {{ old('klasse_id') == $disciplineklasse->id ? 'selected' : '' }} class="text-gray-800">
+                            {{ $disciplineklasse->name }} ({{ $disciplineklasse->school->name ?? '?' }})
                         </option>
                     @endforeach
                 </select>
@@ -37,6 +37,7 @@
             @enderror
         </div>
 
+        <!-- Rest des Formulars bleibt gleich -->
         <div class="group">
             <label for="discipline_name" class="block text-sm font-semibold text-gray-800 mb-2 transition-colors group-focus-within:text-orange-600">
                 <span class="flex items-center gap-2">
