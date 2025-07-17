@@ -234,6 +234,13 @@
                                                             <div>
                                                                 <span class="text-gray-700">{{ $discipline->name }}</span>
                                                                 <span class="text-xs text-gray-500 ml-2">({{ $discipline->klasse->name ?? 'Keine Klasse' }})</span>
+                                                                <br>
+                                                                @if($discipline->higher_is_better)
+                                                                    <p class="text-xs text-green-500">Höher ist Besser</p>
+                                                                @else
+                                                                    <p class="text-xs text-red-500">Niedriger ist Besser</p>
+                                                                @endif
+
                                                             </div>
                                                             <form action="{{ route('disciplines.destroy', $discipline->id) }}" method="POST" onsubmit="return confirm('Disziplin {{ $discipline->name }} wirklich löschen?');">
                                                                 @csrf
