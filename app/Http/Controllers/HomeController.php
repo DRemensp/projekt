@@ -23,6 +23,18 @@ class HomeController extends Controller
         $schoolCount = School::count();
         $klasseCount = Klasse::count();
         $teamCount = Team::count();
+
+        // Schüler zählen durch Summierung aller Team-Mitglieder
+        // Wenn ein Team keine Mitglieder hat, rechnen wir +3
+        $studentCount = Team::all()->sum(function ($team) {
+            if (is_array($team->members) && count($team->members) > 0) {
+                return count($team->members);
+            } else {
+                // Team hat keine Mitglieder eingetragen -> +3
+                return 3;
+            }
+        });
+
         $comments = Comment::all();
         $visitcount = VisitCounter::first() ?? new VisitCounter();
         $visitcount->total_visits++;
@@ -33,6 +45,7 @@ class HomeController extends Controller
             'schoolCount',
             'klasseCount',
             'teamCount',
+            'studentCount',
             'comments',
             'visitcount'));
     }
