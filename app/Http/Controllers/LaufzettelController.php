@@ -76,7 +76,7 @@ class LaufzettelController extends Controller
         }
 
         // Alle Disziplinen mit Teams laden
-        $allDisciplines = Discipline::with('teams')->get();
+        $allDisciplines = Discipline::with('teams')->orderBy('name')->get();
 
         $results = [];
 
