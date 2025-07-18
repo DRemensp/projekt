@@ -18,7 +18,7 @@
                     <span class="text-indigo-600">Campus Olympiade</span> - Dein Portal zum Wettbewerb
                 </h1>
                 <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-                    Verfolge live die Ranglisten deiner Schule, Klasse und deines Teams. Lehrer und Admins können sich hier einloggen, um Ergebnisse einzutragen und den Wettbewerb zu verwalten.
+                    Verfolge live die Ranglisten deiner Schule, Klasse und deines Teams. Du kannst dich hier einloggen, um Ergebnisse einzutragen und den Wettbewerb zu verwalten.
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-4 mb-16">
@@ -28,7 +28,7 @@
                     </a>
                     <a href="{{ url('/login') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-white text-indigo-600 text-base font-medium rounded-lg border border-indigo-300 shadow-sm hover:bg-indigo-50 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                        Login für Lehrer & Admins
+                        Login für Berechtigte
                     </a>
                 </div>
 
@@ -194,19 +194,18 @@
             <div class="text-center mb-8 md:mb-12">
                 <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3 md:mb-4">Olympiade im Überblick</h2>
                 <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-                    Aktuelle Zahlen und Fakten zur Campus Olympiade
+                    Live Zahlen zur Campus Olympiade im Überblick
                 </p>
             </div>
 
-            <div class="grid grid-cols-3 gap-3 md:gap-6 max-w-4xl mx-auto mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto mb-8">
                 {{-- Schulen Counter --}}
                 <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 20v-9l-4 1.125V20h4Zm0 0h8m-8 0V6.66667M16 20v-9l4 1.125V20h-4Zm0 0V7m0 0V4h4v3h-4ZM6 8l6-4 4 2.66667M11 9h2m-2 3h2"/>
-</svg>
-
+                            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 20v-9l-4 1.125V20h4Zm0 0h8m-8 0V6.66667M16 20v-9l4 1.125V20h-4Zm0 0V7m0 0V4h4v3h-4ZM6 8l6-4 4 2.66667M11 9h2m-2 3h2"/>
+                            </svg>
                         </div>
                         <div class="text-2xl md:text-3xl font-bold text-indigo-600 mb-1">{{ $schoolCount }}</div>
                         <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Schulen</div>
@@ -218,9 +217,9 @@
                 <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
-</svg>
+                            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
+                            </svg>
                         </div>
                         <div class="text-2xl md:text-3xl font-bold text-blue-600 mb-1">{{ $klasseCount }}</div>
                         <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Klassen</div>
@@ -232,13 +231,27 @@
                 <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-</svg>
+                            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                            </svg>
                         </div>
                         <div class="text-2xl md:text-3xl font-bold text-emerald-600 mb-1">{{ $teamCount }}</div>
                         <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Teams</div>
                         <div class="text-xs text-gray-500 mt-1 hidden md:block">im Wettbewerb</div>
+                    </div>
+                </a>
+
+                {{-- Schüler Counter --}}
+                <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                            </svg>
+                        </div>
+                        <div class="text-2xl md:text-3xl font-bold text-orange-600 mb-1">{{ $studentCount }}</div>
+                        <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Schüler</div>
+                        <div class="text-xs text-gray-500 mt-1 hidden md:block">dabei</div>
                     </div>
                 </a>
             </div>

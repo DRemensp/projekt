@@ -31,16 +31,29 @@
                 <div class="max-w-4xl mx-auto mb-8">
                     <div class="relative bg-white rounded-lg shadow-md p-6 {{ $schoolColors['bg-light'] ?? 'bg-blue-50' }}">
 
-                        <!-- Bonus-Indikator in der oberen rechten Ecke -->
+                        <!-- Mitglieder-Button in der oberen linken Ecke -->
+                        @if($selectedTeam->members && ((is_array($selectedTeam->members) && count($selectedTeam->members) > 0) || (is_string($selectedTeam->members) && count(json_decode($selectedTeam->members, true)) > 0)))
+                            <div class="absolute top-4 left-4">
+                                <button class="members-btn bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium cursor-pointer hover:bg-blue-200 transition-all duration-200 shadow-sm border border-blue-200"
+                                        onclick="openMembersModal()"
+                                        onmouseover="this.style.transform='scale(1.05)'"
+                                        onmouseout="this.style.transform='scale(1)'"
+                                        title="Klicken für Mitglieder">
+                                    👥 Mitglieder
+                                </button>
+                            </div>
+                        @endif
+
+                        <!-- Bonus-Button in der oberen rechten Ecke -->
                         @if($selectedTeam->bonus)
                             <div class="absolute top-4 right-4">
-                                <div class="bonus-indicator bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-all duration-200 shadow-sm border border-green-200"
-                                     onclick="showBonusInfo(event)"
-                                     onmouseover="this.style.transform='scale(1.05)'"
-                                     onmouseout="this.style.transform='scale(1)'"
-                                     title="Klicken für mehr Informationen">
+                                <button class="bonus-btn bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-all duration-200 shadow-sm border border-green-200"
+                                        onclick="openBonusModal()"
+                                        onmouseover="this.style.transform='scale(1.05)'"
+                                        onmouseout="this.style.transform='scale(1)'"
+                                        title="Klicken für Bonus-Info">
                                     ⭐ Bonus
-                                </div>
+                                </button>
                             </div>
                         @endif
 
@@ -232,133 +245,106 @@
         </div>
     </div>
 
+    <!-- Mitglieder Modal -->
+    <div id="membersModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">👥 Mitglieder</h3>
+                        <button onclick="closeModal('membersModal')" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="membersContent" class="space-y-2">
+                        <!-- Wird von JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bonus Modal -->
+    <div id="bonusModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">⭐ Bonus</h3>
+                        <button onclick="closeModal('bonusModal')" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="text-green-600 text-2xl">👕</div>
+                        <div>
+                            <h4 class="font-medium text-gray-800 mb-2">Bonus für passende Outfits</h4>
+                            <p class="text-sm text-gray-600">
+                                Dieses Team hat passende Outfits als Team getragen und erhält dafür Bonus-Punkte in der Gesamtwertung.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if(isset($teamsForJs) && isset($colorMapForJs))
         <script>
             // Daten für JavaScript verfügbar machen
             const allTeamsData = @json($teamsForJs);
             const colorMap = @json($colorMapForJs);
             const isAdmin = @json($isAdmin ?? false);
+            const teamMembers = @json($selectedTeam->members ?? null);
         </script>
     @endif
 
-    <!-- Bonus Info Popup Script -->
     <script>
-        // Bonus Info Tooltip Funktionen
-        function showBonusInfo(event) {
-            event.stopPropagation();
+        function openMembersModal() {
+            // Teammitglieder parsen - berücksichtigt sowohl Array als auch JSON-String
+            let membersData = null;
 
-            // Tooltip erstellen
-            const tooltip = document.createElement('div');
-            tooltip.id = 'bonus-tooltip';
-            tooltip.className = 'fixed z-50 bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-w-sm animate-fade-in';
-            tooltip.style.animation = 'fadeIn 0.2s ease-out';
-            tooltip.innerHTML = `
-                <div class="flex items-start space-x-2">
-                    <div class="text-green-600 text-xl">👕</div>
-                    <div>
-                        <h4 class="font-semibold text-gray-800 mb-1">Bonus für passende Outfits</h4>
-                        <p class="text-sm text-gray-600">
-                            Dieses Team hat passende Outfits als Team getragen und erhält dafür Bonus-Punkte in der Gesamtwertung.
-                        </p>
-                    </div>
-                </div>
-                <div class="mt-2 pt-2 border-t border-gray-100">
-                    <p class="text-xs text-gray-500">💡 Klicke irgendwo anders, um das Fenster zu schließen</p>
-                </div>
-            `;
-
-            // Position berechnen
-            const rect = event.target.getBoundingClientRect();
-            const tooltipWidth = 280;
-            const tooltipHeight = 120;
-
-            let left = rect.left + window.scrollX;
-            let top = rect.bottom + window.scrollY + 8;
-
-            // Auf der linken Seite anzeigen, wenn rechts kein Platz
-            if (left + tooltipWidth > window.innerWidth) {
-                left = rect.left + window.scrollX - tooltipWidth - 8;
-            }
-
-            // Nach oben verschieben, wenn unten kein Platz
-            if (top + tooltipHeight > window.innerHeight + window.scrollY) {
-                top = rect.top + window.scrollY - tooltipHeight - 8;
-            }
-
-            // Mindestabstand zu den Rändern
-            left = Math.max(10, Math.min(left, window.innerWidth - tooltipWidth - 10));
-            top = Math.max(10, top);
-
-            tooltip.style.left = left + 'px';
-            tooltip.style.top = top + 'px';
-
-            // Vorheriges Tooltip entfernen
-            const existingTooltip = document.getElementById('bonus-tooltip');
-            if (existingTooltip) {
-                existingTooltip.remove();
-            }
-
-            document.body.appendChild(tooltip);
-
-            // Debug-Ausgabe
-            console.log('Bonus-Tooltip erstellt und positioniert');
-
-            // Tooltip nach 8 Sekunden automatisch ausblenden
-            setTimeout(() => {
-                const currentTooltip = document.getElementById('bonus-tooltip');
-                if (currentTooltip) {
-                    currentTooltip.style.animation = 'fadeOut 0.2s ease-in';
-                    setTimeout(() => {
-                        if (currentTooltip.parentNode) {
-                            currentTooltip.remove();
-                        }
-                    }, 200);
+            if (Array.isArray(teamMembers)) {
+                membersData = teamMembers;
+            } else if (typeof teamMembers === 'string') {
+                try {
+                    membersData = JSON.parse(teamMembers);
+                } catch (e) {
+                    membersData = null;
                 }
-            }, 8000);
+            }
+
+            const content = document.getElementById('membersContent');
+
+            if (!membersData || !Array.isArray(membersData) || membersData.length === 0) {
+                content.innerHTML = '<p class="text-gray-500 text-sm">Keine Mitglieder gefunden.</p>';
+            } else {
+                let html = '';
+                membersData.forEach(member => {
+                    html += `
+                        <div class="flex items-center space-x-2 p-2 bg-gray-50 rounded">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-sm text-gray-700">${member}</span>
+                        </div>
+                    `;
+                });
+                content.innerHTML = html;
+            }
+
+            document.getElementById('membersModal').classList.remove('hidden');
         }
 
-        function hideBonusInfo() {
-            const tooltip = document.getElementById('bonus-tooltip');
-            if (tooltip) {
-                tooltip.style.animation = 'fadeOut 0.2s ease-in';
-                setTimeout(() => {
-                    if (tooltip.parentNode) {
-                        tooltip.remove();
-                    }
-                }, 200);
-            }
+        function openBonusModal() {
+            document.getElementById('bonusModal').classList.remove('hidden');
         }
 
-        // Event Listener für Klicks außerhalb des Tooltips
-        document.addEventListener('click', function(event) {
-            const tooltip = document.getElementById('bonus-tooltip');
-            if (tooltip && !tooltip.contains(event.target) && !event.target.closest('.bonus-indicator')) {
-                hideBonusInfo();
-            }
-        });
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
 
-        // ESC-Taste zum Schließen
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                hideBonusInfo();
-            }
-        });
-
-        // CSS-Animationen hinzufügen
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            @keyframes fadeOut {
-                from { opacity: 1; transform: translateY(0); }
-                to { opacity: 0; transform: translateY(-10px); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Test ob die Funktion geladen wurde
-        console.log('Bonus Info Script geladen');
     </script>
 </x-layout>
