@@ -15,10 +15,10 @@
             </label>
             <div class="relative">
                 <select
-                    name="klasse_id"
-                    id="discipline_klasse_id"
-                    class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300 appearance-none cursor-pointer"
-                    required>
+                        name="klasse_id"
+                        id="discipline_klasse_id"
+                        class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300 appearance-none cursor-pointer"
+                        required>
                     <option value="" disabled {{ old('klasse_id') ? '' : 'selected' }} class="text-gray-400">-- Bitte wählen --</option>
                     @foreach($disciplineklasses as $disciplineklasse)
                         <option value="{{ $disciplineklasse->id }}" {{ old('klasse_id') == $disciplineklasse->id ? 'selected' : '' }} class="text-gray-800">
@@ -49,13 +49,13 @@
             </label>
             <div class="relative">
                 <input
-                    type="text"
-                    name="discipline_name"
-                    id="discipline_name"
-                    placeholder="z.B. Weitsprung"
-                    required
-                    value="{{ old('discipline_name') }}"
-                    class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300"
+                        type="text"
+                        name="discipline_name"
+                        id="discipline_name"
+                        placeholder="z.B. Weitsprung"
+                        required
+                        value="{{ old('discipline_name') }}"
+                        class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300"
                 >
             </div>
             @error('discipline_name')
@@ -79,10 +79,10 @@
             </label>
             <div class="relative">
                 <select
-                    name="higher_is_better"
-                    id="higher_is_better"
-                    class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300 appearance-none cursor-pointer"
-                    required
+                        name="higher_is_better"
+                        id="higher_is_better"
+                        class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300 appearance-none cursor-pointer"
+                        required
                 >
                     <option value="1" {{ old('higher_is_better', '1') == '1' ? 'selected' : '' }} class="text-gray-800">Ja (z.B. Weitwurf, Hochsprung)</option>
                     <option value="0" {{ old('higher_is_better') == '0' ? 'selected' : '' }} class="text-gray-800">Nein (z.B. Sprintzeit)</option>
@@ -110,11 +110,13 @@
             </label>
             <div class="relative">
                 <textarea
-                    name="description"
-                    id="description"
-                    rows="3"
-                    placeholder="Kurze Beschreibung der Disziplin oder Regeln"
-                    class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300 resize-none"
+                        name="description"
+                        id="description"
+                        rows="3"
+                        placeholder="Kurze Beschreibung der Disziplin oder Regeln"
+                        maxlength="255"
+                        class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm hover:border-gray-300 resize-none"
+                        oninput="updateCharacterCount()"
                 >{{ old('description') }}</textarea>
                 <div class="absolute top-3 right-3">
                     <svg class="w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -122,19 +124,29 @@
                     </svg>
                 </div>
             </div>
-            @error('description')
-            <div class="flex items-center gap-2 mt-2 text-red-600">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                </svg>
-                <span class="text-xs font-medium">{{ $message }}</span>
+            <div class="flex justify-between items-center mt-2">
+                <div class="flex items-center gap-2">
+                    @error('description')
+                    <div class="flex items-center gap-1 text-red-600">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-xs font-medium">{{ $message }}</span>
+                    </div>
+                    @enderror
+                </div>
+                <div class="text-xs text-gray-500 flex items-center gap-1">
+                    <span id="character-count">0</span>
+                    <span>/</span>
+                    <span class="text-gray-400">255</span>
+                    <span class="text-gray-400">Zeichen</span>
+                </div>
             </div>
-            @enderror
         </div>
 
         <button
-            type="submit"
-            class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                type="submit"
+                class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
         >
             <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -144,3 +156,32 @@
         </button>
     </form>
 </div>
+
+<script>
+    function updateCharacterCount() {
+        const textarea = document.getElementById('description');
+        const counter = document.getElementById('character-count');
+        const currentLength = textarea.value.length;
+        const maxLength = 255;
+
+        // Update counter
+        counter.textContent = currentLength;
+
+        // Farben basierend auf Nähe zum Limit
+        if (currentLength >= maxLength) {
+            counter.classList.remove('text-gray-500', 'text-yellow-600');
+            counter.classList.add('text-red-600');
+        } else if (currentLength >= maxLength * 0.8) { // 80% des Limits (204 Zeichen)
+            counter.classList.remove('text-gray-500', 'text-red-600');
+            counter.classList.add('text-yellow-600');
+        } else {
+            counter.classList.remove('text-red-600', 'text-yellow-600');
+            counter.classList.add('text-gray-500');
+        }
+    }
+
+    // Initialisiere den Counter beim Laden der Seite
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCharacterCount();
+    });
+</script>

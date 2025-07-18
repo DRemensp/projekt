@@ -20,7 +20,7 @@ class DisciplineController extends Controller
             'klasse_id'         => 'required|exists:klasses,id',
             'discipline_name'   => 'required|string|max:255',
             'higher_is_better'  => 'required|boolean',
-            'description'       => 'nullable|string'
+            'description' => 'nullable|string|max:255'
         ]);
 
         // erstellt die Disziplin
