@@ -203,7 +203,7 @@
                                         </svg>
                                         Anmerkung:
                                     </span>
-                                    <span class="text-green-600">{{ $discipline->description ?? 'Nichts Relevantes, bei Fragen Admin fragen' }}</span>
+                                    <span class="text-green-600">{{ $discipline->description ?? 'Keine Eintragung, bei Fragen bitte Admin aufsuchen' }}</span>
                                 </div>
                             </div>
                         </div>
