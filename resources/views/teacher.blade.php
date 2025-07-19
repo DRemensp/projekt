@@ -3,12 +3,12 @@
         Teacher Dashboard - Score Eingabe
     </x-slot:heading>
 
-    <div class="bg-gradient-to-br from-blue-100 to-green-100 py-8">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="p-6 md:p-8 text-gray-900">
+                <div class="p-6 text-gray-900">
 
-                    <h1 class="text-3xl font-bold text-indigo-700 mb-8 text-center border-b pb-4">
-                        Scores eintragen / bearbeiten
+                    <h1 class="text-3xl font-bold text-indigo-700 text-center border-b">
+                        Wertungs Editor
                     </h1>
 
 
