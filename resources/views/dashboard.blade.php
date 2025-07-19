@@ -9,7 +9,7 @@
 
                 {{-- Willkommensnachricht --}}
                 <div class="mb-3">
-                    <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 text-center mb-4 border-b-2 border-indigo-300 pb-4">
+                    <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 text-center ">
                         Willkommen, {{ $klasse->name ?? 'Unbekannte Klasse' }}!
                     </h1>
                 </div>
@@ -52,20 +52,17 @@
 
                 {{-- Disziplin-Bereich --}}
                 @if($discipline)
-                    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 md:p-8">
+
                         {{-- Disziplin Header --}}
                         <div class="mb-6 text-center">
-                            <h3 class="text-2xl md:text-3xl font-bold text-green-700 mb-2 flex items-center justify-center gap-3">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                                </svg>
+                            <h3 class="text-3xl md:text-3xl font-bold text-green-700 mb-2 flex items-center justify-center gap-3">
                                 {{ $discipline->name }}
                             </h3>
                             <div class="bg-gradient-to-r from-green-500 to-blue-500 h-1 w-38 mx-auto rounded-full"></div>
                         </div>
 
                         {{-- Score Eingabe Formular --}}
-                        <div class="bg-gradient-to-br from-gray-50 to-blue-50 p-6 md:p-8 rounded-xl border border-gray-200 shadow-inner">
+                        <div class="bg-gradient-to-br from-gray-50 to-blue-50 p-6 md:p-8 rounded-xl border border-gray-400 shadow-inner">
                             <h4 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                                 <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -179,7 +176,7 @@
                         </div>
 
                         {{-- Disziplin-Informationen --}}
-                        <div class="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200 p-6 rounded-xl mt-6 shadow-inner">
+                        <div class="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-gray-300 p-6 rounded-xl mt-6 shadow-inner">
                             <h5 class="text-lg font-bold text-green-700 mb-4 flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -206,11 +203,11 @@
                                         </svg>
                                         Anmerkung:
                                     </span>
-                                    <span class="text-green-600">{{ $discipline->description }}</span>
+                                    <span class="text-green-600">{{ $discipline->description ?? 'Nichts Relevantes, bei Fragen Admin fragen' }}</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
 
                 @else
                     {{-- Keine Disziplin zugewiesen --}}
