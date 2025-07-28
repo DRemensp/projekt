@@ -122,18 +122,33 @@ class RankingController extends Controller
 
         foreach ($disciplines as $discipline) {
             if ($discipline->teams->isEmpty()) continue;
+
             $teamsScores = $discipline->teams->map(function ($team) use ($discipline, $scoresystem) {
                 $score1 = $team->pivot->score_1;
                 $score2 = $team->pivot->score_2;
-                $best_score = 0;
-                if ($discipline->higher_is_better) {
-                    $best_score = ($score1 === null && $score2 === null) ? 0 : max($score1 ?? -INF, $score2 ?? -INF);
-                } else {
-                    $temp_min = ($score1 === null && $score2 === null) ? INF : min($score1 ?? INF, $score2 ?? INF);
-                    $best_score = ($temp_min === INF) ? 0 : $temp_min;
+
+                // Wenn beide Scores null sind, kein Ergebnis für dieses Team
+                if ($score1 === null && $score2 === null) {
+                    return null; // Team hat nicht teilgenommen
                 }
+
+                $best_score = null;
+                if ($discipline->higher_is_better) {
+                    $best_score = max($score1 ?? -INF, $score2 ?? -INF);
+                    // Wenn das Ergebnis -INF ist, bedeutet das keine gültigen Werte
+                    if ($best_score === -INF) {
+                        return null;
+                    }
+                } else {
+                    $best_score = min($score1 ?? INF, $score2 ?? INF);
+                    // Wenn das Ergebnis INF ist, bedeutet das keine gültigen Werte
+                    if ($best_score === INF) {
+                        return null;
+                    }
+                }
+
                 return ['team_id' => $team->id, 'best_score' => $best_score];
-            })->filter(fn($data) => true);
+            })->filter(fn($data) => $data !== null); // Nur Teams mit gültigen Ergebnissen
 
             $teamsScores = $discipline->higher_is_better ? $teamsScores->sortByDesc('best_score') : $teamsScores->sortBy('best_score');
             $platz = 1;
@@ -183,6 +198,7 @@ class RankingController extends Controller
             $klasseScore = $teamCount > 0 ? (int)round($totalScore / $teamCount) : 0;
             Klasse::where('id', $klasse->id)->update(['score' => $klasseScore]);
         }
+
         $schools = School::with(['klasses' => function ($query) {
             $query->select('id', 'school_id', 'score')->withCount('teams')->withSum('teams', 'score');
         }])->select('id')->get();
@@ -197,5 +213,4 @@ class RankingController extends Controller
             School::where('id', $school->id)->update(['score' => $schoolScore]);
         }
         return redirect()->back()->with('success', 'Alle Scores wurden erfolgreich neu berechnet!');
-    }
-}
+    }}
