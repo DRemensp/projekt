@@ -32,12 +32,14 @@
                     </a>
                 </div>
 
-                {{-- 5 Feature Slides --}}
+                {{-- 6 Feature Slides --}}
                 <div class="w-full max-w-4xl mx-auto relative">
                     <div class="overflow-hidden rounded-xl">
-                        <div id="slideshow-container" class="flex transition-transform duration-500 ease-in-out" style="width: 500%;">
-                            {{-- Slide 1: Ranking & Live Auswertung --}}
-                            <div class="w-full flex-shrink-0 px-4" style="width: 20%;">
+                        <div id="slideshow-container" class="flex transition-transform duration-500 ease-in-out" style="width: 600%;">
+
+
+                            {{-- Slide 2: Ranking & Live Auswertung --}}
+                            <div class="w-full flex-shrink-0 px-4" style="width: 16.67%;">
                                 <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center min-h-[320px]">
                                     <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
@@ -62,8 +64,8 @@
                                 </div>
                             </div>
 
-                            {{-- Slide 2: Verwaltung & Stammdaten --}}
-                            <div class="w-full flex-shrink-0 px-4" style="width: 20%;">
+                            {{-- Slide 3: Verwaltung & Stammdaten --}}
+                            <div class="w-full flex-shrink-0 px-4" style="width: 16.67%;">
                                 <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center min-h-[320px]">
                                     <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-8 w-8 text-teal-600">
@@ -91,8 +93,8 @@
                                 </div>
                             </div>
 
-                            {{-- Slide 3: Punkte erfassen --}}
-                            <div class="w-full flex-shrink-0 px-4" style="width: 20%;">
+                            {{-- Slide 4: Punkte erfassen --}}
+                            <div class="w-full flex-shrink-0 px-4" style="width: 16.67%;">
                                 <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center min-h-[320px]">
                                     <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
@@ -117,8 +119,10 @@
                                 </div>
                             </div>
 
-                            {{-- Slide 4: Welcome Page Features --}}
-                            <div class="w-full flex-shrink-0 px-4" style="width: 20%;">
+
+
+                            {{-- Slide 5: Welcome Page Features --}}
+                            <div class="w-full flex-shrink-0 px-4" style="width: 16.67%;">
                                 <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center min-h-[320px]">
                                     <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -145,8 +149,8 @@
                                 </div>
                             </div>
 
-                            {{-- Slide 5: Laufzettel --}}
-                            <div class="w-full flex-shrink-0 px-4" style="width: 20%;">
+                            {{-- Slide 6: Laufzettel --}}
+                            <div class="w-full flex-shrink-0 px-4" style="width: 16.67%;">
                                 <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center min-h-[320px]">
                                     <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -172,16 +176,50 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="w-full flex-shrink-0 px-4" style="width: 16.67%;">
+                                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center min-h-[320px]">
+                                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14,2 14,8 20,8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                            <polyline points="10,9 9,9 8,9"></polyline>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-4">📚 Archiv & Historie</h3>
+                                    <div class="text-gray-600 text-sm leading-relaxed flex-grow">
+                                        <ul class="space-y-3 text-left">
+                                            <li class="flex items-center gap-2">
+                                                <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                                Endstände vergangener Wettbewerbe
+                                            </li>
+                                            <li class="flex items-center gap-2">
+                                                <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                                Detaillierte Archiv-Ranglisten
+                                            </li>
+                                            <li class="flex items-center gap-2">
+                                                <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                                Historische Statistiken & Vergleiche
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    {{-- Slide Indicators (5 Punkte) --}}
+
+
+                    {{-- Slide Indicators (6 Punkte) --}}
                     <div class="flex justify-center mt-8 space-x-2">
                         <button class="slide-indicator w-3 h-3 rounded-full bg-indigo-600 transition-all duration-300" data-slide="0"></button>
                         <button class="slide-indicator w-3 h-3 rounded-full bg-gray-300 transition-all duration-300" data-slide="1"></button>
                         <button class="slide-indicator w-3 h-3 rounded-full bg-gray-300 transition-all duration-300" data-slide="2"></button>
                         <button class="slide-indicator w-3 h-3 rounded-full bg-gray-300 transition-all duration-300" data-slide="3"></button>
                         <button class="slide-indicator w-3 h-3 rounded-full bg-gray-300 transition-all duration-300" data-slide="4"></button>
+                        <button class="slide-indicator w-3 h-3 rounded-full bg-gray-300 transition-all duration-300" data-slide="5"></button>
                     </div>
                 </div>
             </div>
@@ -292,7 +330,7 @@
             const container = document.getElementById('slideshow-container');
             const indicators = document.querySelectorAll('.slide-indicator');
             let currentSlide = 0;
-            const totalSlides = 5;
+            const totalSlides = 6; // Geändert von 5 auf 6
             const slideInterval = 5000; // 5 Sekunden
             let slideshow;
 
@@ -301,7 +339,7 @@
                 if (slideIndex < 0) slideIndex = 0;
                 if (slideIndex >= totalSlides) slideIndex = totalSlides - 1;
 
-                const offset = -(slideIndex * 20); // 20% pro Slide (100% / 5 Slides)
+                const offset = -(slideIndex * (100 / totalSlides)); // Geändert von 20% auf (100/6)%
                 container.style.transform = `translateX(${offset}%)`;
 
                 // Update indicators

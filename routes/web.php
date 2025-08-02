@@ -72,6 +72,21 @@ Route::get('/laufzettel', [LaufzettelController::class, 'index'])
 Route::get('/laufzettel/{team}', [LaufzettelController::class, 'show'])
     ->name('laufzettel.show');
 
+
+Route::get('/archive', [App\Http\Controllers\ArchiveController::class, 'index'])
+    ->name('archive.index');
+
+Route::get('/archive/{archive}', [App\Http\Controllers\ArchiveController::class, 'show'])
+    ->name('archive.show');
+
+Route::post('/archive', [App\Http\Controllers\ArchiveController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('archive.store');
+
+Route::delete('/archive/{archive}', [App\Http\Controllers\ArchiveController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('archive.destroy');
+
 Route::post('/scoresystem', [ScoresystemController::class, 'store'])->name('scoresystem.store');
 
 // Füge diese Route zu deiner routes/web.php hinzu:

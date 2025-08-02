@@ -43,6 +43,11 @@
                     📋 Laufzettel
                 </a>
 
+                <a href="{{ url('/archive') }}"
+                   class="w-32 py-3 rounded text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:scale-105 transition-all duration-200 text-lg font-medium text-center {{ Request::is('archive*') ? 'bg-blue-100 text-blue-600' : '' }}">
+                    📚 Archiv
+                </a>
+
                 @auth
                     @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher'))
                         <a href="{{ url('/teacher') }}"
@@ -101,6 +106,10 @@
             <a href="{{ url('/laufzettel') }}"
                class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded transition-all duration-200"
             >📋 Laufzettel</a>
+            <a href="{{ url('/archive') }}"
+               class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded transition-all duration-200"
+            >📚 Archive</a>
+
 
             @auth
                 @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher'))
