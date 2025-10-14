@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Comment;
+use App\Services\PerspectiveService;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 
 class Comments extends Component
 {
@@ -26,7 +28,8 @@ class Comments extends Component
 
     public function render()
     {
-        $allComments = Comment::latest()->get();
+        // Zeige nur genehmigte Kommentare an
+        $allComments = Comment::approved()->latest()->get();
         $visibleComments = $allComments->take($this->commentsToShow);
 
         return view('livewire.comments', [
@@ -40,16 +43,85 @@ class Comments extends Component
     {
         $this->validate();
 
-        Comment::create([
-            'message'     => $this->message,
-            'author_name' => $this->authorName ?: 'Anonym',
-            'ip_address'  => request()->ip(),
-        ]);
+        try {
+            // Erstelle PerspectiveService
+            $moderationService = new PerspectiveService();
 
-        $this->message = '';
-        $this->authorName = '';
+            // Analysiere den Kommentar
+            $analysis = $moderationService->analyzeText($this->message);
 
-        session()->flash('comment_success', 'Kommentar erfolgreich hinzugefügt!');
+            // Log die Analyse für Debugging
+            Log::info('Comment moderation analysis', [
+                'text' => substr($this->message, 0, 50) . '...',
+                'analysis' => $analysis
+            ]);
+
+            $moderationStatus = 'pending';
+            $moderationReason = null;
+
+            // Entscheide basierend auf der AI-Analyse
+            switch ($analysis['action']) {
+                case 'allow':
+                    $moderationStatus = 'approved';
+                    break;
+
+                case 'moderate':
+                    $moderationStatus = 'pending';
+                    $moderationReason = 'Automatisch zur manuellen Überprüfung markiert wegen: ' .
+                        $moderationService->getReasonText($analysis);
+                    break;
+
+                case 'block':
+                    $moderationStatus = 'blocked';
+                    $moderationReason = 'Automatisch blockiert wegen: ' .
+                        $moderationService->getReasonText($analysis);
+                    break;
+            }
+
+            // Erstelle den Kommentar
+            $comment = Comment::create([
+                'message' => $this->message,
+                'author_name' => $this->authorName ?: 'Anonym',
+                'ip_address' => request()->ip(),
+                'moderation_status' => $moderationStatus,
+                'moderation_scores' => $analysis['scores'],
+                'moderation_reason' => $moderationReason,
+                'moderated_at' => $moderationStatus !== 'pending' ? now() : null,
+            ]);
+
+            // Setze Eingabefelder zurück
+            $this->message = '';
+            $this->authorName = '';
+
+            // Zeige passende Nachricht basierend auf Moderation
+            if ($moderationStatus === 'approved') {
+                session()->flash('comment_success', 'Kommentar erfolgreich hinzugefügt!');
+            } elseif ($moderationStatus === 'pending') {
+                session()->flash('comment_pending', 'Ihr Kommentar wird überprüft und dann freigeschaltet.');
+            } else {
+                session()->flash('comment_blocked', 'Ihr Kommentar konnte nicht veröffentlicht werden. Bitte achten Sie auf einen respektvollen Umgangston.');
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Error storing comment', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            // Fallback: Bei Fehlern direkt genehmigen (oder zur manuellen Überprüfung)
+            Comment::create([
+                'message' => $this->message,
+                'author_name' => $this->authorName ?: 'Anonym',
+                'ip_address' => request()->ip(),
+                'moderation_status' => 'pending', // Sicherheitshalber zur manuellen Überprüfung
+                'moderation_reason' => 'Moderations-Service nicht verfügbar - manuelle Überprüfung erforderlich',
+            ]);
+
+            $this->message = '';
+            $this->authorName = '';
+
+            session()->flash('comment_pending', 'Ihr Kommentar wird überprüft und dann freigeschaltet.');
+        }
     }
 
     public function loadMore()
@@ -64,6 +136,11 @@ class Comments extends Component
 
     public function destroy(Comment $comment)
     {
+        // Prüfe ob User eingeloggt ist
+        if (!auth()->check()) {
+            abort(403, 'Sie müssen eingeloggt sein, um Kommentare zu löschen');
+        }
+
         // Nur Admin und Teacher dürfen löschen
         if (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('teacher')) {
             abort(403, 'Keine Berechtigung zum Löschen von Kommentaren');

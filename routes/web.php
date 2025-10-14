@@ -31,8 +31,10 @@ Route::view('profile', 'profile')
 
 
 Route::delete('/klasses/{klasseId}', [KlasseController::class, 'destroy'])
+    ->middleware(['auth'])
     ->name('klasses.destroy');
 Route::post('/klasses', [KlasseController::class, 'store'])
+    ->middleware(['auth'])
     ->name('klasses.store');
 
 
@@ -58,10 +60,12 @@ Route::get('/admin', function () {
 
 
 Route::post('/disciplines-teams', [TeamTableController::class, 'storeOrUpdate'])
+    ->middleware(['auth'])
     ->name('teamTable.storeOrUpdate');
 
 
 Route::post('/ranking/recalculate', [RankingController::class, 'recalculateAllScores'])
+    ->middleware(['auth'])
     ->name('ranking.recalculate');
 Route::get('/ranking', [RankingController::class, 'index'])
     ->name('ranking.index');
@@ -87,10 +91,27 @@ Route::delete('/archive/{archive}', [App\Http\Controllers\ArchiveController::cla
     ->middleware(['auth'])
     ->name('archive.destroy');
 
-Route::post('/scoresystem', [ScoresystemController::class, 'store'])->name('scoresystem.store');
+Route::post('/scoresystem', [ScoresystemController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('scoresystem.store');
 
-// Füge diese Route zu deiner routes/web.php hinzu:
-Route::post('/team/{team}/toggle-bonus', [LaufzettelController::class, 'toggleBonus'])->name('team.toggle-bonus');
+Route::post('/team/{team}/toggle-bonus', [LaufzettelController::class, 'toggleBonus'])
+    ->middleware(['auth'])
+    ->name('team.toggle-bonus');
+
+// Moderation Routes (nur für Admin & Teacher)
+Route::get('/moderation', [App\Http\Controllers\ModerationController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('moderation.index');
+Route::delete('/moderation/{comment}', [App\Http\Controllers\ModerationController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('moderation.destroy');
+Route::post('/moderation/{comment}/approve', [App\Http\Controllers\ModerationController::class, 'approve'])
+    ->middleware(['auth'])
+    ->name('moderation.approve');
+Route::post('/moderation/{comment}/block', [App\Http\Controllers\ModerationController::class, 'block'])
+    ->middleware(['auth'])
+    ->name('moderation.block');
 
 //nicht wundern wenn manche Index nicht in Ressourcen angezeigt wird, hatte ganz komischen bug und fehler nicht gefunden,
 //also einfach sepperat gemacht

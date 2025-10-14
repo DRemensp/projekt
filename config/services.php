@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'perspective' => [
+        'api_key' => env('PERSPECTIVE_API_KEY'),
+        'attributes' => explode(',', env('PERSPECTIVE_ATTRIBUTES', 'TOXICITY')),
+        'language_hints' => explode(',', env('PERSPECTIVE_LANGUAGE_HINTS', 'de,en')),
+        'block_threshold' => (float) env('PERSPECTIVE_BLOCK_THRESHOLD', 0.75),
+        'moderate_threshold' => (float) env('PERSPECTIVE_MODERATE_THRESHOLD', 0.60),
+        'timeout' => (int) env('PERSPECTIVE_TIMEOUT', 4)
+    ]
+
 ];

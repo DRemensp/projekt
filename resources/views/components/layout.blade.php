@@ -146,6 +146,7 @@
 
 <main class="pt-16">
     {{ $slot }}
+    @include('cookie-consent::index')
 </main>
 
 <footer class="bg-gray-800 text-white py-6 duration-300">

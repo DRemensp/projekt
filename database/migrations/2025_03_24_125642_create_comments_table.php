@@ -13,6 +13,10 @@ return new class extends Migration
             $table->text('message');
             $table->string('author_name', 50)->nullable();
             $table->string('ip_address', 45);           // nur in datenbank sichtbar
+            $table->enum('moderation_status', ['pending', 'approved', 'blocked'])->default('pending');
+            $table->json('moderation_scores')->nullable();
+            $table->text('moderation_reason')->nullable();
+            $table->timestamp('moderated_at')->nullable();
             $table->timestamps();
         });
     }
