@@ -112,6 +112,9 @@ Route::post('/moderation/{comment}/approve', [App\Http\Controllers\ModerationCon
 Route::post('/moderation/{comment}/block', [App\Http\Controllers\ModerationController::class, 'block'])
     ->middleware(['auth'])
     ->name('moderation.block');
+Route::post('/moderation/toggle-comments', [App\Http\Controllers\ModerationController::class, 'toggleComments'])
+    ->middleware(['auth'])
+    ->name('moderation.toggle');
 
 //nicht wundern wenn manche Index nicht in Ressourcen angezeigt wird, hatte ganz komischen bug und fehler nicht gefunden,
 //also einfach sepperat gemacht

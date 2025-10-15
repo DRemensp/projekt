@@ -322,18 +322,17 @@
                         <div class="space-y-4">
                             @foreach($bestTeamsPerDiscipline as $champion)
                                 @php $colors = SchoolColorService::getColorClasses($champion['team_school_id'] ?? 0); @endphp
-                                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-r {{ $colors['gradient'] }} border {{ $colors['border-light'] }} hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                                    <div class="absolute top-4 right-4">
-                                        <span class="text-2xl">🏆</span>
+                                <div onclick="openDisciplineModal({{ $champion['discipline_id'] }})" class="group relative overflow-hidden rounded-xl bg-gradient-to-r {{ $colors['gradient'] }} border {{ $colors['border-light'] }} hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                                    <div class="absolute top-4 right-4 flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                        </svg>
                                     </div>
 
                                     <div class="p-6">
                                         <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 w-16 h-16 {{ $colors['bg'] }} border-2 {{ $colors['border'] }} rounded-full flex items-center justify-center text-2xl font-bold {{ $colors['text'] }}">
-                                                👑
-                                            </div>
                                             <div class="flex-1 min-w-0">
-                                                <h3 class="text-xl font-bold text-gray-800 mb-1">
+                                                <h3 class="text-xl font-bold text-gray-800 mb-1 group-hover:text-gray-900 transition-colors">
                                                     {{ $champion['discipline_name'] ?? 'Disziplin ' . $champion['discipline_id'] }}
                                                 </h3>
                                                 <p class="text-lg font-semibold {{ $colors['text'] }} mb-2">
@@ -344,7 +343,11 @@
                                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                                     </svg>
                                                     <span class="text-lg font-bold {{ $colors['text-points'] }}">{{ $champion['best_score'] }}</span>
+                                                    <span class="text-2xl">🏆</span>
                                                     <span class="text-sm text-gray-500">Bestleistung</span>
+                                                </div>
+                                                <div class="mt-2 text-sm text-gray-600 group-hover:text-gray-800 transition-colors">
+                                                    → Klicken für Details und vollständige Rangliste
                                                 </div>
                                             </div>
                                         </div>
@@ -359,11 +362,32 @@
         </div>
     </div>
 
+    <!-- Modal für Disziplin-Details -->
+    <div id="disciplineModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" onclick="closeDisciplineModal(event)">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden" onclick="event.stopPropagation()">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 flex justify-between items-center">
+                <h3 id="modalTitle" class="text-2xl font-bold text-white"></h3>
+                <button onclick="closeDisciplineModal()" class="text-white hover:text-gray-200 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript für Tab-Navigation und externe Suchfunktionalität -->
     <script>
         // Daten für laufzettel-search.js bereitstellen
         const allTeamsData = @json($teamsForJs ?? []);
         const colorMap = @json($colorMapForJs ?? ['default' => []]);
+        const disciplineDetails = @json($disciplineDetailsForJs ?? []);
 
         // Tab Navigation
         function showSection(sectionName) {
@@ -384,6 +408,69 @@
             // Highlight active tab
             event.target.classList.remove('text-gray-600', 'hover:text-indigo-600');
             event.target.classList.add('bg-indigo-600', 'text-white');
+        }
+
+        // Modal Funktionen
+        function openDisciplineModal(disciplineId) {
+            const discipline = disciplineDetails[disciplineId];
+            if (!discipline) return;
+
+            const modal = document.getElementById('disciplineModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+
+            modalTitle.textContent = discipline.name;
+
+            // Simpel: Liste der Teams mit Platz und Score
+            let html = '<div class="space-y-3">';
+
+            if (discipline.teams.length === 0) {
+                html += '<p class="text-gray-600 text-center py-8">Keine Teams haben an dieser Disziplin teilgenommen.</p>';
+            } else {
+                discipline.teams.forEach(team => {
+                    const colors = getColorForSchool(team.school_id);
+                    const medal = team.rank === 1 ? '🥇' : team.rank === 2 ? '🥈' : team.rank === 3 ? '🥉' : '';
+
+                    html += `
+                        <div class="flex items-center justify-between p-4 bg-gradient-to-r ${colors.bgLight} border-l-4 ${colors.borderLight} rounded-lg hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center justify-center w-10 h-10 ${medal ? '' : 'bg-white rounded-full'}">
+                                    ${medal ? `<span class="text-2xl">${medal}</span>` : `<span class="font-bold text-gray-700 text-lg">${team.rank}</span>`}
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-900">${team.team_name}</div>
+                                    <div class="text-sm text-gray-600">${team.klasse_name}</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xl font-bold ${colors.textPoints}">${team.best_score}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            html += '</div>';
+            modalContent.innerHTML = html;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDisciplineModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('disciplineModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function getColorForSchool(schoolId) {
+            const colors = colorMap[schoolId] || colorMap['default'];
+            return {
+                bgLight: colors['bg-light'] || 'from-gray-50 to-gray-100',
+                borderLight: colors['border-light'] || 'border-gray-300',
+                textPoints: colors['text-points'] || 'text-gray-700'
+            };
         }
     </script>
 

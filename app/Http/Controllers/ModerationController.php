@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class ModerationController extends Controller
@@ -30,7 +31,9 @@ class ModerationController extends Controller
             'blocked' => Comment::where('moderation_status', 'blocked')->count(),
         ];
 
-        return view('moderation.index', compact('comments', 'stats'));
+        $commentsEnabled = Setting::commentsEnabled();
+
+        return view('moderation.index', compact('comments', 'stats', 'commentsEnabled'));
     }
 
     public function destroy(Comment $comment)
@@ -76,5 +79,22 @@ class ModerationController extends Controller
 
         return redirect()->route('moderation.index')
             ->with('success', 'Kommentar wurde blockiert!');
+    }
+
+    public function toggleComments()
+    {
+        // Zugriffskontrolle
+        if (!auth()->check() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('teacher'))) {
+            abort(403, 'Keine Berechtigung');
+        }
+
+        $isEnabled = Setting::toggleComments();
+
+        $message = $isEnabled
+            ? 'Kommentare wurden aktiviert!'
+            : 'Kommentare wurden deaktiviert!';
+
+        return redirect()->route('moderation.index')
+            ->with('success', $message);
     }
 }

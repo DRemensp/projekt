@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="container mx-auto px-4 py-8 mt-20">
+    <div class=" bg-gradient-to-br from-blue-100 to-green-100 mx-auto px-4 py-8">
         <!-- Header -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
@@ -26,6 +26,29 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            <!-- Toggle-Button für Kommentare -->
+            <div class="mb-6">
+                <form action="{{ route('moderation.toggle') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg {{ $commentsEnabled ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-green-600 hover:bg-green-700 text-white' }}">
+                        @if($commentsEnabled)
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                            </svg>
+                            Kommentare deaktivieren
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Kommentare aktivieren
+                        @endif
+                    </button>
+                    <div class="ml-3 text-sm text-gray-600">
+                        Status: <strong class="{{ $commentsEnabled ? 'text-green-600' : 'text-red-600' }}">{{ $commentsEnabled ? 'Aktiviert' : 'Deaktiviert' }}</strong>
+                    </div>
+                </form>
+            </div>
 
             <!-- Statistiken -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">

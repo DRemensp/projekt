@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Comment;
+use App\Models\Setting;
 use App\Services\PerspectiveService;
 use Livewire\Component;
 use Illuminate\Support\Facades\Log;
@@ -35,12 +36,19 @@ class Comments extends Component
         return view('livewire.comments', [
             'comments' => $visibleComments,
             'totalComments' => $allComments->count(),
-            'hasMoreComments' => $allComments->count() > $this->commentsToShow
+            'hasMoreComments' => $allComments->count() > $this->commentsToShow,
+            'commentsEnabled' => Setting::commentsEnabled()
         ]);
     }
 
     public function store()
     {
+        // Prüfe ob Kommentare aktiviert sind
+        if (!Setting::commentsEnabled()) {
+            session()->flash('comment_blocked', 'Kommentare sind derzeit deaktiviert.');
+            return;
+        }
+
         $this->validate();
 
         try {

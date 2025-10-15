@@ -76,7 +76,8 @@
         }
     </script>
 
-    <!-- Eingabebereich - wird durch JavaScript gesteuert -->
+    <!-- Eingabebereich - nur wenn Kommentare aktiviert sind -->
+    @if($commentsEnabled)
     <div id="comment-form-container" wire:ignore style="display: none;" class="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100 shadow-sm">
         <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -189,6 +190,24 @@
             </div>
         </form>
     </div>
+    @endif
+
+    <!-- Nachricht wenn Kommentare deaktiviert sind -->
+    @if(!$commentsEnabled)
+        <div class="mb-8 bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border border-gray-300 shadow-sm">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Kommentare deaktiviert</h3>
+                <p class="text-gray-600 text-sm">
+                    Die Kommentarfunktion wurde vom Administrator vorübergehend deaktiviert.
+                </p>
+            </div>
+        </div>
+    @endif
 
     <!-- Blockierte Nachricht für Moderation -->
     <div id="moderation-blocked-message" wire:ignore.self style="display: none;" class="mb-8 bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl border border-orange-200 shadow-sm">

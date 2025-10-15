@@ -60,6 +60,46 @@ class RankingController extends Controller
         }
         usort($bestTeamsPerDiscipline, fn($a, $b) => strcmp($a['discipline_name'], $b['discipline_name']));
 
+        // Detaillierte Rankings pro Disziplin für Modal
+        $disciplineDetailsForJs = [];
+        foreach ($disciplines as $discipline) {
+            $teamsData = [];
+
+            foreach ($discipline->teams as $team) {
+                $score1 = $team->pivot->score_1;
+                $score2 = $team->pivot->score_2;
+                $bestScore = $this->getTeamBestScore($score1, $score2, $discipline->higher_is_better);
+
+                // Nur Teams die teilgenommen haben (bestScore nicht null)
+                if ($bestScore !== null) {
+                    $teamsData[] = [
+                        'team_name' => $team->name,
+                        'klasse_name' => $team->klasse->name ?? 'N/A',
+                        'school_id' => $team->klasse->school_id ?? 0,
+                        'best_score' => $bestScore,
+                    ];
+                }
+            }
+
+            // Sortieren nach Score
+            if ($discipline->higher_is_better) {
+                usort($teamsData, fn($a, $b) => $b['best_score'] <=> $a['best_score']);
+            } else {
+                usort($teamsData, fn($a, $b) => $a['best_score'] <=> $b['best_score']);
+            }
+
+            // Platzierung hinzufügen
+            foreach ($teamsData as $index => $teamData) {
+                $teamsData[$index]['rank'] = $index + 1;
+            }
+
+            $disciplineDetailsForJs[$discipline->id] = [
+                'name' => $discipline->name,
+                'higher_is_better' => $discipline->higher_is_better,
+                'teams' => $teamsData,
+            ];
+        }
+
         // für java suche
         $teamsForJs = $teams->map(function ($team) {
             return [
@@ -85,6 +125,7 @@ class RankingController extends Controller
             'bestTeamsPerDiscipline' => $bestTeamsPerDiscipline,
             'teamsForJs' => $teamsForJs,
             'colorMapForJs' => $colorMapForJs,
+            'disciplineDetailsForJs' => $disciplineDetailsForJs,
         ]);
     }
 
@@ -213,4 +254,5 @@ class RankingController extends Controller
             School::where('id', $school->id)->update(['score' => $schoolScore]);
         }
         return redirect()->back()->with('success', 'Alle Scores wurden erfolgreich neu berechnet!');
-    }}
+    }
+}
