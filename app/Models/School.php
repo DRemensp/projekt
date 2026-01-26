@@ -10,6 +10,7 @@ class School extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'score',
     ];
 
     public function klasses(){
