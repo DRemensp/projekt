@@ -11,10 +11,11 @@
     <script>
         // Darkmode initialisierung - VOR dem Rendering
         function initDarkMode() {
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark')
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
             } else {
-                document.documentElement.classList.remove('dark')
+                document.documentElement.classList.remove('dark');
             }
         }
         initDarkMode();
@@ -277,5 +278,4 @@
 
 </body>
 </html>
-
 
