@@ -5,7 +5,7 @@
         @csrf
 
         <div class="group">
-            <label for="klasse_id" class="block text-sm font-semibold text-gray-800 mb-2 transition-colors group-focus-within:text-purple-600">
+            <label for="klasse_id" class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 transition-colors group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400">
                 <span class="flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -17,18 +17,18 @@
                 <select
                     name="klasse_id"
                     id="klasse_id"
-                    class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-sm hover:border-gray-300 appearance-none cursor-pointer"
+                    class="w-full px-4 py-3 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl shadow-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-purple-500 dark:focus:border-purple-400 transition-all duration-300 text-sm hover:border-gray-300 dark:hover:border-gray-500 appearance-none cursor-pointer"
                     required>
-                    <option value="" disabled {{ old('klasse_id') ? '' : 'selected' }} class="text-gray-400">-- Bitte wählen --</option>
+                    <option value="" disabled {{ old('klasse_id') ? '' : 'selected' }} class="text-gray-400 dark:text-gray-500">-- Bitte wählen --</option>
                     @foreach($klasses as $klasse)
-                        <option value="{{ $klasse->id }}" {{ old('klasse_id') == $klasse->id ? 'selected' : '' }} class="text-gray-800">
+                        <option value="{{ $klasse->id }}" {{ old('klasse_id') == $klasse->id ? 'selected' : '' }} class="text-gray-800 dark:text-gray-100">
                             {{ $klasse->name }} ({{ $klasse->school->name ?? '?' }})
                         </option>
                     @endforeach
                 </select>
             </div>
             @error('klasse_id')
-            <div class="flex items-center gap-2 mt-2 text-red-600">
+            <div class="flex items-center gap-2 mt-2 text-red-600 dark:text-red-400">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                 </svg>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="group">
-            <label for="team_name" class="block text-sm font-semibold text-gray-800 mb-2 transition-colors group-focus-within:text-purple-600">
+            <label for="team_name" class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 transition-colors group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400">
                 <span class="flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
@@ -54,11 +54,11 @@
                     placeholder="z.B. Red Dragons"
                     required
                     value="{{ old('team_name') }}"
-                    class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-sm hover:border-gray-300"
+                    class="w-full px-4 py-3 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-purple-500 dark:focus:border-purple-400 transition-all duration-300 text-sm hover:border-gray-300 dark:hover:border-gray-500"
                 >
             </div>
             @error('team_name')
-            <div class="flex items-center gap-2 mt-2 text-red-600">
+            <div class="flex items-center gap-2 mt-2 text-red-600 dark:text-red-400">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                 </svg>
@@ -68,13 +68,13 @@
         </div>
 
         <div class="group">
-            <label for="members" class="block text-sm font-semibold text-gray-800 mb-2 transition-colors group-focus-within:text-purple-600">
+            <label for="members" class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 transition-colors group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400">
                 <span class="flex items-center gap-2">
-                    <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
 </svg>
                     Team-Mitglieder
-                    <span class="text-xs text-gray-500 font-normal">(eine Person pro Zeile)</span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">(eine Person pro Zeile)</span>
                 </span>
             </label>
             <div class="relative">
@@ -83,7 +83,7 @@
                     id="members"
                     rows="4"
                     placeholder="Person A&#10;Person B&#10;Person C"
-                    class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-sm hover:border-gray-300 resize-none"
+                    class="w-full px-4 py-3 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-purple-500 dark:focus:border-purple-400 transition-all duration-300 text-sm hover:border-gray-300 dark:hover:border-gray-500 resize-none"
                 >{{ old('members') }}</textarea>
                 <div class="absolute top-3 right-3">
                     <svg class="w-5 h-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +92,7 @@
                 </div>
             </div>
             @error('members')
-            <div class="flex items-center gap-2 mt-2 text-red-600">
+            <div class="flex items-center gap-2 mt-2 text-red-600 dark:text-red-400">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                 </svg>
@@ -103,7 +103,7 @@
 
         <button
             type="submit"
-            class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+            class="w-full group relative flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 focus:ring-purple-500 dark:focus:ring-purple-400 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
         >
             <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

@@ -37,7 +37,7 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-black-600 dark:text-gray-400">
+    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
         {{ __('Passwort vergessen? nur der Admin kann dir Helfen, suche nach ihm!') }}
     </div>
 

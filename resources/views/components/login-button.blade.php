@@ -1,7 +1,7 @@
 <a
     href="{{ url('/login') }}"
-    class="flex items-center space-x-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700
-           text-white rounded-md transition-colors duration-200 shadow-md"
+    class="flex items-center space-x-1 px-4 py-2 bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600
+           text-white rounded-md transition-colors duration-300 shadow-md"
 >
     <!-- Login Icon -->
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
