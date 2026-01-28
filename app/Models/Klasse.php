@@ -13,8 +13,7 @@ class Klasse extends Model
         'school_id',
         'name',
         'password',
-        'score',
-    ];
+        ];
 
 
     public function user()

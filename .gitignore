@@ -1,23 +1,114 @@
-/.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-/vendor
+# Dependencies
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel 4 specific (legacy)
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5+ & Lumen specific
+public/storage
+public/hot
+public_html/storage
+public_html/hot
+
+storage/*.key
 .env
+.env.*
+!.env.example
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache
+
+/public/build
+/storage/pail
 .env.backup
 .env.production
 .phpactor.json
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/auth.json
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
+auth.json
+
+# Laravel Sail / Docker (neuere Versionen)
+.dockerignore
+.sail/
+
+# IDEs & Editors (für CLion/PHPStorm, VS Code, Vim)
+.idea/
+.vscode/
+.fleet/
+.nova/
+.zed/
+*.sublime-project
+*.sublime-workspace
+
+# Logs & Caches (erweitert)
+storage/logs/**/*.log
+bootstrap/cache/*.php
+bootstrap/cache/*.json
+.cache/
+.php-cs-fixer.cache
+.pint.cache
+
+# Security & Sensitive Files
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.csr
+id_rsa*
+*.ppk
+credentials.json
+credentials.yaml
+secrets.json
+secrets.yaml
+
+# OS-generated
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Tests
+coverage/
+.phpunit.cache/
+phpunit.xml
+!phpunit.xml.dist
+
+# Server/Deployment (DigitalOcean, Forge)
+.serverless/
+.nyc_output
+
+# Optional: Exclude personal backups
+*.bak
+*.swp
+*.orig
+
+# Local databases (Laravel)
+database/*.sqlite
+database/*.sqlite3
+
+# Laravel Mix (legacy)
+public/mix-manifest.json
+
+# Debugging tool data (Laravel packages)
+storage/debugbar/
+storage/clockwork/
+
+# --- MEINE EIGENEN AUSNAHMEN ---
+# Lokale Test-Skripte und Daten-Dumps (NICHT HOCHLADEN)
+/temp_comments.json
+/test_moderation.php
+
+# Vite Cache
+/.vite/

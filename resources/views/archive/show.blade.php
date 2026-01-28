@@ -3,7 +3,7 @@
         📚 {{ $archive->name }}
     </x-slot:heading>
 
-    <div class="bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-800 dark:to-gray-900 min-h-screen transition-colors duration-300">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 min-h-screen">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
             <!-- Header -->

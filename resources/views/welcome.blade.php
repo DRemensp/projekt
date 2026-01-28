@@ -1,7 +1,7 @@
 <x-layout>
     @livewireStyles
 
-    <section class="relative pt-10 pb-16 md:pb-24 bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-800 dark:to-gray-900 overflow-hidden transition-colors duration-300">
+    <section class="relative pt-10 pb-16 md:pb-24 bg-gradient-to-br from-blue-100 to-green-100 overflow-hidden">
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-col items-center text-center">
 
@@ -14,10 +14,10 @@
                 </div>
 
                 {{-- Überschrift und Text --}}
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight transition-colors duration-300">
-                    <span class="text-indigo-600 dark:text-indigo-400">Campus Olympiade</span> - Dein Portal zum Wettbewerb
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                    <span class="text-indigo-600">Campus Olympiade</span> - Dein Portal zum Wettbewerb
                 </h1>
-                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 transition-colors duration-300">
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                     Verfolge live die Ranglisten deiner Schule, Klasse und deines Teams. Du kannst dich hier einloggen, um Ergebnisse einzutragen und den Wettbewerb zu verwalten.
                 </p>
 
@@ -26,7 +26,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
                         Ranking ansehen
                     </a>
-                    <a href="{{ url('/login') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 text-base font-medium rounded-lg border border-indigo-300 dark:border-indigo-600 shadow-sm hover:bg-indigo-50 dark:hover:bg-gray-700 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">
+                    <a href="{{ url('/login') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-white text-indigo-600 text-base font-medium rounded-lg border border-indigo-300 shadow-sm hover:bg-indigo-50 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
                         Login für Berechtigte
                     </a>
@@ -227,83 +227,83 @@
     </section>
 
     {{-- Rest der Seite bleibt unverändert --}}
-    <section class="py-12 md:py-16 bg-gradient-to-br from-slate-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+    <section class="py-12 md:py-16 bg-gradient-to-br from-slate-50 to-gray-100 border-t border-gray-200">
         <div class="container mx-auto px-4">
             <div class="text-center mb-8 md:mb-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-3 md:mb-4 transition-colors duration-300">Olympiade im Überblick</h2>
-                <p class="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto transition-colors duration-300">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3 md:mb-4">Olympiade im Überblick</h2>
+                <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
                     Live Zahlen zur Campus Olympiade im Überblick
                 </p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto mb-8">
                 {{-- Schulen Counter --}}
-                <a href="{{ url('/ranking') }}" class="bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
+                <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 20v-9l-4 1.125V20h4Zm0 0h8m-8 0V6.66667M16 20v-9l4 1.125V20h-4Zm0 0V7m0 0V4h4v3h-4ZM6 8l6-4 4 2.66667M11 9h2m-2 3h2"/>
                             </svg>
                         </div>
-                        <div class="text-2xl md:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1 transition-colors duration-300">{{ $schoolCount }}</div>
-                        <div class="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide transition-colors duration-300">Schulen</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden md:block transition-colors duration-300">teilnehmend</div>
+                        <div class="text-2xl md:text-3xl font-bold text-indigo-600 mb-1">{{ $schoolCount }}</div>
+                        <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Schulen</div>
+                        <div class="text-xs text-gray-500 mt-1 hidden md:block">teilnehmend</div>
                     </div>
                 </a>
 
                 {{-- Klassen Counter --}}
-                <a href="{{ url('/ranking') }}" class="bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
+                <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
                             </svg>
                         </div>
-                        <div class="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1 transition-colors duration-300">{{ $klasseCount }}</div>
-                        <div class="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide transition-colors duration-300">Klassen</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden md:block transition-colors duration-300">registriert</div>
+                        <div class="text-2xl md:text-3xl font-bold text-blue-600 mb-1">{{ $klasseCount }}</div>
+                        <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Klassen</div>
+                        <div class="text-xs text-gray-500 mt-1 hidden md:block">registriert</div>
                     </div>
                 </a>
 
                 {{-- Teams Counter --}}
-                <a href="{{ url('/ranking') }}" class="bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
+                <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                             </svg>
                         </div>
-                        <div class="text-2xl md:text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-1 transition-colors duration-300">{{ $teamCount }}</div>
-                        <div class="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide transition-colors duration-300">Teams</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden md:block transition-colors duration-300">im Wettbewerb</div>
+                        <div class="text-2xl md:text-3xl font-bold text-emerald-600 mb-1">{{ $teamCount }}</div>
+                        <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Teams</div>
+                        <div class="text-xs text-gray-500 mt-1 hidden md:block">im Wettbewerb</div>
                     </div>
                 </a>
 
                 {{-- Schüler Counter --}}
-                <a href="{{ url('/ranking') }}" class="bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
+                <a href="{{ url('/ranking') }}" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group block">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                             </svg>
                         </div>
-                        <div class="text-2xl md:text-3xl font-bold text-orange-600 dark:text-orange-400 mb-1 transition-colors duration-300">{{ $studentCount }}</div>
-                        <div class="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide transition-colors duration-300">Schüler</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden md:block transition-colors duration-300">dabei</div>
+                        <div class="text-2xl md:text-3xl font-bold text-orange-600 mb-1">{{ $studentCount }}</div>
+                        <div class="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">Schüler</div>
+                        <div class="text-xs text-gray-500 mt-1 hidden md:block">dabei</div>
                     </div>
                 </a>
             </div>
 
             {{-- Besucher Counter --}}
             <div class="max-w-sm mx-auto">
-                <div class="bg-white/70 dark:bg-gray-800/70 rounded-lg shadow-sm p-3 border border-gray-200/50 dark:border-gray-700/50 text-center transition-colors duration-300">
-                    <div class="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-500 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <div class="bg-white/70 rounded-lg shadow-sm p-3 border border-gray-200/50 text-center">
+                    <div class="flex items-center justify-center gap-2 text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
                         <span class="text-sm">
-                            <strong class="text-purple-600 dark:text-purple-400">{{ number_format($visitcount->total_visits ?? 0) }}</strong>
+                            <strong class="text-purple-600">{{ number_format($visitcount->total_visits ?? 0) }}</strong>
                             Besuche insgesamt
                         </span>
                     </div>
@@ -313,9 +313,9 @@
     </section>
 
     {{-- Kommentare --}}
-    <section class="py-16 bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-800 dark:to-gray-900 transition-colors duration-300">
+    <section class="py-16 bg-gradient-to-br from-blue-100 to-green-100">
         <div class="container mx-auto px-4">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center transition-colors duration-300">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
                 Community Diskussionen
             </h2>
 
