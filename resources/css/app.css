@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +12,164 @@
 
     .dark {
         color-scheme: dark;
+        --night-0: #0a0f14;
+        --night-1: #0f172a;
+        --night-2: #141c2b;
+        --ink-0: #e6edf7;
+        --ink-1: #b5c0d3;
+        --accent-teal: #2dd4bf;
+        --accent-blue: #60a5fa;
+        --accent-amber: #f59e0b;
+        --accent-rose: #fb7185;
+        --line: rgba(148, 163, 184, 0.2);
     }
 }
 
+@layer utilities {
+    .dark .home-theme {
+        font-family: "Manrope", sans-serif;
+        color: var(--ink-0);
+    }
 
+    .dark .home-theme .display-font {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.02em;
+    }
+
+    .dark .aurora-sky {
+        background:
+            radial-gradient(1200px circle at 12% 0%, rgba(45, 212, 191, 0.18), transparent 60%),
+            radial-gradient(900px circle at 90% 12%, rgba(96, 165, 250, 0.22), transparent 55%),
+            radial-gradient(700px circle at 30% 85%, rgba(245, 158, 11, 0.16), transparent 60%),
+            linear-gradient(180deg, #0a0f14 0%, #0b1320 45%, #0b0f17 100%);
+    }
+
+    .dark .night-panel {
+        background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(7, 10, 18, 0.95));
+        border-color: var(--line);
+    }
+
+    .dark .night-card {
+        background: rgba(12, 18, 30, 0.88);
+        border-color: var(--line);
+    }
+
+    .dark .night-chip {
+        background: rgba(12, 18, 30, 0.7);
+        border-color: var(--line);
+        color: var(--ink-1);
+    }
+
+    .dark .night-tab {
+        background: rgba(12, 18, 30, 0.65);
+        border: 1px solid var(--line);
+        color: var(--ink-1);
+    }
+
+    .dark .night-tab:hover {
+        color: var(--ink-0);
+        border-color: rgba(96, 165, 250, 0.45);
+    }
+
+    .dark .night-tab-active {
+        background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+        color: #0a0f14;
+        box-shadow: 0 16px 30px rgba(45, 212, 191, 0.25);
+    }
+
+    .dark .night-muted {
+        color: var(--ink-1);
+    }
+
+    .dark .night-border {
+        border-color: var(--line);
+    }
+
+    .dark .home-theme input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+    .dark .home-theme select,
+    .dark .home-theme textarea {
+        background-color: rgba(12, 18, 30, 0.88);
+        border-color: rgba(148, 163, 184, 0.28);
+        color: var(--ink-0);
+    }
+
+    .dark .home-theme input::placeholder,
+    .dark .home-theme textarea::placeholder {
+        color: rgba(148, 163, 184, 0.6);
+    }
+
+    .dark .aurora-grid {
+        background-image: radial-gradient(rgba(148, 163, 184, 0.25) 1px, transparent 1px);
+        background-size: 24px 24px;
+        opacity: 0.35;
+        animation: gridPulse 8s ease-in-out infinite;
+    }
+
+    .parallax-layer {
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+    }
+
+    .dark .hero-orb {
+        animation: drift 12s ease-in-out infinite;
+    }
+
+    .dark .glow-dot {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(3px);
+        box-shadow: 0 0 30px currentColor, 0 0 60px currentColor, 0 0 90px currentColor;
+        animation: glowFloat 6s ease-in-out infinite, glowPulse 3s ease-in-out infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes gridPulse {
+        0%, 100% {
+            opacity: 0.35;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.5;
+            transform: scale(1.02);
+        }
+    }
+
+    @keyframes glowFloat {
+        0%, 100% {
+            transform: translate(0, 0);
+        }
+        25% {
+            transform: translate(15px, -15px);
+        }
+        50% {
+            transform: translate(-10px, -20px);
+        }
+        75% {
+            transform: translate(-20px, 10px);
+        }
+    }
+
+    @keyframes glowPulse {
+        0%, 100% {
+            opacity: 0.4;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+    }
+
+    @keyframes drift {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-18px) translateX(10px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .dark .hero-orb,
+        .dark .glow-dot,
+        .dark .aurora-grid {
+            animation: none !important;
+        }
+    }
+}

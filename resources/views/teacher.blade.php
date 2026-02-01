@@ -3,11 +3,11 @@
         Teacher Dashboard - Score Eingabe
     </x-slot:heading>
 
-    <div class="bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 transition-colors duration-300 dark:bg-none">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-                    <h1 class="text-3xl font-bold text-indigo-700 dark:text-indigo-400 text-center border-b border-gray-300 dark:border-gray-600 transition-colors duration-300">
+                    <h1 class="display-font text-3xl font-bold text-indigo-700 dark:text-indigo-300 text-center border-b border-gray-300 dark:border-gray-600 transition-colors duration-300">
                         Wertungs Editor
                     </h1>
 

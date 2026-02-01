@@ -4,7 +4,7 @@
     </x-slot:heading>
 
     {{-- Haupt-Container (wie Ranking) --}}
-    <div class="bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 transition-colors duration-300 dark:bg-none">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-6 md:p-8 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
@@ -19,11 +19,11 @@
                                 <div class="mt-1 grid grid-cols-2 gap-2">
                                     <div>
                                         <span class="font-medium">Benutzername:</span>
-                                        <span class="font-mono bg-white dark:bg-gray-700 px-2 py-1 rounded border border-gray-200 dark:border-gray-600 transition-colors duration-300">{{ session('username') }}</span>
+                                        <span class="font-mono bg-white night-card dark:bg-gray-700 px-2 py-1 rounded border border-gray-200 dark:border-gray-600 transition-colors duration-300">{{ session('username') }}</span>
                                     </div>
                                     <div>
                                         <span class="font-medium">Passwort:</span>
-                                        <span class="font-mono bg-white dark:bg-gray-700 px-2 py-1 rounded border border-gray-200 dark:border-gray-600 transition-colors duration-300">{{ session('password') }}</span>
+                                        <span class="font-mono bg-white night-card dark:bg-gray-700 px-2 py-1 rounded border border-gray-200 dark:border-gray-600 transition-colors duration-300">{{ session('password') }}</span>
                                     </div>
                                 </div>
                                 <p class="mt-2 text-xs text-gray-600 dark:text-gray-400 transition-colors duration-300">Bitte notieren Sie sich diese Daten, sie werden nur einmal angezeigt!</p>
@@ -47,7 +47,7 @@
                 {{-- Navigation Arrows --}}
                 <button
                     id="prevBtn"
-                    class="absolute left-[5px] top-1/2 transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
+                    class="absolute left-[5px] top-[20%] transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
                     aria-label="Vorheriger Bereich"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -57,7 +57,7 @@
 
                 <button
                     id="nextBtn"
-                    class="absolute right-[5px] top-1/2 transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
+                    class="absolute right-[5px] top-[20%] transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
                     aria-label="Nächster Bereich"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -76,7 +76,7 @@
                         {{-- SLIDE 1: Punktesystem --}}
                         <div class="w-[16.666%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-amber-500 dark:border-amber-600 pb-4 transition-colors duration-300">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-amber-500 dark:border-amber-600 pb-4 transition-colors duration-300">
                                     ⚙️ Punktesystem
                                 </h2>
                                 <x-scoresystem-form :scoresystem="$scoresystem"
@@ -87,20 +87,20 @@
                         {{-- SLIDE 2: Schulen --}}
                         <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-400 dark:border-purple-600 pb-4 transition-colors duration-300">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-400 dark:border-purple-600 pb-4 transition-colors duration-300">
                                     🏫 Schulen
                                 </h2>
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Neue Schule anlegen</h3>
                                         <x-school-form />
                                     </div>
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Vorhandene Schulen</h3>
                                         @if($schools->count() > 0)
                                             <ul class="space-y-2">
                                                 @foreach($schools as $school)
-                                                    <li class="flex items-center justify-between bg-white dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
+                                                    <li class="flex items-center justify-between bg-white night-card dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
                                                         <span class="text-gray-700 dark:text-gray-200 transition-colors duration-300">{{ $school->name }}</span>
                                                         <form action="{{ route('schools.destroy', $school->id) }}" method="POST" onsubmit="return confirm('Schule {{ $school->name }} wirklich löschen? Alle zugehörigen Klassen, Teams und Disziplinen werden ebenfalls gelöscht!');">
                                                             @csrf
@@ -125,11 +125,11 @@
                         {{-- SLIDE 3: Klassen --}}
                         <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-green-500 dark:border-green-600 pb-4 transition-colors duration-300">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-green-500 dark:border-green-600 pb-4 transition-colors duration-300">
                                     👥 Klassen
                                 </h2>
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Neue Klasse anlegen</h3>
                                         @if($schools->count() > 0)
                                             <x-klasse-form :schools="$schools" />
@@ -137,12 +137,12 @@
                                             <p class="text-red-600 dark:text-red-400 italic transition-colors duration-300">Bitte zuerst eine Schule anlegen!</p>
                                         @endif
                                     </div>
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Vorhandene Klassen</h3>
                                         @if($klasses->count() > 0)
                                             <ul class="space-y-2">
                                                 @foreach($klasses as $klasse)
-                                                    <li class="flex items-center justify-between bg-white dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
+                                                    <li class="flex items-center justify-between bg-white night-card dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
                                                         <div>
                                                             <span class="text-gray-700 dark:text-gray-200 transition-colors duration-300">{{ $klasse->name }}</span>
                                                             <span class="text-xs text-gray-500 dark:text-gray-400 ml-2 transition-colors duration-300">({{ $klasse->school->name ?? 'Keine Schule' }})</span>
@@ -170,11 +170,11 @@
                         {{-- SLIDE 4: Teams --}}
                         <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-pink-500 dark:border-pink-600 pb-4 transition-colors duration-300">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-pink-500 dark:border-pink-600 pb-4 transition-colors duration-300">
                                     🏆 Teams
                                 </h2>
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Neues Team anlegen</h3>
                                         @if($klasses->count() > 0)
                                             <x-team-form :klasses="$klasses" />
@@ -182,12 +182,12 @@
                                             <p class="text-red-600 dark:text-red-400 italic transition-colors duration-300">Bitte zuerst eine Klasse anlegen!</p>
                                         @endif
                                     </div>
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Vorhandene Teams</h3>
                                         @if($teams->count() > 0)
                                             <ul class="space-y-2">
                                                 @foreach($teams as $team)
-                                                    <li class="flex items-center justify-between bg-white dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
+                                                    <li class="flex items-center justify-between bg-white night-card dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
                                                         <div>
                                                             <span class="text-gray-700 dark:text-gray-200 transition-colors duration-300">{{ $team->name }}</span>
                                                             <span class="text-xs text-gray-500 dark:text-gray-400 ml-2 transition-colors duration-300">({{ $team->klasse->name ?? 'Keine Klasse' }})</span>
@@ -213,11 +213,11 @@
                         {{-- SLIDE 5: Disziplinen --}}
                         <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-orange-400 dark:border-orange-600 pb-4 transition-colors duration-300">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-orange-400 dark:border-orange-600 pb-4 transition-colors duration-300">
                                     ⚡ Disziplinen
                                 </h2>
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Neue Disziplin anlegen</h3>
                                         @if($klasses->count() > 0)
                                             <x-discipline-form :disciplineklasses="$disciplineklasses" />
@@ -225,12 +225,12 @@
                                             <p class="text-red-600 dark:text-red-400 italic transition-colors duration-300">Bitte zuerst eine Klasse anlegen!</p>
                                         @endif
                                     </div>
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Vorhandene Disziplinen</h3>
                                         @if($disciplines->count() > 0)
                                             <ul class="space-y-2">
                                                 @foreach($disciplines as $discipline)
-                                                    <li class="flex items-center justify-between bg-white dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
+                                                    <li class="flex items-center justify-between bg-white night-card dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
                                                         <div>
                                                             <span class="text-gray-700 dark:text-gray-200 transition-colors duration-300">{{ $discipline->name }}</span>
                                                             <span class="text-xs text-gray-500 dark:text-gray-400 ml-2 transition-colors duration-300">({{ $discipline->klasse->name ?? 'Keine Klasse' }})</span>
@@ -263,12 +263,12 @@
                         {{-- SLIDE 6: Archiv --}}
                         <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
-                                <h2 class="text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-500 dark:border-purple-600 pb-4 transition-colors duration-300">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-500 dark:border-purple-600 pb-4 transition-colors duration-300">
                                     📚 Archiv
                                 </h2>
 
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Neues Archiv erstellen</h3>
                                         <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm transition-colors duration-300">Erstellen Sie ein Archiv mit allen aktuellen Daten der CampusOlympiade.</p>
 
@@ -304,12 +304,12 @@
                                         </form>
                                     </div>
 
-                                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
                                         <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Vorhandene Archive</h3>
                                         @if($archives->count() > 0)
                                             <ul class="space-y-2">
                                                 @foreach($archives as $archive)
-                                                    <li class="flex items-center justify-between bg-white dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
+                                                    <li class="flex items-center justify-between bg-white night-card dark:bg-gray-700 p-3 rounded shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-600 transition-colors duration-300">
                                                         <div class="flex-1">
                                                             <div class="flex items-center gap-2">
                                                                 <span class="text-gray-700 dark:text-gray-200 font-medium transition-colors duration-300">{{ $archive->name }}</span>

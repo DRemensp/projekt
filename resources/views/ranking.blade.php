@@ -3,22 +3,22 @@
     <x-slot:heading>Live Rangliste</x-slot:heading>
 
 
-    <div class="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-900 dark:to-gray-800 py-8 transition-colors duration-300">
+    <div class="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 py-8 transition-colors duration-300 dark:bg-none">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Hero Section -->
             <div class="text-center mb-12">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-5 mb-8 transition-colors duration-300">
-                    <h1 class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-emerald-600 dark:from-indigo-400 dark:to-emerald-400 bg-clip-text text-transparent mb-4">
+                <div class="bg-white night-panel dark:bg-gray-800 rounded-2xl shadow-xl p-5 mb-8 transition-colors duration-300">
+                    <h1 class="display-font text-4xl font-bold bg-gradient-to-r from-indigo-600 to-emerald-600 dark:from-teal-300 dark:to-sky-300 bg-clip-text text-transparent mb-4">
                         Live Rangliste
                     </h1>
-                    <div class="max-w-3xl mx-auto bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 p-4 rounded-lg flex items-start space-x-3 transition-colors duration-300">
-                        <svg class="h-6 w-6 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="max-w-3xl mx-auto bg-blue-50 dark:bg-slate-900/70 border border-blue-200 dark:border-sky-400/40 p-4 rounded-lg flex items-start space-x-3 transition-colors duration-300">
+                        <svg class="h-6 w-6 text-blue-500 dark:text-sky-300 mt-0.5 flex-shrink-0 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
                         </svg>
-                        <div class="text-sm text-blue-800 dark:text-blue-200 text-left transition-colors duration-300">
+                        <div class="text-sm text-blue-800 dark:text-slate-200 text-left transition-colors duration-300">
                             <p class="font-semibold mb-1">Wie werden die Punkte berechnet?</p>
-                            <ul class="list-disc ml-4 space-y-1 text-blue-700 dark:text-blue-300 transition-colors duration-300">
+                            <ul class="list-disc ml-4 space-y-1 text-blue-700 dark:text-slate-300 transition-colors duration-300">
                                 <li><strong>Teams:</strong> Erhalten Punkte basierend auf ihrer Platzierung in jeder Disziplin.</li>
                                 <li><strong>Klassen & Schulen:</strong> Der Gesamtscore ergibt sich aus dem Durchschnitt der Punkte aller zugehörigen Teams.</li>
                                 <li><strong>psstt:</strong> kleiner Tipp, Jede Schule besitzt ihre eigene Farbe!</li>
@@ -30,18 +30,18 @@
 
             <!-- Navigation Tabs -->
             <div class="flex justify-center mb-8 ">
-                <nav class="bg-white dark:bg-gray-800 rounded-full shadow-lg p-1 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+                <nav class="bg-white night-card dark:bg-gray-800 rounded-full shadow-lg p-1 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
                     <div class="flex space-x-0.5">
-                        <button onclick="showSection('schools')" class="ranking-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-indigo-600 dark:bg-indigo-500 text-white">
+                        <button onclick="showSection('schools')" class="ranking-tab night-tab night-tab-active px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-indigo-600 dark:bg-indigo-500 text-white">
                             Schulen
                         </button>
-                        <button onclick="showSection('klasses')" class="ranking-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        <button onclick="showSection('klasses')" class="ranking-tab night-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
                             Klassen
                         </button>
-                        <button onclick="showSection('teams')" class="ranking-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        <button onclick="showSection('teams')" class="ranking-tab night-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
                             Teams
                         </button>
-                        <button onclick="showSection('disciplines')" class="ranking-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        <button onclick="showSection('disciplines')" class="ranking-tab night-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
                             Disziplinen
                         </button>
                     </div>
@@ -51,8 +51,8 @@
             <!-- Schulen Ranking -->
             @if($schools->count() > 0)
                 <div id="schools-section" class="ranking-section">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 transition-colors duration-300">
-                        <h2 class="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">🏫 Schulen Rangliste</h2>
+                    <div class="bg-white night-panel dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 transition-colors duration-300">
+                        <h2 class="display-font text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">🏫 Schulen Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
                         <div class="flex justify-center mb-12">
@@ -111,7 +111,7 @@
                                     @php $colors = SchoolColorService::getColorClasses($school->id); @endphp
                                     <div class="flex items-center justify-between p-4 rounded-lg {{ $colors['bg-light'] }} border-l-4 {{ $colors['border-light'] }} hover:shadow-md transition-all duration-300">
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-8 h-8 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center font-bold text-gray-700 dark:text-gray-200 text-sm transition-colors duration-300">
+                                            <div class="w-8 h-8 bg-white dark:bg-slate-900/70 rounded-full flex items-center justify-center font-bold text-gray-700 dark:text-gray-200 text-sm transition-colors duration-300">
                                                 {{ $index + 1 }}
                                             </div>
                                             <span class="font-medium text-gray-800 dark:text-gray-200 transition-colors duration-300">{{ $school->name }}</span>
@@ -131,8 +131,8 @@
             <!-- Klassen Ranking -->
             @if($klasses->count() > 0)
                 <div id="klasses-section" class="ranking-section hidden">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 transition-colors duration-300">
-                        <h2 class="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">👥 Klassen Rangliste</h2>
+                    <div class="bg-white night-panel dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 transition-colors duration-300">
+                        <h2 class="display-font text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">👥 Klassen Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
                         <div class="flex justify-center mb-12">
@@ -191,7 +191,7 @@
                                     @php $colors = SchoolColorService::getColorClasses($klasse->school_id ?? 0); @endphp
                                     <div class="flex items-center justify-between p-4 rounded-lg {{ $colors['bg-light'] }} border-l-4 {{ $colors['border-light'] }} hover:shadow-md transition-all duration-300">
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-8 h-8 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center font-bold text-gray-700 dark:text-gray-200 text-sm transition-colors duration-300">
+                                            <div class="w-8 h-8 bg-white dark:bg-slate-900/70 rounded-full flex items-center justify-center font-bold text-gray-700 dark:text-gray-200 text-sm transition-colors duration-300">
                                                 {{ $index + 1 }}
                                             </div>
                                             <span class="font-medium text-gray-800 dark:text-gray-200 transition-colors duration-300">{{ $klasse->name }}</span>
@@ -211,8 +211,8 @@
             <!-- Teams Ranking -->
             @if($teams->count() > 0)
                 <div id="teams-section" class="ranking-section hidden">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 transition-colors duration-300">
-                        <h2 class="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">🏆 Teams Rangliste</h2>
+                    <div class="bg-white night-panel dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8 transition-colors duration-300">
+                        <h2 class="display-font text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">🏆 Teams Rangliste</h2>
 
                         <!-- Podium für Top 3 -->
                         <div class="flex justify-center mb-12">
@@ -274,7 +274,7 @@
                                     @php $colors = SchoolColorService::getColorClasses($team->klasse->school_id ?? 0); @endphp
                                     <div class="flex items-center justify-between p-4 rounded-lg {{ $colors['bg-light'] }} border-l-4 {{ $colors['border-light'] }} hover:shadow-md transition-all duration-300">
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-8 h-8 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center font-bold text-gray-700 dark:text-gray-200 text-sm transition-colors duration-300">
+                                            <div class="w-8 h-8 bg-white dark:bg-slate-900/70 rounded-full flex items-center justify-center font-bold text-gray-700 dark:text-gray-200 text-sm transition-colors duration-300">
                                                 {{ $index + 1 }}
                                             </div>
                                             <div>
@@ -293,7 +293,7 @@
 
                         <!-- Team-Suche -->
                         <div class="max-w-2xl mx-auto mt-12">
-                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border-2 border-gray-300 dark:border-gray-700 transition-colors duration-300">
+                            <div class="bg-white night-card dark:bg-gray-800 rounded-lg shadow-md p-6 border-2 border-gray-300 dark:border-gray-700 transition-colors duration-300">
                                 <label for="team-search-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-300">
                                     Team suchen:
                                 </label>
@@ -316,8 +316,8 @@
             <!-- Disziplinen Ranking -->
             @if(!empty($bestTeamsPerDiscipline))
                 <div id="disciplines-section" class="ranking-section hidden">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 transition-colors duration-300">
-                        <h2 class="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">🎯 Beste Teams pro Disziplin</h2>
+                    <div class="bg-white night-panel dark:bg-gray-800 rounded-2xl shadow-xl p-8 transition-colors duration-300">
+                        <h2 class="display-font text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100 transition-colors duration-300">🎯 Beste Teams pro Disziplin</h2>
 
                         <div class="space-y-4">
                             @foreach($bestTeamsPerDiscipline as $champion)
@@ -332,7 +332,7 @@
                                     <div class="p-6">
                                         <div class="flex items-start space-x-4">
                                             <div class="flex-1 min-w-0">
-                                                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-1 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors duration-300">
+                                                <h3 class="display-font text-xl font-bold text-gray-800 dark:text-gray-200 mb-1 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors duration-300">
                                                     {{ $champion['discipline_name'] ?? 'Disziplin ' . $champion['discipline_id'] }}
                                                 </h3>
                                                 <p class="text-lg font-semibold {{ $colors['text'] }} mb-2 transition-colors duration-300">
@@ -364,10 +364,10 @@
 
     <!-- Modal für Disziplin-Details -->
     <div id="disciplineModal" class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 hidden items-center justify-center z-50 transition-all duration-300" onclick="closeDisciplineModal(event)">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden transition-colors duration-300" onclick="event.stopPropagation()">
+        <div class="bg-white night-panel dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden transition-colors duration-300" onclick="event.stopPropagation()">
             <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-700 dark:to-indigo-700 px-6 py-4 flex justify-between items-center transition-colors duration-300">
-                <h3 id="modalTitle" class="text-2xl font-bold text-white"></h3>
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-teal-500 dark:to-sky-500 px-6 py-4 flex justify-between items-center transition-colors duration-300">
+                <h3 id="modalTitle" class="display-font text-2xl font-bold text-white"></h3>
                 <button onclick="closeDisciplineModal()" class="text-white hover:text-gray-200 dark:hover:text-gray-300 transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -401,13 +401,13 @@
 
             // Update tab styles
             document.querySelectorAll('.ranking-tab').forEach(tab => {
-                tab.classList.remove('bg-indigo-600', 'text-white');
+                tab.classList.remove('bg-indigo-600', 'text-white', 'night-tab-active');
                 tab.classList.add('text-gray-600', 'hover:text-indigo-600');
             });
 
             // Highlight active tab
             event.target.classList.remove('text-gray-600', 'hover:text-indigo-600');
-            event.target.classList.add('bg-indigo-600', 'text-white');
+            event.target.classList.add('bg-indigo-600', 'text-white', 'night-tab-active');
         }
 
         // Modal Funktionen
@@ -434,7 +434,7 @@
                     html += `
                         <div class="flex items-center justify-between p-4 bg-gradient-to-r ${colors.bgLight} border-l-4 ${colors.borderLight} rounded-lg hover:shadow-md transition-all duration-300">
                             <div class="flex items-center gap-4">
-                                <div class="flex items-center justify-center w-10 h-10 ${medal ? '' : 'bg-white dark:bg-gray-700 rounded-full transition-colors duration-300'}">
+                                <div class="flex items-center justify-center w-10 h-10 ${medal ? '' : 'bg-white dark:bg-slate-900/70 rounded-full transition-colors duration-300'}">
                                     ${medal ? `<span class="text-2xl">${medal}</span>` : `<span class="font-bold text-gray-700 dark:text-gray-200 text-lg transition-colors duration-300">${team.rank}</span>`}
                                 </div>
                                 <div>
@@ -475,5 +475,8 @@
     </script>
 
     <!-- Import der laufzettel-search.js für Suchfunktionalität -->
-    @vite(['resources/js/laufzettel-search.js'])
+    @push('scripts')
+        @vite(['resources/js/laufzettel-search.js'])
+    @endpush
 </x-layout>
+

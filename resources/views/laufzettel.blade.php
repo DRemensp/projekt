@@ -1,7 +1,7 @@
 <x-layout>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <div class="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-900 dark:to-gray-800 py-8 transition-colors duration-300">
+    <div class="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 py-8 transition-colors duration-300 dark:bg-none">
         <div class="container mx-auto px-4">
 
             <div class="text-center mb-8">

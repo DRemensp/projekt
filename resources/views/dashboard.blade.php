@@ -3,13 +3,13 @@
         Klassen Dashboard
     </x-slot:heading>
 
-    <div class="bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 min-h-screen transition-colors duration-300 dark:bg-none">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-6 md:p-8 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
                 {{-- Willkommensnachricht --}}
                 <div class="mb-3">
-                    <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 dark:text-indigo-400 text-center transition-colors duration-300">
+                    <h1 class="display-font text-3xl md:text-4xl font-bold text-indigo-700 dark:text-indigo-300 text-center transition-colors duration-300">
                         Willkommen, {{ $klasse->name ?? 'Unbekannte Klasse' }}!
                     </h1>
                 </div>
@@ -55,14 +55,14 @@
 
                         {{-- Disziplin Header --}}
                         <div class="mb-6 text-center">
-                            <h3 class="text-3xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-2 flex items-center justify-center gap-3 transition-colors duration-300">
+                            <h3 class="display-font text-3xl md:text-3xl font-bold text-green-700 dark:text-green-300 mb-2 flex items-center justify-center gap-3 transition-colors duration-300">
                                 {{ $discipline->name }}
                             </h3>
                             <div class="bg-gradient-to-r from-green-500 to-blue-500 dark:from-green-600 dark:to-blue-600 h-1 w-38 mx-auto rounded-full transition-colors duration-300"></div>
                         </div>
 
                         {{-- Score Eingabe Formular --}}
-                        <div class="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 p-6 md:p-8 rounded-xl border border-gray-400 dark:border-gray-600 shadow-inner dark:shadow-gray-900/50 transition-colors duration-300">
+                        <div class="bg-gradient-to-br from-gray-50 to-blue-50 night-panel dark:from-gray-800 dark:to-gray-700 p-6 md:p-8 rounded-xl border border-gray-400 dark:border-gray-600 shadow-inner dark:shadow-gray-900/50 transition-colors duration-300">
                             <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2 transition-colors duration-300">
                                 <svg class="w-6 h-6 text-blue-600 dark:text-blue-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -129,7 +129,7 @@
                                             >
                                         </div>
                                         <div id="loaded_score_1_display" class="mt-2 text-xs text-gray-600 dark:text-gray-400 transition-colors duration-300" style="display: none;">
-                                            Aktuell gespeichert: <span class="font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded transition-colors duration-300"></span>
+                                            Aktuell gespeichert: <span class="font-medium bg-gray-100 night-card dark:bg-gray-700 px-2 py-1 rounded transition-colors duration-300"></span>
                                         </div>
                                     </div>
 
@@ -154,7 +154,7 @@
                                             >
                                         </div>
                                         <div id="loaded_score_2_display" class="mt-2 text-xs text-gray-600 dark:text-gray-400 transition-colors duration-300" style="display: none;">
-                                            Aktuell gespeichert: <span class="font-medium bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded transition-colors duration-300"></span>
+                                            Aktuell gespeichert: <span class="font-medium bg-gray-100 night-card dark:bg-gray-700 px-2 py-1 rounded transition-colors duration-300"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +176,7 @@
                         </div>
 
                         {{-- Disziplin-Informationen --}}
-                        <div class="bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 border-2 border-gray-300 dark:border-gray-600 p-6 rounded-xl mt-6 shadow-inner dark:shadow-gray-900/50 transition-colors duration-300">
+                        <div class="bg-gradient-to-br from-green-50 to-blue-50 night-panel dark:from-gray-800 dark:to-gray-700 border-2 border-gray-300 dark:border-gray-600 p-6 rounded-xl mt-6 shadow-inner dark:shadow-gray-900/50 transition-colors duration-300">
                             <h5 class="text-lg font-bold text-green-700 dark:text-green-400 mb-4 flex items-center gap-2 transition-colors duration-300">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -184,7 +184,7 @@
                                 Disziplin-Informationen
                             </h5>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm dark:shadow-gray-900/50 border border-green-100 dark:border-green-800 transition-colors duration-300">
+                                <div class="bg-white night-card dark:bg-gray-700 p-4 rounded-lg shadow-sm dark:shadow-gray-900/50 border border-green-100 dark:border-green-800 transition-colors duration-300">
                                     <span class="font-semibold text-green-700 dark:text-green-400 flex items-center gap-2 mb-1 transition-colors duration-300">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -196,7 +196,7 @@
                                     </span>
                                 </div>
 
-                                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm dark:shadow-gray-900/50 border border-green-100 dark:border-green-800 md:col-span-2 transition-colors duration-300">
+                                <div class="bg-white night-card dark:bg-gray-700 p-4 rounded-lg shadow-sm dark:shadow-gray-900/50 border border-green-100 dark:border-green-800 md:col-span-2 transition-colors duration-300">
                                     <span class="font-semibold text-green-700 dark:text-green-400 flex items-center gap-2 mb-1 transition-colors duration-300">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
@@ -211,7 +211,7 @@
 
                 @else
                     {{-- Keine Disziplin zugewiesen --}}
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 p-8 text-center transition-colors duration-300">
+                    <div class="bg-white night-panel dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 p-8 text-center transition-colors duration-300">
                         <div class="mb-4">
                             <svg class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.007-5.824-2.562M15 6.306a7.962 7.962 0 00-6 0m6 0a7.962 7.962 0 105.238 3.237M9 6.306a7.962 7.962 0 00-5.238 3.237"></path>

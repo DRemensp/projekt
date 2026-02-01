@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-800 dark:to-gray-900 mx-auto px-4 py-8 transition-colors duration-200">
+    <div class="bg-gradient-to-br from-blue-100 to-green-100 mx-auto px-4 py-8 transition-colors duration-200 dark:bg-none">
         <!-- Header -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">

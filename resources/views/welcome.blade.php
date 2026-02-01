@@ -22,7 +22,6 @@
             --line: rgba(148, 163, 184, 0.2);
             font-family: "Manrope", sans-serif;
             color: var(--ink-0);
-            background-color: var(--night-0);
         }
 
         .dark .dark-mode-only .display-font {
@@ -441,39 +440,6 @@
     </div>
 
     <div class="dark-mode-only relative z-0 min-h-screen overflow-x-hidden">
-        <!-- Globaler Aurora Background für gesamten Dark Mode -->
-        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <div class="parallax-layer absolute inset-0" data-speed="0.12">
-                <div class="aurora-sky absolute inset-0"></div>
-            </div>
-            <div class="parallax-layer absolute inset-0" data-speed="0.22">
-                <div class="aurora-grid absolute inset-0"></div>
-            </div>
-            <div class="parallax-layer absolute inset-0" data-speed="0.35">
-            <!-- Große schwebende Orbs -->
-            <div class="hero-orb absolute rounded-full blur-[40px] opacity-60" style="width: 320px; height: 320px; top: -80px; left: 8%; background: rgba(45, 212, 191, 0.35);"></div>
-            <div class="hero-orb absolute rounded-full blur-[40px] opacity-60" style="width: 380px; height: 380px; top: 20%; right: 5%; background: rgba(96, 165, 250, 0.35); animation-delay: 0.5s;"></div>
-            <div class="hero-orb absolute rounded-full blur-[40px] opacity-60" style="width: 260px; height: 260px; bottom: -60px; left: 40%; background: rgba(245, 158, 11, 0.35); animation-delay: 1s;"></div>
-
-            <!-- Kleine glühende Punkte die sich bewegen -->
-            <div class="glow-dot" style="width: 8px; height: 8px; top: 15%; left: 25%; background: #2dd4bf; animation-delay: 0s;"></div>
-            <div class="glow-dot" style="width: 6px; height: 6px; top: 35%; left: 75%; background: #60a5fa; animation-delay: 1s;"></div>
-            <div class="glow-dot" style="width: 10px; height: 10px; top: 55%; left: 15%; background: #f59e0b; animation-delay: 2s;"></div>
-            <div class="glow-dot" style="width: 7px; height: 7px; top: 75%; left: 85%; background: #fb7185; animation-delay: 3s;"></div>
-            <div class="glow-dot" style="width: 8px; height: 8px; top: 25%; left: 50%; background: #2dd4bf; animation-delay: 1.5s;"></div>
-            <div class="glow-dot" style="width: 6px; height: 6px; top: 45%; left: 30%; background: #60a5fa; animation-delay: 2.5s;"></div>
-            <div class="glow-dot" style="width: 9px; height: 9px; top: 65%; left: 60%; background: #f59e0b; animation-delay: 0.5s;"></div>
-            <div class="glow-dot" style="width: 10px; height: 10px; top: 85%; left: 40%; background: #2dd4bf; animation-delay: 3.5s;"></div>
-            <div class="glow-dot" style="width: 7px; height: 7px; top: 10%; left: 90%; background: #60a5fa; animation-delay: 4s;"></div>
-            <div class="glow-dot" style="width: 8px; height: 8px; top: 50%; left: 10%; background: #fb7185; animation-delay: 1.8s;"></div>
-            <div class="glow-dot" style="width: 6px; height: 6px; top: 20%; left: 65%; background: #2dd4bf; animation-delay: 0.8s;"></div>
-            <div class="glow-dot" style="width: 9px; height: 9px; top: 40%; left: 85%; background: #f59e0b; animation-delay: 2.2s;"></div>
-            <div class="glow-dot" style="width: 7px; height: 7px; top: 60%; left: 20%; background: #60a5fa; animation-delay: 3.8s;"></div>
-            <div class="glow-dot" style="width: 8px; height: 8px; top: 80%; left: 70%; background: #fb7185; animation-delay: 1.2s;"></div>
-            <div class="glow-dot" style="width: 10px; height: 10px; top: 30%; left: 5%; background: #f59e0b; animation-delay: 2.8s;"></div>
-        </div>
-        </div>
-
         <div class="relative z-10">
         <section class="relative overflow-hidden py-16 md:py-24">
 
@@ -786,34 +752,7 @@
                 });
             }
 
-            // Dark mode parallax background
-            const parallaxLayers = document.querySelectorAll('.parallax-layer');
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (parallaxLayers.length && !reduceMotion) {
-                let latestY = window.scrollY || window.pageYOffset;
-                let ticking = false;
-
-                function updateParallax() {
-                    ticking = false;
-                    const scrollY = latestY;
-                    parallaxLayers.forEach((layer) => {
-                        const speed = parseFloat(layer.dataset.speed || '0');
-                        const offset = scrollY * speed;
-                        layer.style.transform = `translate3d(0, ${offset}px, 0)`;
-                    });
-                }
-
-                function onScroll() {
-                    latestY = window.scrollY || window.pageYOffset;
-                    if (!ticking) {
-                        window.requestAnimationFrame(updateParallax);
-                        ticking = true;
-                    }
-                }
-
-                updateParallax();
-                window.addEventListener('scroll', onScroll, { passive: true });
-            }
 
             // Dark mode module carousel (mobile)
             const moduleCarousel = document.querySelector('[data-module-carousel]');
@@ -902,3 +841,4 @@
         });
     </script>
 </x-layout>
+

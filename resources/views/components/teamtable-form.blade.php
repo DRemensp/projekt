@@ -5,7 +5,7 @@
         @csrf
 
         {{-- Auswahl-Sektion --}}
-        <div class="bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-700 dark:to-gray-800 px-6 py-3 rounded-xl border-2 border-gray-400 dark:border-gray-600 shadow-lg transition-colors duration-300">
+        <div class="bg-gradient-to-br from-blue-100 to-purple-100 night-panel dark:from-gray-700 dark:to-gray-800 px-6 py-3 rounded-xl border-2 border-gray-400 dark:border-gray-600 shadow-lg transition-colors duration-300">
             <div class="flex items-center gap-3 mb-2">
                 <div class="p-2 rounded-lg">
                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@
         </div>
 
         {{-- Score-Eingabe-Sektion --}}
-        <div class="bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-700 dark:to-gray-800 px-6 py-3 rounded-xl border-2 border-gray-400 dark:border-gray-600 shadow-lg transition-colors duration-300">
+        <div class="bg-gradient-to-br from-blue-100 to-purple-100 night-panel dark:from-gray-700 dark:to-gray-800 px-6 py-3 rounded-xl border-2 border-gray-400 dark:border-gray-600 shadow-lg transition-colors duration-300">
             <div class="flex items-center gap-3 mb-2">
                 <div class="p-2 rounded-lg">
                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

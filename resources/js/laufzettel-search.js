@@ -14,8 +14,8 @@ function initLaufzettelSearch() {
     searchInput.setAttribute('data-search-initialized', 'true');
 
     // Nachrichten-Templates
-    const initialMessage = '<p class="text-center text-gray-500 italic py-4">Bitte gib einen Teamnamen ein, um zu suchen.</p>';
-    const noResultsMessage = '<p class="text-center text-gray-500 italic py-4">Keine Teams gefunden, die dem Suchbegriff entsprechen.</p>';
+    const initialMessage = '<p class="text-center text-gray-500 dark:text-slate-400 italic py-4">Bitte gib einen Teamnamen ein, um zu suchen.</p>';
+    const noResultsMessage = '<p class="text-center text-gray-500 dark:text-slate-400 italic py-4">Keine Teams gefunden, die dem Suchbegriff entsprechen.</p>';
 
     // Funktion zum Abrufen der Farbklassen (JS-Version)
     function getJsSchoolColorClasses(schoolId) {
@@ -61,10 +61,10 @@ function initLaufzettelSearch() {
 
                     // Button-Status aktualisieren
                     if (data.bonus) {
-                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 transition-colors cursor-pointer';
+                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40 dark:hover:bg-emerald-500/30 transition-colors cursor-pointer';
                         buttonElement.innerHTML = '✅ Bonus';
                     } else {
-                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer';
+                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 dark:bg-slate-500/15 dark:text-slate-200 dark:border-slate-500/40 dark:hover:bg-slate-500/25 transition-colors cursor-pointer';
                         buttonElement.innerHTML = '⭕ Kein Bonus';
                     }
 
@@ -123,8 +123,8 @@ function initLaufzettelSearch() {
                 let bonusButtonHtml = '';
                 if (typeof isAdmin !== 'undefined' && isAdmin) {
                     const bonusButtonClass = team.bonus
-                        ? 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 transition-colors cursor-pointer'
-                        : 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer';
+                        ? 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40 dark:hover:bg-emerald-500/30 transition-colors cursor-pointer'
+                        : 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 dark:bg-slate-500/15 dark:text-slate-200 dark:border-slate-500/40 dark:hover:bg-slate-500/25 transition-colors cursor-pointer';
 
                     const bonusButtonText = team.bonus ? '✅ Bonus' : '⭕ Kein Bonus';
 
@@ -137,18 +137,18 @@ function initLaufzettelSearch() {
                 } else if (team.bonus) {
                     // Für Nicht-Admins: Bonus-Status nur anzeigen (nicht klickbar)
                     bonusButtonHtml = `
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40">
                             ✅ Bonus
                         </span>
                     `;
                 }
 
                 resultsHtml += `
-                    <div class="team-card bg-white rounded-lg shadow-md p-4 hover:${hoverClass} hover:shadow-lg transition-all duration-200 border border-gray-200">
+                    <div class="team-card bg-white night-card rounded-lg shadow-md p-4 hover:${hoverClass} hover:shadow-lg dark:hover:bg-slate-800/70 transition-all duration-200 border border-gray-200">
                         <div class="flex justify-between items-center">
                             <div class="flex-1 cursor-pointer" onclick="selectTeam(${team.id})">
                                 <h3 class="text-lg font-semibold ${textClass}">${escapeHtml(team.name)}</h3>
-                                <p class="text-sm text-gray-600">
+                                <p class="text-sm text-gray-600 dark:text-slate-400">
                                     ${escapeHtml(team.klasse_name)} - ${escapeHtml(team.school_name)}
                                 </p>
                             </div>
@@ -156,7 +156,7 @@ function initLaufzettelSearch() {
                                 <!-- Bonus Button/Anzeige -->
                                 ${bonusButtonHtml}
                                 <!-- Pfeil für Team-Auswahl -->
-                                <div class="text-blue-600 cursor-pointer" onclick="selectTeam(${team.id})">
+                                <div class="text-blue-600 dark:text-sky-300 cursor-pointer" onclick="selectTeam(${team.id})">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                     </svg>
