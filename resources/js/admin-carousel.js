@@ -17,7 +17,7 @@ function initAdminCarousel() {
 
     const carousel = {
         currentSlide: 0,
-        totalSlides: 6,
+        totalSlides: dots.length,
         slidesContainer: slidesContainer,
         dots: dots,
         prevBtn: prevBtn,
@@ -115,7 +115,8 @@ function initAdminCarousel() {
 
         updateCarousel() {
             // Move slides - für 6 slides: 100% / 6 = 16.666667%
-            const translateX = -this.currentSlide * 16.666667;
+            const slideWidth = 100 / this.totalSlides;
+            const translateX = -this.currentSlide * slideWidth;
             this.slidesContainer.style.transform = `translateX(${translateX}%)`;
 
             // Update active states for slides

@@ -9,9 +9,12 @@
         "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/nightwatch": "^1.10",
+        "laravel/reverb": "^1.7",
         "laravel/tinker": "^2.10.1",
-        "livewire/livewire": "^3.4",
+        "league/commonmark": "2.7",
+        "livewire/livewire": "3.6.4",
         "livewire/volt": "^1.0",
+        "sentry/sentry-laravel": "^4.20",
         "spatie/laravel-cookie-consent": "^3.3",
         "spatie/laravel-permission": "^6.17"
     },

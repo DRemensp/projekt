@@ -68,13 +68,76 @@
                 {{-- Carousel Content --}}
                 <div class="overflow-hidden">
                     <div
-                        class="flex transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] w-[600%]"
+                        class="flex transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] w-[700%]"
                         id="carouselSlides"
                         style="transform: translateX(0%)"
                     >
 
-                        {{-- SLIDE 1: Punktesystem --}}
-                        <div class="w-[16.666%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
+                        {{-- SLIDE 1: Nachricht --}}
+                        <div class="w-[14.285%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
+                            <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-600 pb-4 transition-colors duration-300">
+                                    Nachricht senden
+                                </h2>
+                                <div class="bg-gray-50 night-panel dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900/50 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 transition-colors duration-300">Schnellnachricht</h3>
+                                    <form action="{{ route('admin.broadcast') }}" method="POST" class="space-y-4">
+                                        @csrf
+                                        <div>
+                                            <label for="admin_message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-300">
+                                                Nachricht *
+                                            </label>
+                                            <textarea id="admin_message"
+                                                      name="message"
+                                                      rows="4"
+                                                      maxlength="500"
+                                                      required
+                                                      placeholder="Kurze Nachricht an die ausgewählten Gruppen..."
+                                                      class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 transition-colors duration-300">{{ old('message') }}</textarea>
+                                        </div>
+                                        <div>
+                                            <span class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-300">
+                                                Empfaenger *
+                                            </span>
+                                            @php($oldTargets = old('targets', []))
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                                <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md px-3 py-2 transition-colors duration-300">
+                                                    <input type="checkbox"
+                                                           name="targets[]"
+                                                           value="teachers"
+                                                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                           {{ in_array('teachers', $oldTargets, true) ? 'checked' : '' }}>
+                                                    Lehrer
+                                                </label>
+                                                <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md px-3 py-2 transition-colors duration-300">
+                                                    <input type="checkbox"
+                                                           name="targets[]"
+                                                           value="klasses"
+                                                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                           {{ in_array('klasses', $oldTargets, true) ? 'checked' : '' }}>
+                                                    Klassen
+                                                </label>
+                                                <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md px-3 py-2 transition-colors duration-300">
+                                                    <input type="checkbox"
+                                                           name="targets[]"
+                                                           value="guests"
+                                                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                           {{ in_array('guests', $oldTargets, true) ? 'checked' : '' }}>
+                                                    Guests
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit"
+                                                class="w-full bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-600 dark:hover:from-blue-700 dark:hover:to-indigo-700 transition-colors duration-200 font-medium shadow-md dark:shadow-gray-900/50">
+                                            Nachricht senden
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- SLIDE 2: Punktesystem --}}
+                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-amber-500 dark:border-amber-600 pb-4 transition-colors duration-300">
                                     ⚙️ Punktesystem
@@ -84,8 +147,8 @@
                             </div>
                         </div>
 
-                        {{-- SLIDE 2: Schulen --}}
-                        <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        {{-- SLIDE 3: Schulen --}}
+                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-400 dark:border-purple-600 pb-4 transition-colors duration-300">
                                     🏫 Schulen
@@ -122,8 +185,8 @@
                             </div>
                         </div>
 
-                        {{-- SLIDE 3: Klassen --}}
-                        <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        {{-- SLIDE 4: Klassen --}}
+                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-green-500 dark:border-green-600 pb-4 transition-colors duration-300">
                                     👥 Klassen
@@ -167,8 +230,8 @@
                             </div>
                         </div>
 
-                        {{-- SLIDE 4: Teams --}}
-                        <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        {{-- SLIDE 5: Teams --}}
+                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-pink-500 dark:border-pink-600 pb-4 transition-colors duration-300">
                                     🏆 Teams
@@ -210,8 +273,8 @@
                             </div>
                         </div>
 
-                        {{-- SLIDE 5: Disziplinen --}}
-                        <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        {{-- SLIDE 6: Disziplinen --}}
+                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-orange-400 dark:border-orange-600 pb-4 transition-colors duration-300">
                                     ⚡ Disziplinen
@@ -260,8 +323,8 @@
                             </div>
                         </div>
 
-                        {{-- SLIDE 6: Archiv --}}
-                        <div class="w-[16.666%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        {{-- SLIDE 7: Archiv --}}
+                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-500 dark:border-purple-600 pb-4 transition-colors duration-300">
                                     📚 Archiv
@@ -354,17 +417,18 @@
 
                 {{-- Dot Navigation --}}
                 <div class="flex justify-center gap-2 mt-6" id="carouselDots">
-                    <button class="w-3 h-3 rounded-full border-0 bg-indigo-600 dark:bg-indigo-500 cursor-pointer transition-all duration-200 scale-125 dot active" data-slide="0" aria-label="Punktesystem"></button>
-                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="1" aria-label="Schulen"></button>
-                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="2" aria-label="Klassen"></button>
-                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="3" aria-label="Teams"></button>
-                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="4" aria-label="Disziplinen"></button>
-                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="5" aria-label="Archiv"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-indigo-600 dark:bg-indigo-500 cursor-pointer transition-all duration-200 scale-125 dot active" data-slide="0" aria-label="Nachricht"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="1" aria-label="Punktesystem"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="2" aria-label="Schulen"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="3" aria-label="Klassen"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="4" aria-label="Teams"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="5" aria-label="Disziplinen"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="6" aria-label="Archiv"></button>
                 </div>
 
                 {{-- Progress Indicator --}}
                 <div class="text-center mt-4">
-                    <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300" id="slideIndicator">1 von 6</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300" id="slideIndicator">1 von 7</span>
                 </div>
             </div>
 

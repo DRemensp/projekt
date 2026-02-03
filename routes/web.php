@@ -11,6 +11,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamTableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminBroadcastController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaufzettelController;
 
@@ -57,6 +58,10 @@ Route::get('/admin', function () {
         return redirect('/');}
     return app(AdminController::class)->index();
 })->middleware(['auth'])->name('admin.index');
+
+Route::post('/admin/broadcast', [AdminBroadcastController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('admin.broadcast');
 
 
 Route::post('/disciplines-teams', [TeamTableController::class, 'storeOrUpdate'])

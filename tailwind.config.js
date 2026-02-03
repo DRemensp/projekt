@@ -8,6 +8,8 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './app/**/*.php',
+        './resources/js/**/*.js',
     ],
 
     theme: {
@@ -25,6 +27,7 @@ export default {
         // Alle Farbvarianten die dynamisch verwendet werden
         {
             pattern: /bg-(blue|yellow|green|orange|purple|gray)-(50|100|200|300|500|700|800)/,
+            variants: ['hover'],
         },
         {
             pattern: /text-(blue|yellow|green|orange|purple|gray)-(600|700|800)/,
