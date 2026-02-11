@@ -29,17 +29,14 @@ class Comments extends Component
 
     public function render()
     {
+        // Zeige nur genehmigte Kommentare an
         $allComments = Comment::approved()->latest()->get();
-
-        // Sicherstellen, dass es ein Integer ist (falls von außen ein Array kommt)
-        $limit = is_array($this->commentsToShow) ? 5 : (int)$this->commentsToShow;
-
-        $visibleComments = $allComments->take($limit);
+        $visibleComments = $allComments->take($this->commentsToShow);
 
         return view('livewire.comments', [
             'comments' => $visibleComments,
             'totalComments' => $allComments->count(),
-            'hasMoreComments' => $allComments->count() > $limit,
+            'hasMoreComments' => $allComments->count() > $this->commentsToShow,
             'commentsEnabled' => Setting::commentsEnabled()
         ]);
     }

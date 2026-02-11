@@ -40,18 +40,45 @@
     </div>
 </div>
 
-<div id="adminBroadcastPopup" class="fixed bottom-6 right-6 z-50 hidden w-[min(90vw,24rem)]">
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4">
-        <div class="flex items-start justify-between gap-3">
-            <div>
-                <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Admin Nachricht</p>
-                <p class="mt-1 text-sm text-gray-800 dark:text-gray-100" data-admin-broadcast-message></p>
+<div id="adminBroadcastPopup" class="fixed inset-0 z-[9999] hidden relative" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-950/80 backdrop-blur transition-opacity"></div>
+
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+
+            <div class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-900 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg ring-1 ring-white/10">
+
+                <div class="px-6 py-8 sm:p-10">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/50 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                            </svg>
+                        </div>
+
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-xl font-bold leading-6 text-gray-900 dark:text-white" id="modal-title">
+                                Neue Ankündigung
+                            </h3>
+                            <div class="mt-4">
+                                <div class="relative rounded-lg bg-gray-50 dark:bg-gray-800/50 p-4 border border-gray-100 dark:border-gray-700">
+                                    <p class="text-base text-gray-700 dark:text-gray-300 font-medium leading-relaxed" data-admin-broadcast-message>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-900/50 px-6 py-4 sm:flex sm:flex-row-reverse sm:px-10 border-t border-gray-100 dark:border-gray-800">
+                    <button type="button"
+                            data-admin-broadcast-close
+                            disabled
+                            class="inline-flex w-full justify-center rounded-lg bg-indigo-600 px-8 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:w-auto disabled:opacity-50 disabled:grayscale transition-all duration-200">
+                        Gelesen <span data-admin-broadcast-timer class="ml-1">(5)</span>
+                    </button>
+                </div>
             </div>
-            <button type="button"
-                    data-admin-broadcast-close
-                    class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150">
-                X <span data-admin-broadcast-timer class="text-xs"></span>
-            </button>
         </div>
     </div>
 </div>
