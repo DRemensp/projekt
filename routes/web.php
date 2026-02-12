@@ -14,7 +14,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminBroadcastController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaufzettelController;
-
+use App\Http\Controllers\CertificateController;
 
 Route::get('/dashboard', function () {
     $user = auth()->user();
@@ -121,6 +121,10 @@ Route::post('/moderation/toggle-comments', [App\Http\Controllers\ModerationContr
     ->middleware(['auth'])
     ->name('moderation.toggle');
 
+// Innerhalb deiner auth/admin middleware gruppe:
+Route::get('/certificate/generate', [CertificateController::class, 'generate'])
+    ->middleware(['auth']) // <--- Das hier noch ergänzen
+    ->name('certificate.generate');
 //nicht wundern wenn manche Index nicht in Ressourcen angezeigt wird, hatte ganz komischen bug und fehler nicht gefunden,
 //also einfach sepperat gemacht
 

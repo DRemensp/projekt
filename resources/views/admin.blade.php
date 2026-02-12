@@ -68,13 +68,13 @@
                 {{-- Carousel Content --}}
                 <div class="overflow-hidden">
                     <div
-                        class="flex transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] w-[700%]"
+                        class="flex transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] w-[800%]"
                         id="carouselSlides"
                         style="transform: translateX(0%)"
                     >
 
                         {{-- SLIDE 1: Nachricht --}}
-                        <div class="w-[14.285%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
+                        <div class="w-[12.5%] flex-shrink-0 opacity-100 transition-opacity duration-300 carousel-slide active">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-600 pb-4 transition-colors duration-300">
                                     Nachricht senden
@@ -137,7 +137,7 @@
                         </div>
 
                         {{-- SLIDE 2: Punktesystem --}}
-                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        <div class="w-[12.5%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-amber-500 dark:border-amber-600 pb-4 transition-colors duration-300">
                                     ⚙️ Punktesystem
@@ -148,7 +148,7 @@
                         </div>
 
                         {{-- SLIDE 3: Schulen --}}
-                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        <div class="w-[12.5%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-400 dark:border-purple-600 pb-4 transition-colors duration-300">
                                     🏫 Schulen
@@ -186,7 +186,7 @@
                         </div>
 
                         {{-- SLIDE 4: Klassen --}}
-                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        <div class="w-[12.5%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-green-500 dark:border-green-600 pb-4 transition-colors duration-300">
                                     👥 Klassen
@@ -231,7 +231,7 @@
                         </div>
 
                         {{-- SLIDE 5: Teams --}}
-                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        <div class="w-[12.5%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-pink-500 dark:border-pink-600 pb-4 transition-colors duration-300">
                                     🏆 Teams
@@ -274,7 +274,7 @@
                         </div>
 
                         {{-- SLIDE 6: Disziplinen --}}
-                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        <div class="w-[12.5%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-orange-400 dark:border-orange-600 pb-4 transition-colors duration-300">
                                     ⚡ Disziplinen
@@ -324,7 +324,7 @@
                         </div>
 
                         {{-- SLIDE 7: Archiv --}}
-                        <div class="w-[14.285%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                        <div class="w-[12.5%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
                             <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
                                 <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-purple-500 dark:border-purple-600 pb-4 transition-colors duration-300">
                                     📚 Archiv
@@ -412,6 +412,23 @@
                             </div>
                         </div>
 
+                        {{-- SLIDE 8: Urkunden --}}
+                        <div class="w-[12.5%] flex-shrink-0 opacity-0 transition-opacity duration-300 carousel-slide">
+                            <div class="px-4 sm:px-2 sm:py-6 min-h-[500px] sm:min-h-[300px]">
+                                <h2 class="display-font text-3xl sm:text-2xl font-semibold mb-8 sm:mb-6 text-center text-gray-800 dark:text-gray-200 border-b-2 border-teal-500 dark:border-teal-600 pb-4 transition-colors duration-300">
+                                    📜 Urkunden & Zertifikate
+                                </h2>
+
+                                <div class="max-w-xl mx-auto">
+                                    <livewire:certificate-generator />
+
+                                    <p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                                        Hinweis: Die Urkunden werden als PDF generiert. Bitte stellen Sie sicher, dass Popups erlaubt sind.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -424,11 +441,12 @@
                     <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="4" aria-label="Teams"></button>
                     <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="5" aria-label="Disziplinen"></button>
                     <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="6" aria-label="Archiv"></button>
+                    <button class="w-3 h-3 rounded-full border-0 bg-gray-400 dark:bg-gray-500 cursor-pointer transition-all duration-200 hover:bg-gray-500 dark:hover:bg-gray-400 hover:scale-110 dot" data-slide="7" aria-label="Urkunden"></button>
                 </div>
 
                 {{-- Progress Indicator --}}
                 <div class="text-center mt-4">
-                    <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300" id="slideIndicator">1 von 7</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300" id="slideIndicator">1 von 8</span>
                 </div>
             </div>
 
