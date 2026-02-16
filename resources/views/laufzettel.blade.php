@@ -265,6 +265,7 @@
         </div>
     </div>
 
+    @if($selectedTeam)
     <!-- QR Modal -->
     <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-50 hidden transition-all duration-300">
         <div class="flex items-center justify-center min-h-screen p-4">
@@ -293,6 +294,8 @@
             </div>
         </div>
     </div>
+
+    @endif
 
     <!-- Mitglieder Modal -->
     <div id="membersModal" class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-50 hidden transition-all duration-300">
@@ -354,7 +357,9 @@
 
     <script>
         function openQrModal() {
-            document.getElementById('qrModal').classList.remove('hidden');
+            const qrModal = document.getElementById('qrModal');
+            if (!qrModal) return;
+            qrModal.classList.remove('hidden');
         }
 
         function openMembersModal() {
@@ -401,3 +406,5 @@
 
     </script>
 </x-layout>
+
+
