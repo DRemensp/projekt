@@ -31,7 +31,7 @@ class PerspectiveService
     {
         if (empty($this->apiKey)) {
             Log::warning('Perspective API key not configured');
-            return ['action' => 'allow', 'scores' => [], 'error' => 'API key not configured'];
+            return ['action' => 'moderate', 'scores' => [], 'error' => 'API key not configured'];
         }
 
         // Erstelle Request für Perspective API
@@ -66,7 +66,7 @@ class PerspectiveService
                     'request_data' => $requestData
                 ]);
                 return [
-                    'action' => 'allow',
+                    'action' => 'moderate',
                     'scores' => [],
                     'error' => 'API request failed: ' . ($errorBody['error']['message'] ?? $response->body())
                 ];
@@ -106,7 +106,7 @@ class PerspectiveService
 
         } catch (\Exception $e) {
             Log::error('Perspective API exception', ['error' => $e->getMessage()]);
-            return ['action' => 'allow', 'scores' => [], 'error' => $e->getMessage()];
+            return ['action' => 'moderate', 'scores' => [], 'error' => $e->getMessage()];
         }
     }
 

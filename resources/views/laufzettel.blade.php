@@ -81,6 +81,30 @@
                     </div>
                 </div>
 
+                @php
+                    $scoreEntryUrl = route('dashboard', [
+                        'scan_team' => $selectedTeam->id,
+                        'open_score_modal' => 1,
+                    ]);
+                @endphp
+
+                <div class="max-w-4xl mx-auto mb-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 text-center">QR-Code für Stationen</h3>
+                        <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
+                            Station scannt diesen Code, Team wird im Klassen-Dashboard direkt vorausgewählt und das Score-Popup öffnet sich.
+                        </p>
+                        <div class="mt-4 flex justify-center">
+                            <div class="rounded-lg border border-gray-200 bg-white p-3 shadow dark:border-gray-700">
+                                {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(260)->margin(1)->generate($scoreEntryUrl) !!}
+                            </div>
+                        </div>
+                        <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400 break-all">
+                            Ziel: {{ $scoreEntryUrl }}
+                        </p>
+                    </div>
+                </div>
+
                 <div class="max-w-6xl mx-auto">
                     @if(empty($teamResults))
                         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center transition-colors duration-300">

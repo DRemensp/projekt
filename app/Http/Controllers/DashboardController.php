@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Aktuell eingeloggten User holen
         $user = Auth::user();
@@ -53,11 +53,21 @@ class DashboardController extends Controller
             ];
         }
 
+        $scanTeamId = $request->integer('scan_team');
+        $openScoreModal = $request->boolean('open_score_modal');
+
+        if (!$scanTeamId || !$teams->pluck('id')->contains($scanTeamId)) {
+            $scanTeamId = null;
+            $openScoreModal = false;
+        }
+
         return view('dashboard', compact(
             'klasse',
             'discipline',
             'teams',
-            'allScores'
+            'allScores',
+            'scanTeamId',
+            'openScoreModal'
         ));
     }
 }

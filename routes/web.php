@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
         return redirect('/admin');}
     elseif ($user->hasRole('teacher')) {
         return redirect('/teacher');}
-    return app(DashboardController::class)->index();
+    return app(DashboardController::class)->index(request());
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -34,6 +34,9 @@ Route::view('profile', 'profile')
 Route::delete('/klasses/{klasseId}', [KlasseController::class, 'destroy'])
     ->middleware(['auth'])
     ->name('klasses.destroy');
+Route::patch('/klasses/{klasse}', [KlasseController::class, 'update'])
+    ->middleware(['auth'])
+    ->name('klasses.update');
 Route::post('/klasses', [KlasseController::class, 'store'])
     ->middleware(['auth'])
     ->name('klasses.store');
@@ -44,6 +47,11 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [HomeController::class, 'index'])
     ->name('welcome');
+
+Route::view('/datenschutz', 'legal.privacy')->name('legal.privacy');
+Route::view('/cookies', 'legal.cookies')->name('legal.cookies');
+Route::view('/nutzungsbedingungen', 'legal.terms')->name('legal.terms');
+Route::view('/impressum', 'legal.imprint')->name('legal.imprint');
 
 Route::get('/teacher', function () {
     $user = auth()->user();

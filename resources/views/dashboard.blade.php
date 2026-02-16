@@ -70,6 +70,21 @@
                                 Scores für Teams eintragen
                             </h4>
 
+                            <div class="mb-6">
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <button
+                                        id="open-qr-camera-modal"
+                                        type="button"
+                                        class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-indigo-700"
+                                    >
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M4 6h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"></path>
+                                        </svg>
+                                        QR-Scanner starten
+                                    </button>
+                                </div>
+                            </div>
+
                             <form method="POST" action="{{ route('teamTable.storeOrUpdate') }}" class="space-y-6">
                                 @csrf
 
@@ -96,9 +111,9 @@
                                             required
                                             class="w-full px-4 py-3 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl shadow-sm dark:shadow-gray-900/50 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 focus:border-green-500 dark:focus:border-green-400 transition-all duration-200 text-sm text-gray-800 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500 appearance-none cursor-pointer"
                                         >
-                                            <option value="" disabled {{ old('team_id') ? '' : 'selected' }} class="text-gray-400 dark:text-gray-500">-- Team wählen --</option>
+                                            <option value="" disabled {{ old('team_id') || $scanTeamId ? '' : 'selected' }} class="text-gray-400 dark:text-gray-500">-- Team wählen --</option>
                                             @foreach($teams as $team)
-                                                <option value="{{ $team->id }}" {{ old('team_id') == $team->id ? 'selected' : '' }} class="text-gray-800 dark:text-gray-200">
+                                                <option value="{{ $team->id }}" {{ (string) old('team_id', (string) ($scanTeamId ?? '')) === (string) $team->id ? 'selected' : '' }} class="text-gray-800 dark:text-gray-200">
                                                     {{ $team->name }} ({{ $team->klasse->name ?? 'Keine Klasse' }})
                                                 </option>
                                             @endforeach
@@ -175,6 +190,89 @@
                             </form>
                         </div>
 
+                        <div id="qr-score-modal" class="fixed inset-0 z-[100] hidden bg-black/60 p-4">
+                            <div class="mx-auto mt-16 w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-gray-700 dark:bg-gray-800">
+                                <div class="mb-5 flex items-center justify-between">
+                                    <h5 class="text-lg font-bold text-gray-900 dark:text-gray-100">Team per QR bewerten</h5>
+                                    <button id="close-qr-score-modal" type="button" class="rounded-md p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-100">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <form method="POST" action="{{ route('teamTable.storeOrUpdate') }}" class="space-y-4">
+                                    @csrf
+                                    <input type="hidden" name="discipline_id" value="{{ $discipline->id }}">
+
+                                    <div>
+                                        <label for="qr_team_id_select" class="mb-2 block text-sm font-semibold text-gray-800 dark:text-gray-200">Team</label>
+                                        <select
+                                            id="qr_team_id_select"
+                                            name="team_id"
+                                            required
+                                            class="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm transition-all duration-200 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-green-400 dark:focus:ring-green-400"
+                                        >
+                                            <option value="" disabled {{ old('team_id') || $scanTeamId ? '' : 'selected' }}>-- Team wählen --</option>
+                                            @foreach($teams as $team)
+                                                <option value="{{ $team->id }}" {{ (string) old('team_id', (string) ($scanTeamId ?? '')) === (string) $team->id ? 'selected' : '' }}>
+                                                    {{ $team->name }} ({{ $team->klasse->name ?? 'Keine Klasse' }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                        <div>
+                                            <label for="qr_score_1_input" class="mb-2 block text-sm font-semibold text-gray-800 dark:text-gray-200">Score 1</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                id="qr_score_1_input"
+                                                name="score_1"
+                                                value="{{ old('score_1') }}"
+                                                class="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm transition-all duration-200 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-green-400 dark:focus:ring-green-400"
+                                                placeholder="z.B. 12.5"
+                                            >
+                                        </div>
+                                        <div>
+                                            <label for="qr_score_2_input" class="mb-2 block text-sm font-semibold text-gray-800 dark:text-gray-200">Score 2</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                id="qr_score_2_input"
+                                                name="score_2"
+                                                value="{{ old('score_2') }}"
+                                                class="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm transition-all duration-200 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-green-400 dark:focus:ring-green-400"
+                                                placeholder="z.B. 11.8"
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-end gap-3 pt-2">
+                                        <button id="cancel-qr-score-modal" type="button" class="rounded-xl border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700">Abbrechen</button>
+                                        <button type="submit" class="rounded-xl bg-gradient-to-r from-green-600 to-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-md hover:from-green-700 hover:to-blue-700">Score speichern</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="qr-camera-modal" class="fixed inset-0 z-[110] hidden bg-black/70 p-4">
+                            <div class="mx-auto mt-12 w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-gray-700 dark:bg-gray-800">
+                                <div class="mb-4 flex items-center justify-between">
+                                    <h5 class="text-lg font-bold text-gray-900 dark:text-gray-100">QR-Scanner</h5>
+                                    <button id="close-qr-camera-modal" type="button" class="rounded-md p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-100">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">Halte den Team-QR-Code in die Kamera. Das Team wird automatisch ausgewählt.</p>
+                                <div id="qr-reader" class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700"></div>
+                                <p id="qr-scan-status" class="mt-3 text-sm text-gray-600 dark:text-gray-300"></p>
+                            </div>
+                        </div>
+
                         {{-- Disziplin-Informationen --}}
                         <div class="bg-gradient-to-br from-green-50 to-blue-50 night-panel dark:from-gray-800 dark:to-gray-700 border-2 border-gray-300 dark:border-gray-600 p-6 rounded-xl mt-6 shadow-inner dark:shadow-gray-900/50 transition-colors duration-300">
                             <h5 class="text-lg font-bold text-green-700 dark:text-green-400 mb-4 flex items-center gap-2 transition-colors duration-300">
@@ -227,5 +325,172 @@
 
     <script>
         window.allScoresData = @json($allScores ?? []);
+        window.qrScoreInitialTeamId = @json($scanTeamId ?? null);
+        window.qrScoreAutoOpen = @json($openScoreModal ?? false);
+
+        (function () {
+            const modal = document.getElementById('qr-score-modal');
+            const closeButton = document.getElementById('close-qr-score-modal');
+            const cancelButton = document.getElementById('cancel-qr-score-modal');
+            const cameraModal = document.getElementById('qr-camera-modal');
+            const openCameraButton = document.getElementById('open-qr-camera-modal');
+            const closeCameraButton = document.getElementById('close-qr-camera-modal');
+            const qrScanStatus = document.getElementById('qr-scan-status');
+            const qrTeamSelect = document.getElementById('qr_team_id_select');
+            const qrScore1Input = document.getElementById('qr_score_1_input');
+            const qrScore2Input = document.getElementById('qr_score_2_input');
+            const disciplineSelect = document.getElementById('discipline_id_select');
+
+            if (!modal || !qrTeamSelect || !qrScore1Input || !qrScore2Input || !disciplineSelect) {
+                return;
+            }
+
+            const openModal = () => modal.classList.remove('hidden');
+            const closeModal = () => modal.classList.add('hidden');
+            const openCameraModal = () => cameraModal?.classList.remove('hidden');
+            const closeCameraModal = () => cameraModal?.classList.add('hidden');
+
+            let cameraScanner = null;
+            let isCameraRunning = false;
+
+            const syncScoresFromDatabase = () => {
+                const disciplineId = disciplineSelect.value;
+                const teamId = qrTeamSelect.value;
+
+                if (!disciplineId || !teamId) {
+                    qrScore1Input.value = '';
+                    qrScore2Input.value = '';
+                    return;
+                }
+
+                const key = `${disciplineId}_${teamId}`;
+                const currentScores = window.allScoresData?.[key] ?? null;
+                qrScore1Input.value = currentScores?.score_1 ?? '';
+                qrScore2Input.value = currentScores?.score_2 ?? '';
+            };
+
+            const validTeamIds = new Set(Array.from(qrTeamSelect.options).map((option) => String(option.value)));
+
+            const extractTeamIdFromScan = (rawText) => {
+                const text = String(rawText || '').trim();
+                if (!text) return null;
+
+                try {
+                    const parsedUrl = new URL(text, window.location.origin);
+                    const teamFromQuery = parsedUrl.searchParams.get('scan_team');
+                    if (teamFromQuery && validTeamIds.has(String(teamFromQuery))) {
+                        return String(teamFromQuery);
+                    }
+                } catch (_) {
+                }
+
+                if (validTeamIds.has(text)) {
+                    return text;
+                }
+
+                const match = text.match(/scan_team=(\d+)/i) || text.match(/team[:=](\d+)/i) || text.match(/(\d+)/);
+                if (match && validTeamIds.has(String(match[1]))) {
+                    return String(match[1]);
+                }
+
+                return null;
+            };
+
+            const stopCameraScanner = async () => {
+                if (cameraScanner && isCameraRunning) {
+                    await cameraScanner.stop();
+                    await cameraScanner.clear();
+                }
+                cameraScanner = null;
+                isCameraRunning = false;
+            };
+
+            const startCameraScanner = async () => {
+                if (!window.Html5Qrcode) {
+                    if (qrScanStatus) qrScanStatus.textContent = 'Scanner-Bibliothek nicht geladen.';
+                    return;
+                }
+
+                if (qrScanStatus) qrScanStatus.textContent = 'Kamera wird gestartet...';
+
+                try {
+                    cameraScanner = new window.Html5Qrcode('qr-reader');
+                    await cameraScanner.start(
+                        { facingMode: 'environment' },
+                        { fps: 10, qrbox: { width: 240, height: 240 } },
+                        async (decodedText) => {
+                            const foundTeamId = extractTeamIdFromScan(decodedText);
+                            if (!foundTeamId) {
+                                if (qrScanStatus) qrScanStatus.textContent = 'QR erkannt, aber keine gültige Team-ID gefunden.';
+                                return;
+                            }
+
+                            qrTeamSelect.value = foundTeamId;
+                            syncScoresFromDatabase();
+                            if (qrScanStatus) qrScanStatus.textContent = `Team ${foundTeamId} erkannt.`;
+                            await stopCameraScanner();
+                            closeCameraModal();
+                            openModal();
+                        },
+                        () => {}
+                    );
+
+                    isCameraRunning = true;
+                    if (qrScanStatus) qrScanStatus.textContent = 'Scanner aktiv.';
+                } catch (error) {
+                    if (qrScanStatus) qrScanStatus.textContent = 'Kamera konnte nicht gestartet werden. Bitte Zugriff erlauben.';
+                }
+            };
+
+            if (openCameraButton) {
+                openCameraButton.addEventListener('click', async () => {
+                    openCameraModal();
+                    await startCameraScanner();
+                });
+            }
+
+            if (closeButton) {
+                closeButton.addEventListener('click', closeModal);
+            }
+            if (cancelButton) {
+                cancelButton.addEventListener('click', closeModal);
+            }
+            if (closeCameraButton) {
+                closeCameraButton.addEventListener('click', async () => {
+                    await stopCameraScanner();
+                    closeCameraModal();
+                });
+            }
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            if (cameraModal) {
+                cameraModal.addEventListener('click', async (event) => {
+                    if (event.target === cameraModal) {
+                        await stopCameraScanner();
+                        closeCameraModal();
+                    }
+                });
+            }
+
+            qrTeamSelect.addEventListener('change', syncScoresFromDatabase);
+
+            const initialTeamId = window.qrScoreInitialTeamId;
+            if (initialTeamId) {
+                qrTeamSelect.value = String(initialTeamId);
+                syncScoresFromDatabase();
+            }
+
+            if (window.qrScoreAutoOpen && initialTeamId) {
+                openModal();
+            }
+
+            window.addEventListener('beforeunload', () => {
+                stopCameraScanner().catch(() => {});
+            });
+        })();
     </script>
 </x-layout>

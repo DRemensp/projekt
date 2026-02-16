@@ -5,18 +5,18 @@ namespace App\Livewire;
 use App\Models\Comment;
 use App\Models\Setting;
 use App\Services\PerspectiveService;
-use Livewire\Component;
 use Illuminate\Support\Facades\Log;
+use Livewire\Component;
 
 class Comments extends Component
 {
     public $message;
     public $authorName;
-    public $commentsToShow = 5; // Anzahl der anzuzeigenden Kommentare
+    public $commentsToShow = 5;
 
     protected $rules = [
-        'message' => 'required|string|max:150|regex:/^[^\\r\\n]*$/',
-        'authorName' => 'nullable|string|max:10',
+        'message' => 'required|string|max:150|regex:/^[^\r\n]*$/',
+        'authorName' => "nullable|string|max:50|regex:/^[\\pL\\pN\\s\\._'\\-]*$/u",
     ];
 
     protected $messages = [
@@ -29,45 +29,45 @@ class Comments extends Component
 
     public function render()
     {
-        // Zeige nur genehmigte Kommentare an
-        $allComments = Comment::approved()->latest()->get();
-        $visibleComments = $allComments->take($this->commentsToShow);
+        $commentsQuery = Comment::approved()->latest();
+        $totalComments = (clone $commentsQuery)->count();
+        $visibleComments = $commentsQuery->take($this->commentsToShow)->get();
 
         return view('livewire.comments', [
             'comments' => $visibleComments,
-            'totalComments' => $allComments->count(),
-            'hasMoreComments' => $allComments->count() > $this->commentsToShow,
-            'commentsEnabled' => Setting::commentsEnabled()
+            'totalComments' => $totalComments,
+            'hasMoreComments' => $totalComments > $this->commentsToShow,
+            'commentsEnabled' => Setting::commentsEnabled(),
         ]);
     }
 
     public function store()
     {
-        // Prüfe ob Kommentare aktiviert sind
         if (!Setting::commentsEnabled()) {
             session()->flash('comment_blocked', 'Kommentare sind derzeit deaktiviert.');
+            return;
+        }
+
+        // Serverseitige Durchsetzung: Kommentare nur mit Moderation-Consent + bestätigtem Hinweis.
+        if (!$this->hasModerationConsent() || !$this->isFirstUseNoticeConfirmed()) {
+            session()->flash('comment_blocked', 'Kommentare sind erst nach Einwilligung und Bestätigung des Hinweises möglich.');
             return;
         }
 
         $this->validate();
 
         try {
-            // Erstelle PerspectiveService
             $moderationService = new PerspectiveService();
-
-            // Analysiere den Kommentar
             $analysis = $moderationService->analyzeText($this->message);
 
-            // Log die Analyse für Debugging
             Log::info('Comment moderation analysis', [
                 'text' => substr($this->message, 0, 50) . '...',
-                'analysis' => $analysis
+                'analysis' => $analysis,
             ]);
 
             $moderationStatus = 'pending';
             $moderationReason = null;
 
-            // Entscheide basierend auf der AI-Analyse
             switch ($analysis['action']) {
                 case 'allow':
                     $moderationStatus = 'approved';
@@ -86,22 +86,19 @@ class Comments extends Component
                     break;
             }
 
-            // Erstelle den Kommentar
-            $comment = Comment::create([
+            Comment::create([
                 'message' => $this->message,
                 'author_name' => $this->authorName ?: 'Anonym',
                 'ip_address' => request()->ip(),
                 'moderation_status' => $moderationStatus,
-                'moderation_scores' => $analysis['scores'],
+                'moderation_scores' => $analysis['scores'] ?? [],
                 'moderation_reason' => $moderationReason,
                 'moderated_at' => $moderationStatus !== 'pending' ? now() : null,
             ]);
 
-            // Setze Eingabefelder zurück
             $this->message = '';
             $this->authorName = '';
 
-            // Zeige passende Nachricht basierend auf Moderation
             if ($moderationStatus === 'approved') {
                 session()->flash('comment_success', 'Kommentar erfolgreich hinzugefügt!');
             } elseif ($moderationStatus === 'pending') {
@@ -109,19 +106,18 @@ class Comments extends Component
             } else {
                 session()->flash('comment_blocked', 'Ihr Kommentar konnte nicht veröffentlicht werden. Bitte achten Sie auf einen respektvollen Umgangston.');
             }
-
         } catch (\Exception $e) {
             Log::error('Error storing comment', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ]);
 
-            // Fallback: Bei Fehlern direkt genehmigen (oder zur manuellen Überprüfung)
+            // Fallback: Bei Fehlern zur manuellen Überprüfung.
             Comment::create([
                 'message' => $this->message,
                 'author_name' => $this->authorName ?: 'Anonym',
                 'ip_address' => request()->ip(),
-                'moderation_status' => 'pending', // Sicherheitshalber zur manuellen Überprüfung
+                'moderation_status' => 'pending',
                 'moderation_reason' => 'Moderations-Service nicht verfügbar - manuelle Überprüfung erforderlich',
             ]);
 
@@ -130,6 +126,22 @@ class Comments extends Component
 
             session()->flash('comment_pending', 'Ihr Kommentar wird überprüft und dann freigeschaltet.');
         }
+    }
+
+    private function hasModerationConsent(): bool
+    {
+        $rawConsent = request()->cookie('laravel_cookie_consent');
+        if (!$rawConsent) {
+            return false;
+        }
+
+        $decoded = json_decode(rawurldecode($rawConsent), true);
+        return is_array($decoded) && ($decoded['moderation'] ?? false) === true;
+    }
+
+    private function isFirstUseNoticeConfirmed(): bool
+    {
+        return request()->cookie('comment_notice_ack') === '1';
     }
 
     public function loadMore()
@@ -144,12 +156,10 @@ class Comments extends Component
 
     public function destroy(Comment $comment)
     {
-        // Prüfe ob User eingeloggt ist
         if (!auth()->check()) {
             abort(403, 'Sie müssen eingeloggt sein, um Kommentare zu löschen');
         }
 
-        // Nur Admin und Teacher dürfen löschen
         if (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('teacher')) {
             abort(403, 'Keine Berechtigung zum Löschen von Kommentaren');
         }

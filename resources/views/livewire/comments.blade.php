@@ -13,7 +13,28 @@
                 } catch (e) {}
                 return false;
             })(),
+            showFirstUseNotice: false,
+            hasNoticeAckCookie() {
+                return document.cookie.split('; ').some(row => row.startsWith('comment_notice_ack=1'));
+            },
+            hideFirstUseNotice() {
+                this.showFirstUseNotice = false;
+                try {
+                    localStorage.setItem('comments_first_use_notice_seen', '1');
+                } catch (e) {}
+                const expires = new Date();
+                expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
+                const secureFlag = window.location.protocol === 'https:' ? '; Secure' : '';
+                document.cookie = `comment_notice_ack=1; expires=${expires.toUTCString()}; path=/; SameSite=Lax${secureFlag}`;
+            },
             init() {
+                try {
+                    const seenInLocalStorage = localStorage.getItem('comments_first_use_notice_seen') === '1';
+                    const seenInCookie = this.hasNoticeAckCookie();
+                    this.showFirstUseNotice = !(seenInLocalStorage && seenInCookie);
+                } catch (e) {
+                    this.showFirstUseNotice = !this.hasNoticeAckCookie();
+                }
                 window.addEventListener('cookiePreferencesUpdated', () => {
                     try {
                         const c = document.cookie.split('; ').find(r => r.startsWith('laravel_cookie_consent='));
@@ -79,8 +100,28 @@
                     <div>
                         <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Nachricht <span class="text-red-500 dark:text-red-400">*</span></label>
                         <input wire:model.defer="message" type="text" id="message" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="Schreibe einen Kommentar... (max 150 Zeichen)" required maxlength="150"
-                               x-on:keydown.enter.prevent="$wire.store()">
+                               x-on:keydown.enter.prevent="if (!showFirstUseNotice) { $wire.store() }">
                         @error('message') <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div x-show="showFirstUseNotice" x-transition class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
+                        <p class="font-semibold">Hinweis zur Kommentarnutzung</p>
+                        <p class="mt-1">
+                            Bitte keine beleidigenden, diskriminierenden, bedrohenden oder anstößigen Inhalte posten.
+                            Spam, bewusste Umgehung der Moderation und Manipulationsversuche sind nicht erlaubt.
+                        </p>
+                        <p class="mt-1 font-semibold">
+                            Jegliche Verstöße können rechtliche Konsequenzen nach sich ziehen.
+                        </p>
+                        <p class="mt-1">
+                            Details: <a href="{{ route('legal.terms') }}" class="underline underline-offset-2 hover:text-amber-700 dark:hover:text-amber-100">Nutzungsbedingungen</a>
+                        </p>
+                        <div class="mt-2">
+                            <button type="button" @click="hideFirstUseNotice()"
+                                    class="inline-flex items-center rounded-md border border-amber-300 bg-white px-2.5 py-1 font-medium text-amber-900 hover:bg-amber-100 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-100 dark:hover:bg-amber-900/50">
+                                Verstanden
+                            </button>
+                        </div>
                     </div>
 
                     <div class="flex justify-between items-center">
@@ -89,6 +130,8 @@
                         {{-- HIER WURDE wire:target="store" HINZUGEFÜGT --}}
                         <button type="submit"
                                 class="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                                :disabled="showFirstUseNotice"
+                                :class="{ 'opacity-50 cursor-not-allowed hover:shadow-none hover:translate-y-0': showFirstUseNotice }"
                                 wire:loading.attr="disabled"
                                 wire:loading.class="opacity-50 cursor-not-allowed"
                                 wire:target="store">
@@ -110,6 +153,9 @@
                             <span wire:loading wire:target="store">Sende...</span>
                         </button>
                     </div>
+                    <p x-show="showFirstUseNotice" class="text-xs text-amber-700 dark:text-amber-300">
+                        Bitte zuerst den Hinweis mit „Verstanden“ bestätigen.
+                    </p>
                 </form>
             </div>
         @endif

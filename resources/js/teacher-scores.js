@@ -1,4 +1,8 @@
 // resources/js/teacher-scores.js
+import { Html5Qrcode } from 'html5-qrcode';
+
+window.Html5Qrcode = Html5Qrcode;
+
 function initTeacherScores() {
     // Prüfen, ob die benötigten Daten vorhanden sind
     if (typeof window.allScoresData === 'undefined') {

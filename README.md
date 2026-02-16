@@ -58,6 +58,7 @@ Die Punkte unten spiegeln die Logik aus Migrations, Models, Controllern und JS w
 - Admin-Ansicht mit Formularen für Schulen, Klassen, Disziplinen, Teams und Scoresystem.
 - Scoresystem steuert die Punktevergabe und Bonuspunkte.
 - Archiv-Funktion: Snapshots erstellen und löschen.
+- Admin-Broadcast: Admin kann Live-Benachrichtigungen an Zielgruppen senden (Gäste, Teacher, Klassen/Schüler), inkl. Popup-Anzeige im Frontend.
 
 ### 🟩 Archive
 - Ein Archiv speichert einen kompletten Snapshot (Rankings, Disziplinen, Teams, Farben, Statistiken) als JSON.
@@ -69,12 +70,15 @@ Die Punkte unten spiegeln die Logik aus Migrations, Models, Controllern und JS w
 - Moderation-Panel für Admin und Teacher: freigeben, blockieren, löschen.
 - Kommentar-Feature global aktivierbar/deaktivierbar (Setting + Cache für 1h).
 - IP-Adressen werden nur in der Datenbank gespeichert (Moderationszweck).
+- Erstnutzungs-Hinweis bei Kommentaren mit verpflichtender Bestätigung vor dem ersten Senden (pro Browser).
+- Kommentarnutzung nur mit Moderation-Cookies; ohne Einwilligung bleibt das Kommentarformular gesperrt.
 
 ### 🟨 Design und UX
 - Light und Dark Mode, Toggle im Footer, Speicherung in localStorage.
 - Alternative Designs für Light und Dark auf der Startseite.
 - Farbzuordnung je Schule für konsistente Highlights.
 - Mobile Navbar mit Animation und Admin Carousel mit Touch-Swipe.
+- Footer mit rechtlichen Seiten (Datenschutz, Cookie-Richtlinie, Nutzungsbedingungen, Impressum) und Button zum Öffnen der Cookie-Präferenzen.
 
 ### 🟧 Statistik
 - VisitCounter zählt Besuche der Startseite.
@@ -123,6 +127,7 @@ Weitere Tabellen:
 - /archive     Archiv-Liste und Detailansichten
 - /dashboard   Klassen-Dashboard (nach Login)
 - /profile     Standard Breeze Profilseite
+- /datenschutz, /cookies, /nutzungsbedingungen, /impressum  Rechtliche Seiten
 
 ## 🟩 Lokales Setup
 ```bash
@@ -243,6 +248,8 @@ Optional, aber empfohlen:
 - PERSPECTIVE_ATTRIBUTES (z.B. TOXICITY,INSULT,SPAM)
 - PERSPECTIVE_LANGUAGE_HINTS (z.B. de,en)
 - PERSPECTIVE_BLOCK_THRESHOLD, PERSPECTIVE_MODERATE_THRESHOLD, PERSPECTIVE_TIMEOUT
+- BROADCAST_CONNECTION, REVERB_APP_KEY, REVERB_APP_SECRET, REVERB_APP_ID, REVERB_HOST, REVERB_PORT, REVERB_SCHEME
+- VITE_REVERB_APP_KEY, VITE_REVERB_HOST, VITE_REVERB_PORT, VITE_REVERB_SCHEME
 
 Ohne PERSPECTIVE_API_KEY werden Kommentare automatisch erlaubt (Fallback) oder als pending markiert.
 
