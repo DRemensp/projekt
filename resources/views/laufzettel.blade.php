@@ -88,21 +88,17 @@
                     ]);
                 @endphp
 
-                <div class="max-w-4xl mx-auto mb-8">
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors duration-300">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 text-center">QR-Code für Stationen</h3>
-                        <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
-                            Station scannt diesen Code, Team wird im Klassen-Dashboard direkt vorausgewählt und das Score-Popup öffnet sich.
-                        </p>
-                        <div class="mt-4 flex justify-center">
-                            <div class="rounded-lg border border-gray-200 bg-white p-3 shadow dark:border-gray-700">
-                                {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(260)->margin(1)->generate($scoreEntryUrl) !!}
-                            </div>
-                        </div>
-                        <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400 break-all">
-                            Ziel: {{ $scoreEntryUrl }}
-                        </p>
-                    </div>
+                <div class="max-w-4xl mx-auto mb-8 text-center">
+                    <button
+                        type="button"
+                        onclick="openQrModal()"
+                        class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-indigo-700"
+                    >
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7a2 2 0 012-2h2m10 0h2a2 2 0 012 2v2m0 8a2 2 0 01-2 2h-2m-10 0H5a2 2 0 01-2-2v-2m0-4h18"></path>
+                        </svg>
+                        QR-Code anzeigen
+                    </button>
                 </div>
 
                 <div class="max-w-6xl mx-auto">
@@ -269,6 +265,35 @@
         </div>
     </div>
 
+    <!-- QR Modal -->
+    <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-50 hidden transition-all duration-300">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full transition-colors duration-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">QR-Code für Stationen</h3>
+                        <button onclick="closeModal('qrModal')" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
+                        Station scannt diesen Code, Team wird im Klassen-Dashboard direkt vorausgewählt und das Score-Popup öffnet sich.
+                    </p>
+                    <div class="mt-4 flex justify-center">
+                        <div class="rounded-lg border border-gray-200 bg-white p-3 shadow dark:border-gray-700">
+                            {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(260)->margin(1)->generate($scoreEntryUrl) !!}
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400 break-all">
+                        Ziel: {{ $scoreEntryUrl }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Mitglieder Modal -->
     <div id="membersModal" class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-50 hidden transition-all duration-300">
         <div class="flex items-center justify-center min-h-screen p-4">
@@ -328,6 +353,10 @@
     @endif
 
     <script>
+        function openQrModal() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
         function openMembersModal() {
             // Teammitglieder parsen - berücksichtigt sowohl Array als auch JSON-String
             let membersData = null;

@@ -1,4 +1,5 @@
-ï»¿@unless ($alreadyConsentedWithCookies)
+@unless ($alreadyConsentedWithCookies)
+    @php($consentCookieName = config('cookie-consent.cookie_name', 'laravel_cookie_consent'))
     <div id="cookieConsent" class="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-5">
         <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"></div>
         <div class="relative mx-auto w-full max-w-[28rem] sm:max-w-[32rem]">
@@ -18,7 +19,7 @@
                         </div>
                         <h2 class="mt-3 text-lg font-bold tracking-tight text-slate-900 dark:text-white sm:text-xl">Datenschutz & Cookie-Einstellungen</h2>
                         <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                            Wir nutzen notwendige Cookies fÃ¼r den Betrieb. Optionale Cookies aktivieren Kommentare und helfen bei Statistiken.
+                            Wir nutzen notwendige Cookies für den Betrieb. Optionale Cookies aktivieren Kommentare und helfen bei Statistiken.
                         </p>
                     </div>
 
@@ -46,7 +47,7 @@
                     </p>
                     <p class="text-center text-xs text-slate-500 dark:text-slate-400">
                         <a href="{{ route('legal.privacy') }}" class="underline decoration-dotted underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400">Datenschutz</a>
-                        Â·
+                        ·
                         <a href="{{ route('legal.cookies') }}" class="underline decoration-dotted underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400">Cookie-Richtlinie</a>
                     </p>
                 </div>
@@ -62,11 +63,11 @@
                 <div class="border-b border-slate-200/80 px-4 py-4 sm:px-6 dark:border-slate-700/80">
                     <div class="flex items-start justify-between gap-4">
                         <div>
-                            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">PrivatsphÃ¤re</p>
+                            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">Privatsphäre</p>
                             <h2 id="cookieModalTitle" class="mt-1 text-xl font-bold text-slate-900 dark:text-white">Cookie-Auswahl</h2>
-                            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Lege fest, welche optionalen Cookies aktiviert werden dÃ¼rfen.</p>
+                            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Lege fest, welche optionalen Cookies aktiviert werden dürfen.</p>
                         </div>
-                        <button id="closeModal" type="button" aria-label="SchlieÃŸen"
+                        <button id="closeModal" type="button" aria-label="Schließen"
                                 class="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-slate-200 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white">
                             <span class="text-2xl leading-none">&times;</span>
                         </button>
@@ -79,7 +80,7 @@
                             <div>
                                 <h3 class="text-sm font-bold text-emerald-900 dark:text-emerald-300">Erforderliche Cookies</h3>
                                 <p class="mt-1 text-sm leading-relaxed text-emerald-800/90 dark:text-emerald-200/90">
-                                    Immer aktiv, damit Anmeldung, Sicherheit und Grundfunktionen zuverlÃ¤ssig laufen.
+                                    Immer aktiv, damit Anmeldung, Sicherheit und Grundfunktionen zuverlässig laufen.
                                 </p>
                             </div>
                             <span class="shrink-0 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white">Aktiv</span>
@@ -91,7 +92,7 @@
                             <div class="pr-2">
                                 <h3 class="text-base font-semibold text-slate-900 dark:text-white">Moderation-Cookies</h3>
                                 <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                                    BenÃ¶tigt fÃ¼r Kommentar-Funktionen und Schutz vor Spam.
+                                    Benötigt für Kommentar-Funktionen und Schutz vor Spam.
                                 </p>
                             </div>
                             <label class="relative inline-flex cursor-pointer items-center self-center">
@@ -215,7 +216,7 @@
                         consentedAt: new Date().toISOString()
                     };
                     const secureFlag = window.location.protocol === 'https:' ? '; Secure' : '';
-                    document.cookie = `laravel_cookie_consent=${encodeURIComponent(JSON.stringify(consent))}; expires=${expires.toUTCString()}; path=/; SameSite=Lax${secureFlag}`;
+                    document.cookie = `{{ $consentCookieName }}=${encodeURIComponent(JSON.stringify(consent))}; expires=${expires.toUTCString()}; path=/; SameSite=Lax${secureFlag}`;
                 },
 
                 hideBanner: function() {
@@ -282,4 +283,6 @@
         });
     </script>
 @endunless
+
+
 
