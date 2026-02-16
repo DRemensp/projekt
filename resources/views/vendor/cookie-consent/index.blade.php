@@ -19,9 +19,23 @@
                         </div>
                         <h2 class="mt-3 text-lg font-bold tracking-tight text-slate-900 dark:text-white sm:text-xl">Datenschutz & Cookie-Einstellungen</h2>
                         <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                            Wir nutzen notwendige Cookies für den Betrieb. Optionale Cookies aktivieren Kommentare und helfen bei Statistiken.
+                            Wir nutzen notwendige Cookies fÃ¼r den Betrieb. Optionale Cookies aktivieren Kommentare und helfen bei Statistiken.
                         </p>
                     </div>
+
+                    <section class="rounded-2xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/40">
+                        <div class="text-left">
+                            <h3 class="text-base font-semibold text-slate-900 dark:text-white">Designmodus</h3>
+                        </div>
+                        <div class="mt-2">
+                            <input id="themePreferenceSlider" type="range" min="0" max="2" step="1" value="1" class="w-full accent-blue-600">
+                            <div class="mt-1 grid grid-cols-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                                <span class="text-left">Dark</span>
+                                <span class="text-center">System</span>
+                                <span class="text-right">Light</span>
+                            </div>
+                        </div>
+                    </section>
 
                     <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
                         <button onclick="window.cookies.acceptNecessary()"
@@ -47,7 +61,7 @@
                     </p>
                     <p class="text-center text-xs text-slate-500 dark:text-slate-400">
                         <a href="{{ route('legal.privacy') }}" class="underline decoration-dotted underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400">Datenschutz</a>
-                        ·
+                        Â·
                         <a href="{{ route('legal.cookies') }}" class="underline decoration-dotted underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400">Cookie-Richtlinie</a>
                     </p>
                 </div>
@@ -63,11 +77,11 @@
                 <div class="border-b border-slate-200/80 px-4 py-4 sm:px-6 dark:border-slate-700/80">
                     <div class="flex items-start justify-between gap-4">
                         <div>
-                            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">Privatsphäre</p>
+                            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">PrivatsphÃ¤re</p>
                             <h2 id="cookieModalTitle" class="mt-1 text-xl font-bold text-slate-900 dark:text-white">Cookie-Auswahl</h2>
-                            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Lege fest, welche optionalen Cookies aktiviert werden dürfen.</p>
+                            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Lege fest, welche optionalen Cookies aktiviert werden dÃ¼rfen.</p>
                         </div>
-                        <button id="closeModal" type="button" aria-label="Schließen"
+                        <button id="closeModal" type="button" aria-label="SchlieÃŸen"
                                 class="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-slate-200 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white">
                             <span class="text-2xl leading-none">&times;</span>
                         </button>
@@ -80,7 +94,7 @@
                             <div>
                                 <h3 class="text-sm font-bold text-emerald-900 dark:text-emerald-300">Erforderliche Cookies</h3>
                                 <p class="mt-1 text-sm leading-relaxed text-emerald-800/90 dark:text-emerald-200/90">
-                                    Immer aktiv, damit Anmeldung, Sicherheit und Grundfunktionen zuverlässig laufen.
+                                    Immer aktiv, damit Anmeldung, Sicherheit und Grundfunktionen zuverlÃ¤ssig laufen.
                                 </p>
                             </div>
                             <span class="shrink-0 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white">Aktiv</span>
@@ -92,7 +106,7 @@
                             <div class="pr-2">
                                 <h3 class="text-base font-semibold text-slate-900 dark:text-white">Moderation-Cookies</h3>
                                 <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                                    Benötigt für Kommentar-Funktionen und Schutz vor Spam.
+                                    BenÃ¶tigt fÃ¼r Kommentar-Funktionen und Schutz vor Spam.
                                 </p>
                             </div>
                             <label class="relative inline-flex cursor-pointer items-center self-center">
@@ -120,8 +134,7 @@
                     </section>
                 </div>
 
-                <div class="border-t border-slate-200/80 bg-slate-50 px-4 py-4 dark:border-slate-700/70 dark:bg-slate-900/70 sm:px-6">
-                    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div class="border-t border-slate-200/80 bg-slate-50 px-4 py-4 dark:border-slate-700/70 dark:bg-slate-900/70 sm:px-6">`r`n                    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
                         <button onclick="window.cookies.acceptNecessary()"
                                 class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
                             Nur notwendige
@@ -150,6 +163,51 @@
                 e.preventDefault();
             };
 
+            const themePreferenceSlider = document.getElementById('themePreferenceSlider');
+            const readThemeChoice = function() {
+                if (!themePreferenceSlider) return 'system';
+                const value = Number(themePreferenceSlider.value);
+                if (value === 0) return 'dark';
+                if (value === 2) return 'light';
+                return 'system';
+            };
+
+            const applyThemeChoice = function(choice) {
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (choice === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else if (choice === 'light') {
+                    document.documentElement.classList.remove('dark');
+                } else if (prefersDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            };
+
+            const saveThemeChoice = function(choice) {
+                localStorage.setItem('theme', choice);
+            };
+
+            const initThemeSlider = function() {
+                if (!themePreferenceSlider) return;
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === null) {
+                    localStorage.setItem('theme', 'system');
+                }
+                if (savedTheme === 'dark') themePreferenceSlider.value = '0';
+                else if (savedTheme === 'light') themePreferenceSlider.value = '2';
+                else themePreferenceSlider.value = '1';
+
+                const choice = readThemeChoice();
+                applyThemeChoice(choice);
+
+                themePreferenceSlider.addEventListener('input', function() {
+                    const liveChoice = readThemeChoice();
+                    applyThemeChoice(liveChoice);
+                });
+            };
+
             window.cookies = {
                 isLocked: false,
 
@@ -174,6 +232,9 @@
                 },
 
                 acceptNecessary: function() {
+                    const themeChoice = readThemeChoice();
+                    saveThemeChoice(themeChoice);
+                    applyThemeChoice(themeChoice);
                     this.setCookiePreferences({
                         necessary: true,
                         moderation: false,
@@ -184,6 +245,9 @@
                 },
 
                 acceptAll: function() {
+                    const themeChoice = readThemeChoice();
+                    saveThemeChoice(themeChoice);
+                    applyThemeChoice(themeChoice);
                     this.setCookiePreferences({
                         necessary: true,
                         moderation: true,
@@ -198,6 +262,9 @@
                 },
 
                 reject: function() {
+                    const themeChoice = readThemeChoice();
+                    saveThemeChoice(themeChoice);
+                    applyThemeChoice(themeChoice);
                     this.setCookiePreferences({
                         necessary: true,
                         moderation: false,
@@ -237,6 +304,8 @@
             const saveSettingsButton = document.getElementById('saveSettings');
             const cookieModal = document.getElementById('cookieModal');
 
+            initThemeSlider();
+
             if (cookieConsent) {
                 window.cookies.lockUi();
             }
@@ -255,12 +324,15 @@
 
             if (saveSettingsButton) {
                 saveSettingsButton.addEventListener('click', function() {
+                    const themeChoice = readThemeChoice();
                     const preferences = {
                         necessary: true,
                         moderation: document.getElementById('moderationCookies').checked,
                         analytics: document.getElementById('analyticsCookies').checked
                     };
 
+                    saveThemeChoice(themeChoice);
+                    applyThemeChoice(themeChoice);
                     window.cookies.setCookiePreferences(preferences);
                     window.cookies.hideBanner();
                     window.cookies.triggerCommentUpdate();
@@ -283,6 +355,7 @@
         });
     </script>
 @endunless
+
 
 
 
