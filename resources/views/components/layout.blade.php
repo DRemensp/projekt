@@ -490,7 +490,7 @@
         const openCookiePreferencesButton = document.getElementById('openCookiePreferences');
         if (openCookiePreferencesButton) {
             openCookiePreferencesButton.addEventListener('click', function () {
-                document.cookie = 'laravel_cookie_consent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+                document.cookie = '{{ config('cookie-consent.cookie_name') }}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
                 window.location.reload();
             });
         }

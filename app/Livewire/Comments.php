@@ -130,7 +130,7 @@ class Comments extends Component
 
     private function hasModerationConsent(): bool
     {
-        $rawConsent = request()->cookie('laravel_cookie_consent');
+        $rawConsent = request()->cookie(config('cookie-consent.cookie_name'));
         if (!$rawConsent) {
             return false;
         }
