@@ -178,7 +178,7 @@
 </nav>
 
 {{-- ÄNDERUNG: pt-8 entfernt, damit der Hintergrund ganz oben anschließt --}}
-<main class="relative">
+<main class="relative pt-10">
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none hidden dark:block" aria-hidden="true">
         <div class="parallax-layer absolute inset-0" data-speed="0.12">
             <div class="aurora-sky absolute inset-0"></div>
