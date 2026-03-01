@@ -133,11 +133,11 @@ function initAdminCarousel() {
             // Update dots
             this.dots.forEach((dot, index) => {
                 if (index === this.currentSlide) {
-                    dot.classList.remove('bg-gray-400');
-                    dot.classList.add('bg-indigo-600', 'scale-125', 'active');
+                    dot.classList.remove('bg-gray-400', 'dark:bg-gray-500');
+                    dot.classList.add('bg-indigo-600', 'dark:bg-indigo-500', 'scale-125', 'active');
                 } else {
-                    dot.classList.remove('bg-indigo-600', 'scale-125', 'active');
-                    dot.classList.add('bg-gray-400');
+                    dot.classList.remove('bg-indigo-600', 'dark:bg-indigo-500', 'scale-125', 'active');
+                    dot.classList.add('bg-gray-400', 'dark:bg-gray-500');
                 }
             });
 

@@ -53,7 +53,7 @@
                 {{-- Navigation Arrows --}}
                 <button
                     id="prevBtn"
-                    class="absolute left-[5px] top-[20%] transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
+                    class="fixed left-[5px] top-1/2 transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
                     aria-label="Vorheriger Bereich"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200"
@@ -64,7 +64,7 @@
 
                 <button
                     id="nextBtn"
-                    class="absolute right-[5px] top-[20%] transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
+                    class="fixed right-[5px] top-1/2 transform -translate-y-1/2 z-10 bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-700 border-2 border-gray-500 dark:border-gray-600 rounded-xl w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-200 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 hover:border-blue-700 dark:hover:border-blue-800 hover:shadow-lg dark:shadow-gray-900/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-gray-600 dark:disabled:to-gray-700 disabled:border-gray-500 dark:disabled:border-gray-600 shadow-md"
                     aria-label="Nächster Bereich"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200"
