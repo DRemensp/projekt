@@ -283,8 +283,13 @@
                         Station scannt diesen Code, Team wird im Klassen-Dashboard direkt vorausgewählt und das Score-Popup öffnet sich.
                     </p>
                     <div class="mt-4 flex justify-center">
-                        <div class="rounded-lg border border-gray-200 bg-white p-3 shadow dark:border-gray-700">
-                            {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(260)->margin(1)->generate($scoreEntryUrl) !!}
+                        <div class="relative inline-block rounded-lg border border-gray-200 bg-white p-3 shadow dark:border-gray-700">
+                            {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(260)->margin(1)->errorCorrection('H')->generate($scoreEntryUrl) !!}
+                            <img
+                                src="{{ asset('img.png') }}"
+                                alt="Logo"
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-16 w-16 rounded-sm bg-white"
+                            />
                         </div>
                     </div>
                     <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400 break-all">
