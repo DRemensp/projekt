@@ -285,11 +285,13 @@
                     <div class="mt-4 flex justify-center">
                         <div class="relative inline-block rounded-lg border border-gray-200 bg-white p-3 shadow dark:border-gray-700">
                             {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(260)->margin(1)->errorCorrection('H')->generate($scoreEntryUrl) !!}
-                            <img
-                                src="{{ asset('img.png') }}"
-                                alt="Logo"
-                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-16 w-16 rounded-sm bg-white"
-                            />
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-white" style="padding: 2px; outline: 2px solid transparent; box-shadow: 0 0 0 2px transparent; border: 2px solid; border-image: linear-gradient(135deg, #f00, #ff7700, #ff0, #0f0, #00f, #8b00ff) 1">
+                                <img
+                                    src="{{ asset('img.png') }}"
+                                    alt="Logo"
+                                    class="h-16 w-16 block"
+                                />
+                            </div>
                         </div>
                     </div>
                     <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400 break-all">
