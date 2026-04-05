@@ -6,40 +6,38 @@ use App\Models\Team;
 use App\Models\Discipline;
 use App\Services\SchoolColorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class LaufzettelController extends Controller
 {
     public function index()
     {
-        // Lade alle Teams mit Schuldaten
-        $teams = Team::with(['klasse.school'])->orderBy('name')->get();
+        $cached = Cache::remember('laufzettel_index', 300, function () {
+            $teams = Team::with(['klasse.school'])->orderBy('name')->get();
 
-        // Teams für die JavaScript Suche aufbereiten
-        $jsTeams = [];
-        foreach ($teams as $team) {
-            $jsTeams[] = [
-                'id' => $team->id,
-                'name' => $team->name,
-                'klasse_name' => $team->klasse ? $team->klasse->name : 'N/A',
-                'school_name' => ($team->klasse && $team->klasse->school) ? $team->klasse->school->name : '-',
-                'school_id' => $team->klasse ? $team->klasse->school_id : 0,
-                'bonus' => $team->bonus, // Bonus-Status hinzufügen
+            $jsTeams = [];
+            foreach ($teams as $team) {
+                $jsTeams[] = [
+                    'id'         => $team->id,
+                    'name'       => $team->name,
+                    'klasse_name' => $team->klasse ? $team->klasse->name : 'N/A',
+                    'school_name' => ($team->klasse && $team->klasse->school) ? $team->klasse->school->name : '-',
+                    'school_id'  => $team->klasse ? $team->klasse->school_id : 0,
+                    'bonus'      => $team->bonus,
+                ];
+            }
+
+            return [
+                'teamsForJs'    => $jsTeams,
+                'colorMapForJs' => SchoolColorService::getAllColorsForJs(),
             ];
-        }
+        });
 
-        // Farben für JS laden
-        $jsColors = SchoolColorService::getAllColorsForJs();
-
-        // Prüfen ob der User ein Admin ist
-        $isAdmin = auth()->check() && auth()->user()->hasRole('admin');
-
-        return view('laufzettel', [
+        return view('laufzettel', array_merge($cached, [
             'selectedTeam' => null,
-            'teamResults' => [],
-            'teamsForJs' => $jsTeams,
-            'colorMapForJs' => $jsColors,
-            'isAdmin' => $isAdmin,
-        ]);
+            'teamResults'  => [],
+            'isAdmin'      => auth()->check() && auth()->user()->hasRole('admin'),
+        ]));
     }
 
     public function show($teamId)
@@ -47,32 +45,26 @@ class LaufzettelController extends Controller
         // Das gewählte Team mit allen nötigen Relationen laden
         $team = Team::with(['klasse.school', 'disciplines'])->findOrFail($teamId);
 
-        // Alle Teams für die Suche laden
-        $allTeams = Team::with(['klasse.school'])->orderBy('name')->get();
+        // Alle Teams für die Suche laden (nach Score sortiert für Gesamtplatzierung)
+        $allTeams = Team::with(['klasse.school'])->orderBy('score', 'DESC')->get();
 
-        // Teams für JavaScript vorbereiten
+        // Gesamtplatzierung und Teamliste aus derselben Collection
+        $overallRanking = null;
+        $totalTeams = $allTeams->count();
         $teamList = [];
-        foreach ($allTeams as $t) {
+
+        foreach ($allTeams as $index => $t) {
+            if ($t->id == $team->id) {
+                $overallRanking = $index + 1;
+            }
             $teamList[] = [
                 'id' => $t->id,
                 'name' => $t->name,
                 'klasse_name' => $t->klasse ? $t->klasse->name : 'N/A',
                 'school_name' => ($t->klasse && $t->klasse->school) ? $t->klasse->school->name : '-',
                 'school_id' => $t->klasse ? $t->klasse->school_id : 0,
-                'bonus' => $t->bonus, // Bonus-Status hinzufügen
+                'bonus' => $t->bonus,
             ];
-        }
-
-        // Gesamtplatzierung berechnen
-        $allTeamsForRanking = Team::orderBy('score', 'DESC')->get();
-        $overallRanking = null;
-        $totalTeams = $allTeamsForRanking->count();
-
-        foreach ($allTeamsForRanking as $index => $rankingTeam) {
-            if ($rankingTeam->id == $team->id) {
-                $overallRanking = $index + 1;
-                break;
-            }
         }
 
         // Alle Disziplinen mit Teams laden
@@ -88,6 +80,12 @@ class LaufzettelController extends Controller
             foreach ($disziplin->teams as $teamInDisc) {
                 $ergebnis1 = $teamInDisc->pivot->score_1;
                 $ergebnis2 = $teamInDisc->pivot->score_2;
+
+                // Bei zeitbasierten Disziplinen (niedriger = besser) ist 0.0 kein gültiger Wert
+                if (!$disziplin->higher_is_better) {
+                    if ($ergebnis1 !== null && $ergebnis1 == 0) $ergebnis1 = null;
+                    if ($ergebnis2 !== null && $ergebnis2 == 0) $ergebnis2 = null;
+                }
 
                 // Bestes Ergebnis ermitteln
                 $bestResult = null;
@@ -141,17 +139,17 @@ class LaufzettelController extends Controller
             $teilgenommen = false;
 
             // Prüfen ob unser Team teilgenommen hat
-            $teamInThisDiscipline = null;
-            foreach ($disziplin->teams as $t) {
-                if ($t->id == $team->id) {
-                    $teamInThisDiscipline = $t;
-                    break;
-                }
-            }
+            $teamInThisDiscipline = $disziplin->teams->firstWhere('id', $team->id);
 
             if ($teamInThisDiscipline) {
                 $s1 = $teamInThisDiscipline->pivot->score_1;
                 $s2 = $teamInThisDiscipline->pivot->score_2;
+
+                // Bei zeitbasierten Disziplinen (niedriger = besser) ist 0.0 kein gültiger Wert
+                if (!$disziplin->higher_is_better) {
+                    if ($s1 !== null && $s1 == 0) $s1 = null;
+                    if ($s2 !== null && $s2 == 0) $s2 = null;
+                }
 
                 if ($s1 !== null || $s2 !== null) {
                     $teilgenommen = true;

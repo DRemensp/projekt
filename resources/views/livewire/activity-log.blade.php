@@ -56,17 +56,43 @@
         </div>
     </div>
 
-    {{-- Legend --}}
-    <div class="flex flex-wrap gap-3 mb-3 text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
+    {{-- Legend + Severity Filter --}}
+    <div class="flex flex-wrap gap-2 mb-3 text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
         <span class="flex items-center gap-1.5">
             <span class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 flex-shrink-0"></span>Normal
         </span>
-        <span class="flex items-center gap-1.5">
-            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400 flex-shrink-0"></span>Verdächtig (kurz nach Eingabe geändert)
-        </span>
-        <span class="flex items-center gap-1.5">
-            <span class="w-2.5 h-2.5 rounded-full bg-red-500 flex-shrink-0"></span>Kritisch (späte Änderung / Wert gelöscht)
-        </span>
+
+        <button
+            wire:click="toggleSeverity('warning')"
+            class="flex items-center gap-1.5 px-2 py-0.5 rounded-full border transition-colors duration-200
+                {{ $severityFilter === 'warning'
+                    ? 'bg-yellow-100 dark:bg-yellow-900/40 border-yellow-400 text-yellow-700 dark:text-yellow-300 font-semibold'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:text-yellow-700 dark:hover:text-yellow-300' }}"
+        >
+            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400 flex-shrink-0"></span>
+            Verdächtig
+            @if($severityFilter === 'warning')
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            @endif
+        </button>
+
+        <button
+            wire:click="toggleSeverity('danger')"
+            class="flex items-center gap-1.5 px-2 py-0.5 rounded-full border transition-colors duration-200
+                {{ $severityFilter === 'danger'
+                    ? 'bg-red-100 dark:bg-red-900/40 border-red-400 text-red-700 dark:text-red-300 font-semibold'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300' }}"
+        >
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500 flex-shrink-0"></span>
+            Kritisch
+            @if($severityFilter === 'danger')
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            @endif
+        </button>
     </div>
 
     {{-- Log List --}}

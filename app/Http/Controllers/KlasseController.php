@@ -6,6 +6,7 @@ use App\Models\Klasse;
 use App\Models\User;
 use App\Services\PasswordGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class KlasseController extends Controller
@@ -50,6 +51,8 @@ class KlasseController extends Controller
             'password' => $password,
         ]);
 
+        Cache::forget('ranking_data');
+        Cache::forget('laufzettel_index');
         return redirect()->back()->with([
             'success' => 'Klasse created successfully.',
             'user_created' => true,
@@ -78,6 +81,7 @@ class KlasseController extends Controller
         $deleted = $klasse->delete();
 
         if ($deleted) {
+            (new RankingController())->recalculateAllScores();
             return redirect()->back()->with('success', 'Klasse erfolgreich gelöscht.');
         }
 
@@ -112,6 +116,7 @@ class KlasseController extends Controller
             $user->save();
         }
 
+        (new RankingController())->recalculateAllScores();
         return redirect()->back()->with('success', 'Klasse erfolgreich aktualisiert.');
     }
 }

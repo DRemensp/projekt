@@ -9,7 +9,7 @@
 
     @livewireStyles
 
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/navbar.js', 'resources/js/laufzettel-search.js', 'resources/js/teacher-scores.js', 'resources/js/admin-carousel.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/navbar.js'])
 
     <script>
         // Darkmode initialisierung - VOR dem Rendering (verhindert Flackern)
@@ -63,7 +63,10 @@
                    class="group flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
                     <div id="mobileBrandLogoWrap"
                          class="w-11 h-11 border border-2 border-blue-400 dark:border-blue-500 rounded-full flex items-center justify-center transition-colors duration-200 overflow-hidden">
-                        <img src="{{ asset('img.png')}}" alt="CampusOlympiade Logo" class="w-12 h-12 object-cover">
+                        <picture>
+                            <source srcset="{{ asset('img.webp') }}" type="image/webp">
+                            <img src="{{ asset('img.png') }}" alt="CampusOlympiade Logo" class="w-12 h-12 object-cover">
+                        </picture>
                     </div>
                     <span id="mobileBrandText"
                           class="font-bold text-xl text-gray-800 dark:text-gray-100 transition-colors duration-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
@@ -286,7 +289,7 @@
 
             <button type="button" @click="mobileMoreOpen = !mobileMoreOpen"
                     class="flex flex-col items-center justify-center rounded-lg px-2 py-1.5 text-gray-600 dark:text-gray-300">
-                <span class="text-base">☰</span>
+                <span class="text-xl leading-none">☰</span>
                 <span>Mehr</span>
             </button>
         </div>
@@ -531,5 +534,6 @@
 
 @livewireScripts
 
+@stack('scripts')
 </body>
 </html>

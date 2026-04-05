@@ -32,7 +32,7 @@
             <div class="flex justify-center mb-8 ">
                 <nav class="bg-white night-card dark:bg-gray-800 rounded-full shadow-lg p-1 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
                     <div class="flex space-x-0.5">
-                        <button onclick="showSection('schools')" class="ranking-tab night-tab night-tab-active px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-indigo-600 dark:bg-indigo-500 text-white">
+                        <button onclick="showSection('schools')" class="ranking-tab night-tab night-tab-active px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-indigo-600 text-white">
                             Schulen
                         </button>
                         <button onclick="showSection('klasses')" class="ranking-tab night-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
@@ -401,13 +401,13 @@
 
             // Update tab styles
             document.querySelectorAll('.ranking-tab').forEach(tab => {
-                tab.classList.remove('bg-indigo-600', 'text-white', 'night-tab-active');
+                tab.classList.remove('bg-indigo-600', 'dark:bg-indigo-500', 'text-white', 'night-tab-active');
                 tab.classList.add('text-gray-600', 'hover:text-indigo-600');
             });
 
             // Highlight active tab
             event.target.classList.remove('text-gray-600', 'hover:text-indigo-600');
-            event.target.classList.add('bg-indigo-600', 'text-white', 'night-tab-active');
+            event.target.classList.add('bg-indigo-600', 'dark:bg-indigo-500', 'text-white', 'night-tab-active');
         }
 
         // Modal Funktionen

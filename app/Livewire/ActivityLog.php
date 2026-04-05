@@ -8,12 +8,24 @@ use Livewire\Component;
 
 class ActivityLog extends Component
 {
-    public int    $page           = 1;
-    public int    $perPage        = 15;
-    public string $selectedKlasse = 'all';
+    public int     $page            = 1;
+    public int     $perPage         = 15;
+    public string  $selectedKlasse  = 'all';
+    public ?string $severityFilter  = null;
 
     public function updatedSelectedKlasse(): void
     {
+        $this->page = 1;
+    }
+
+    public function updatedSeverityFilter(): void
+    {
+        $this->page = 1;
+    }
+
+    public function toggleSeverity(string $severity): void
+    {
+        $this->severityFilter = $this->severityFilter === $severity ? null : $severity;
         $this->page = 1;
     }
 
@@ -55,6 +67,10 @@ class ActivityLog extends Component
 
         if ($this->selectedKlasse !== 'all') {
             $query->where('klasse_name', $this->selectedKlasse);
+        }
+
+        if ($this->severityFilter !== null) {
+            $query->where('severity', $this->severityFilter);
         }
 
         $total      = $query->count();

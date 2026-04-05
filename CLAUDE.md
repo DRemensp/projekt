@@ -108,6 +108,28 @@ Role checks in routes use inline closures; in controllers the pattern is `auth()
 ### Archive
 `ArchiveController::store` snapshots the full current state (rankings, disciplines, teams, colors, stats) as JSON into the `archives` table. Snapshots are read-only and can be deleted by admins.
 
+## Backups
+
+Vor größeren Änderungen wird das gesamte Projekt (ohne `.git`) nach `/home/daniel/Projekte/backup_campus/` gesichert.
+
+### Backup erstellen
+```bash
+rsync -a --exclude='.git' /home/daniel/Projekte/CampusOlympiade/ /home/daniel/Projekte/backup_campus/YYYY-MM-DD_HH-MM-SS_beschreibung/
+```
+
+Namensschema: `DATUM_UHRZEIT_kurze-beschreibung` (z.B. `2026-04-04_18-00-00_pre_admin_rework`)
+
+### Vorhandene Backups
+| Ordner | Inhalt |
+|---|---|
+| `2026-03-29_17-34-36` | früher Stand |
+| `2026-04-03_21-42-00_Schulwertung_rework` | Schulwertung-Umbau |
+| `2026-04-04_15-00-28_logs_checkbox_schools_reverb_overwork` | Logs, Checkboxen, Schulen, Reverb |
+| `2026-04-04_18-00-00_pre_admin_carousel_rework` | vor Admin-Carousel-Umbau zu Kachelmenü |
+| `2026-04-05_10-30-00_performance-cache-design-fixes` | Performance-Indexes, Caching, Cache-Invalidierung bei CRUD, 0.0-Fix, Design-Fixes |
+
+---
+
 ### Key `.env` variables
 | Variable | Purpose |
 |---|---|

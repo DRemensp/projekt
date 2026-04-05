@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(php:*)"
+      "Bash(php:*)",
+      "Bash(ffmpeg -version)",
+      "Bash(convert --version)",
+      "Bash(python3 -c \"from PIL import Image; print\\('Pillow verfügbar'\\)\")",
+      "Bash(node -e \"console.log\\('node verfügbar'\\)\")",
+      "Bash(npm list:*)"
     ]
   }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Discipline;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 
 class DisciplineController extends Controller
@@ -41,6 +42,8 @@ class DisciplineController extends Controller
             'description' => $validated['description'] ?? null,
         ]);
 
+        Cache::forget('ranking_data');
+        Cache::forget('laufzettel_index');
         return redirect()->back()->with('success', 'Disziplin erfolgreich angelegt!');
     }
 
@@ -48,6 +51,7 @@ class DisciplineController extends Controller
     {
         $this->ensureAdmin();
         $discipline->delete();
+        (new RankingController())->recalculateAllScores();
         return redirect()->back()->with('success', 'Disziplin erfolgreich gelöscht.');
     }
 
@@ -73,6 +77,7 @@ class DisciplineController extends Controller
             'description' => $validated['description'] ?? null,
         ]);
 
+        (new RankingController())->recalculateAllScores();
         return redirect()->back()->with('success', 'Disziplin erfolgreich aktualisiert.');
     }
 }

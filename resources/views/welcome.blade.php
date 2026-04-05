@@ -600,7 +600,7 @@
                                 </a>
                                 <a href="{{ url('/login') }}"
                                    class="inline-flex items-center gap-3 px-8 py-3.5 rounded-full border border-blue-400/45 bg-slate-900/65 text-slate-100 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-400/80 hover:shadow-[0_12px_28px_rgba(12,18,30,0.6)]">
-                                    <span>Admin Login</span>
+                                    <span>Login für Berechtigte</span>
                                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>

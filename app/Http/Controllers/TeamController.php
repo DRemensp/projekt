@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TeamController extends Controller
 {
@@ -33,6 +34,8 @@ class TeamController extends Controller
             'members' => $membersArray,
         ]);
 
+        Cache::forget('ranking_data');
+        Cache::forget('laufzettel_index');
         return redirect()->back()->with('success', 'Team created successfully.');
     }
 
@@ -40,6 +43,7 @@ class TeamController extends Controller
     {
         $this->ensureAdmin();
         $team->delete();
+        (new RankingController())->recalculateAllScores();
         return redirect()->back()->with('success', 'Team deleted successfully.');
     }
 
@@ -62,6 +66,7 @@ class TeamController extends Controller
             'members' => $membersArray,
         ]);
 
+        (new RankingController())->recalculateAllScores();
         return redirect()->back()->with('success', 'Team erfolgreich aktualisiert.');
     }
 }

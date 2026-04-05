@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\School;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SchoolController extends Controller
 {
@@ -25,6 +26,8 @@ class SchoolController extends Controller
 
         School::create($validated);
 
+        Cache::forget('ranking_data');
+        Cache::forget('laufzettel_index');
         return redirect()->back()->with('success', 'School created successfully.');
     }
 
@@ -49,6 +52,7 @@ class SchoolController extends Controller
         // Lösche die Schule (Cascade löscht automatisch Klassen, Teams, etc.)
         $school->delete();
 
+        (new RankingController())->recalculateAllScores();
         return redirect()->back()->with('success', 'Schule und alle zugehörigen Daten erfolgreich gelöscht.');
     }
 
@@ -62,6 +66,7 @@ class SchoolController extends Controller
 
         $school->update($validated);
 
+        (new RankingController())->recalculateAllScores();
         return redirect()->back()->with('success', 'Schule erfolgreich aktualisiert.');
     }
 }

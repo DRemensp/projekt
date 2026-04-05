@@ -10,130 +10,131 @@ use App\Services\SchoolColorService;
 use phpDocumentor\Reflection\Types\True_;
 use PhpParser\Node\Stmt\Switch_;
 use App\Models\Scoresystem;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class RankingController extends Controller
 {
     public function index()
     {
-        // Daten laden
-        $schools = School::orderBy('score', 'DESC')->get();
-        $klasses = Klasse::with('school')->orderBy('score', 'DESC')->get();
-        $teams = Team::with(['disciplines', 'klasse.school'])->orderBy('score', 'DESC')->get();
-        $disciplines = Discipline::with(['teams' => function($query) {
-            $query->with('klasse.school');
-        }])->get();
+        $viewData = Cache::remember('ranking_data', 300, function () {
+            // Daten laden
+            $schools = School::orderBy('score', 'DESC')->get();
+            $klasses = Klasse::with('school')->orderBy('score', 'DESC')->get();
+            $teams = Team::with(['disciplines', 'klasse.school'])->orderBy('score', 'DESC')->get();
+            $disciplines = Discipline::with(['teams' => function($query) {
+                $query->with('klasse.school');
+            }])->get();
 
-        // Bestes Team pro Disziplin
-        $bestTeamsPerDiscipline = [];
+            // Bestes Team pro Disziplin
+            $bestTeamsPerDiscipline = [];
 
-        foreach ($disciplines as $discipline) {
-            if ($discipline->teams->isEmpty()) continue;
+            foreach ($disciplines as $discipline) {
+                if ($discipline->teams->isEmpty()) continue;
 
-            $bestTeam = null;
-            $bestScore = null;
+                $bestTeam = null;
+                $bestScore = null;
 
-            // Durch alle Teams der Disziplin gehen
-            foreach ($discipline->teams as $team) {
-                $score1 = $team->pivot->score_1;
-                $score2 = $team->pivot->score_2;
+                foreach ($discipline->teams as $team) {
+                    $score1 = $team->pivot->score_1;
+                    $score2 = $team->pivot->score_2;
 
-                // Besten Score des Teams ermitteln
-                $teamBestScore = $this->getTeamBestScore($score1, $score2, $discipline->higher_is_better);
+                    $teamBestScore = $this->getTeamBestScore($score1, $score2, $discipline->higher_is_better);
 
-                if ($bestTeam === null || $this->isScoreBetter($teamBestScore, $bestScore, $discipline->higher_is_better)) {
-                    $bestTeam = $team;
-                    $bestScore = $teamBestScore;
+                    if ($bestTeam === null || $this->isScoreBetter($teamBestScore, $bestScore, $discipline->higher_is_better)) {
+                        $bestTeam = $team;
+                        $bestScore = $teamBestScore;
+                    }
                 }
-            }
 
-            // Ergebnis hinzufügen
-            if ($bestTeam && $bestScore !== null) {
-                $bestTeamsPerDiscipline[] = [
-                    'discipline_id' => $discipline->id,
-                    'discipline_name' => $discipline->name,
-                    'team_id' => $bestTeam->id,
-                    'team_name' => $bestTeam->name,
-                    'team_school_id' => $bestTeam->klasse->school_id ?? 0,
-                    'best_score' => $bestScore,
-                ];
-            }
-        }
-        usort($bestTeamsPerDiscipline, fn($a, $b) => strcmp($a['discipline_name'], $b['discipline_name']));
-
-        // Detaillierte Rankings pro Disziplin für Modal
-        $disciplineDetailsForJs = [];
-        foreach ($disciplines as $discipline) {
-            $teamsData = [];
-
-            foreach ($discipline->teams as $team) {
-                $score1 = $team->pivot->score_1;
-                $score2 = $team->pivot->score_2;
-                $bestScore = $this->getTeamBestScore($score1, $score2, $discipline->higher_is_better);
-
-                // Nur Teams die teilgenommen haben (bestScore nicht null)
-                if ($bestScore !== null) {
-                    $teamsData[] = [
-                        'team_name' => $team->name,
-                        'klasse_name' => $team->klasse->name ?? 'N/A',
-                        'school_id' => $team->klasse->school_id ?? 0,
+                if ($bestTeam && $bestScore !== null) {
+                    $bestTeamsPerDiscipline[] = [
+                        'discipline_id' => $discipline->id,
+                        'discipline_name' => $discipline->name,
+                        'team_id' => $bestTeam->id,
+                        'team_name' => $bestTeam->name,
+                        'team_school_id' => $bestTeam->klasse->school_id ?? 0,
                         'best_score' => $bestScore,
                     ];
                 }
             }
+            usort($bestTeamsPerDiscipline, fn($a, $b) => strcmp($a['discipline_name'], $b['discipline_name']));
 
-            // Sortieren nach Score
-            if ($discipline->higher_is_better) {
-                usort($teamsData, fn($a, $b) => $b['best_score'] <=> $a['best_score']);
-            } else {
-                usort($teamsData, fn($a, $b) => $a['best_score'] <=> $b['best_score']);
+            // Detaillierte Rankings pro Disziplin für Modal
+            $disciplineDetailsForJs = [];
+            foreach ($disciplines as $discipline) {
+                $teamsData = [];
+
+                foreach ($discipline->teams as $team) {
+                    $score1 = $team->pivot->score_1;
+                    $score2 = $team->pivot->score_2;
+                    $bestScore = $this->getTeamBestScore($score1, $score2, $discipline->higher_is_better);
+
+                    if ($bestScore !== null) {
+                        $teamsData[] = [
+                            'team_name' => $team->name,
+                            'klasse_name' => $team->klasse->name ?? 'N/A',
+                            'school_id' => $team->klasse->school_id ?? 0,
+                            'best_score' => $bestScore,
+                        ];
+                    }
+                }
+
+                if ($discipline->higher_is_better) {
+                    usort($teamsData, fn($a, $b) => $b['best_score'] <=> $a['best_score']);
+                } else {
+                    usort($teamsData, fn($a, $b) => $a['best_score'] <=> $b['best_score']);
+                }
+
+                foreach ($teamsData as $index => $teamData) {
+                    $teamsData[$index]['rank'] = $index + 1;
+                }
+
+                $disciplineDetailsForJs[$discipline->id] = [
+                    'name' => $discipline->name,
+                    'higher_is_better' => $discipline->higher_is_better,
+                    'teams' => $teamsData,
+                ];
             }
 
-            // Platzierung hinzufügen
-            foreach ($teamsData as $index => $teamData) {
-                $teamsData[$index]['rank'] = $index + 1;
-            }
+            // für JS-Suche
+            $teamsForJs = $teams->map(function ($team) {
+                return [
+                    'id' => $team->id,
+                    'name' => $team->name,
+                    'score' => $team->score,
+                    'klasse_name' => $team->klasse->name ?? 'N/A',
+                    'school_name' => $team->klasse->school->name ?? '-',
+                    'school_id' => $team->klasse->school_id ?? 0,
+                    'disciplines_list' => $team->disciplines->count() > 0
+                        ? $team->disciplines->pluck('name')->implode(', ')
+                        : null,
+                ];
+            });
 
-            $disciplineDetailsForJs[$discipline->id] = [
-                'name' => $discipline->name,
-                'higher_is_better' => $discipline->higher_is_better,
-                'teams' => $teamsData,
-            ];
-        }
-
-        // für java suche
-        $teamsForJs = $teams->map(function ($team) {
             return [
-                'id' => $team->id,
-                'name' => $team->name,
-                'score' => $team->score,
-                'klasse_name' => $team->klasse->name ?? 'N/A',
-                'school_name' => $team->klasse->school->name ?? '-',
-                'school_id' => $team->klasse->school_id ?? 0,
-                'disciplines_list' => $team->disciplines->count() > 0
-                    ? $team->disciplines->pluck('name')->implode(', ')
-                    : null,
+                'schools'                => $schools,
+                'klasses'                => $klasses,
+                'teams'                  => $teams,
+                'bestTeamsPerDiscipline' => $bestTeamsPerDiscipline,
+                'teamsForJs'             => $teamsForJs,
+                'colorMapForJs'          => SchoolColorService::getAllColorsForJs(),
+                'disciplineDetailsForJs' => $disciplineDetailsForJs,
             ];
         });
 
-        // Farb-Map für JavaScript erstellen
-        $colorMapForJs = SchoolColorService::getAllColorsForJs();
-
-        return view('ranking', [
-            'schools' => $schools,
-            'klasses' => $klasses,
-            'teams' => $teams,
-            'bestTeamsPerDiscipline' => $bestTeamsPerDiscipline,
-            'teamsForJs' => $teamsForJs,
-            'colorMapForJs' => $colorMapForJs,
-            'disciplineDetailsForJs' => $disciplineDetailsForJs,
-        ]);
+        return view('ranking', $viewData);
     }
 
 
     private function getTeamBestScore($score1, $score2, $higherIsBetter)
     {
-        if ($score1 === null && $score2 === null) return null; // Geändert von 0 zu null
+        // Bei zeitbasierten Disziplinen (niedriger = besser) ist 0.0 kein gültiger Wert
+        if (!$higherIsBetter) {
+            if ($score1 !== null && $score1 == 0) $score1 = null;
+            if ($score2 !== null && $score2 == 0) $score2 = null;
+        }
+        if ($score1 === null && $score2 === null) return null;
         if ($score1 === null) return $score2;
         if ($score2 === null) return $score1;
         return $higherIsBetter ? max($score1, $score2) : min($score1, $score2);
@@ -154,6 +155,9 @@ class RankingController extends Controller
 
     public function recalculateAllScores()
     {
+        Cache::forget('ranking_data');
+        Cache::forget('laufzettel_index');
+
         Team::query()->update(['score' => 0]);
         Klasse::query()->update(['score' => 0]);
         School::query()->update(['score' => 0]);
@@ -168,6 +172,12 @@ class RankingController extends Controller
             $teamsScores = $discipline->teams->map(function ($team) use ($discipline, $scoresystem) {
                 $score1 = $team->pivot->score_1;
                 $score2 = $team->pivot->score_2;
+
+                // Bei zeitbasierten Disziplinen (niedriger = besser) ist 0.0 kein gültiger Wert
+                if (!$discipline->higher_is_better) {
+                    if ($score1 !== null && $score1 == 0) $score1 = null;
+                    if ($score2 !== null && $score2 == 0) $score2 = null;
+                }
 
                 // Wenn beide Scores null sind, kein Ergebnis für dieses Team
                 if ($score1 === null && $score2 === null) {
@@ -227,10 +237,7 @@ class RankingController extends Controller
         }
 
         // Bonusscores für Teams mit bonus = true hinzufügen
-        $bonusTeams = Team::where('bonus', true)->get();
-        foreach ($bonusTeams as $team) {
-            Team::where('id', $team->id)->increment('score', $scoresystem->bonus_score);
-        }
+        Team::where('bonus', true)->increment('score', $scoresystem->bonus_score);
 
         $klasses = Klasse::with(['teams' => fn($query) => $query->select('id', 'score', 'klasse_id')])->select('id', 'school_id')->get();
         foreach ($klasses as $klasse) {

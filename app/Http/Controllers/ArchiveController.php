@@ -9,13 +9,17 @@ use App\Models\School;
 use App\Models\Team;
 use App\Services\SchoolColorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
 class ArchiveController extends Controller
 {
     public function index()
     {
-        $archives = Archive::orderBy('archived_date', 'desc')->get();
+        $archives = Cache::remember('archive_index', 86400, function () {
+            return Archive::orderBy('archived_date', 'desc')->get();
+        });
+
         return view('archive.index', compact('archives'));
     }
 
@@ -41,12 +45,16 @@ class ArchiveController extends Controller
             'data' => $archiveData
         ]);
 
+        Cache::forget('archive_index');
+
         return redirect()->back()->with('success', 'Archiv wurde erfolgreich erstellt!');
     }
 
     public function destroy(Archive $archive)
     {
         $archive->delete();
+
+        Cache::forget('archive_index');
 
         return redirect()->back()->with('success', 'Archiv wurde erfolgreich gelöscht!');
     }
@@ -151,6 +159,11 @@ class ArchiveController extends Controller
 
     private function getTeamBestScore($score1, $score2, $higherIsBetter)
     {
+        // Bei zeitbasierten Disziplinen (niedriger = besser) ist 0.0 kein gültiger Wert
+        if (!$higherIsBetter) {
+            if ($score1 !== null && $score1 == 0) $score1 = null;
+            if ($score2 !== null && $score2 == 0) $score2 = null;
+        }
         if ($score1 === null && $score2 === null) return null;
         if ($score1 === null) return $score2;
         if ($score2 === null) return $score1;

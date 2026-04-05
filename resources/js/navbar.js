@@ -22,21 +22,25 @@ function initNavbar() {
     function setHeaderExpanded() {
         if (!brandText || !brandLogoWrap || !brandLink) return;
         mobileHeaderCollapsed = false;
-        brandText.style.transition = 'transform 280ms ease, opacity 220ms ease, margin 220ms ease, font-size 220ms ease';
+        brandText.style.transition = 'transform 500ms ease, opacity 400ms ease, margin 400ms ease, font-size 400ms ease';
         brandText.style.transform = 'translateX(0)';
         brandText.style.opacity = '1';
         brandText.style.marginLeft = '';
         brandText.style.fontSize = '';
         brandText.style.lineHeight = '';
 
-        brandLogoWrap.style.transition = 'opacity 260ms ease, transform 280ms ease, width 260ms ease, height 260ms ease';
+        brandLogoWrap.style.transition = 'opacity 400ms ease, transform 500ms ease, width 400ms ease, height 400ms ease';
         brandLogoWrap.style.opacity = '1';
         brandLogoWrap.style.transform = 'scale(1)';
         brandLogoWrap.style.width = '';
         brandLogoWrap.style.height = '';
 
+        // border-radius sofort entfernen, Rest animieren
+        brandLink.style.transition = 'none';
+        brandLink.style.borderRadius = '';
+        brandLink.offsetHeight; // reflow
+        brandLink.style.transition = 'padding 500ms ease, background-color 400ms ease, backdrop-filter 400ms ease, box-shadow 500ms ease, border-color 400ms ease';
         brandLink.style.pointerEvents = '';
-        brandLink.style.transition = 'padding 260ms ease, border-radius 260ms ease, background-color 260ms ease, backdrop-filter 260ms ease, box-shadow 260ms ease, border-color 260ms ease';
         brandLink.style.padding = '';
         brandLink.style.gap = '';
         brandLink.style.transform = '';
@@ -44,7 +48,6 @@ function initNavbar() {
         brandLink.style.left = '';
         brandLink.style.top = '';
         brandLink.style.zIndex = '';
-        brandLink.style.borderRadius = '';
         brandLink.style.backgroundColor = '';
         brandLink.style.backdropFilter = '';
         brandLink.style.boxShadow = '';
@@ -55,30 +58,40 @@ function initNavbar() {
         if (!brandText || !brandLogoWrap || !brandLink) return;
         const darkMode = document.documentElement.classList.contains('dark');
         mobileHeaderCollapsed = true;
-        brandText.style.transition = 'transform 280ms ease, opacity 220ms ease, margin 220ms ease, font-size 220ms ease';
+
+        brandText.style.transition = 'transform 500ms ease, opacity 400ms ease, margin 400ms ease, font-size 400ms ease';
         brandText.style.transform = 'translateX(0)';
         brandText.style.opacity = '1';
         brandText.style.marginLeft = '';
         brandText.style.fontSize = '0.95rem';
         brandText.style.lineHeight = '1';
 
-        brandLogoWrap.style.transition = 'opacity 260ms ease, transform 280ms ease, width 260ms ease, height 260ms ease';
+        brandLogoWrap.style.transition = 'opacity 400ms ease, transform 500ms ease, width 400ms ease, height 400ms ease';
         brandLogoWrap.style.opacity = '1';
         brandLogoWrap.style.transform = 'scale(1)';
         brandLogoWrap.style.width = '2.25rem';
         brandLogoWrap.style.height = '2.25rem';
 
-        // Keep the brand interactive and always visible in compact mode.
+        // Aktuelle Bildschirmposition merken bevor position:fixed gesetzt wird
+        const rect = brandLink.getBoundingClientRect();
+
+        // border-radius + position sofort setzen (kein weißes Rechteck, kein Positionssprung)
+        brandLink.style.transition = 'none';
+        brandLink.style.borderRadius = '9999px';
+        brandLink.style.position = 'fixed';
+        brandLink.style.left = rect.left + 'px';
+        brandLink.style.top = rect.top + 'px';
+        brandLink.style.zIndex = '60';
+        brandLink.offsetHeight; // reflow
+
+        // Jetzt alles animieren inkl. Bewegung zur Zielposition
+        brandLink.style.transition = 'left 500ms ease, top 500ms ease, padding 500ms ease, background-color 400ms ease, backdrop-filter 400ms ease, box-shadow 500ms ease, border-color 400ms ease';
         brandLink.style.pointerEvents = '';
-        brandLink.style.transition = 'padding 260ms ease, border-radius 260ms ease, background-color 260ms ease, backdrop-filter 260ms ease, box-shadow 260ms ease, border-color 260ms ease';
+        brandLink.style.left = '0.5rem';
+        brandLink.style.top = '0.5rem';
         brandLink.style.padding = '0.34rem 0.5rem 0.34rem 0.34rem';
         brandLink.style.gap = '0.45rem';
         brandLink.style.transform = '';
-        brandLink.style.position = 'fixed';
-        brandLink.style.left = '0.5rem';
-        brandLink.style.top = '0.5rem';
-        brandLink.style.zIndex = '60';
-        brandLink.style.borderRadius = '9999px';
         brandLink.style.backgroundColor = darkMode ? 'rgba(15, 23, 42, 0.5)' : 'rgba(255, 255, 255, 0.42)';
         brandLink.style.backdropFilter = 'blur(12px)';
         brandLink.style.boxShadow = darkMode ? '0 8px 24px rgba(2, 6, 23, 0.42)' : '0 8px 24px rgba(15, 23, 42, 0.22)';

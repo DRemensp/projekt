@@ -493,4 +493,8 @@
             });
         })();
     </script>
+
+    @push('scripts')
+        @vite(['resources/js/teacher-scores.js'])
+    @endpush
 </x-layout>

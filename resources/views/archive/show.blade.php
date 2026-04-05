@@ -25,19 +25,19 @@
 
                 <!-- Statistik Cards -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-500/18 dark:to-blue-400/6 p-4 rounded-lg text-center border border-blue-200 dark:border-blue-400/40 hover:shadow-md transition-all duration-200">
+                    <div class="bg-gradient-to-br from-gray-50 to-indigo-50 dark:from-slate-900/70 dark:to-sky-500/10 p-4 rounded-lg text-center border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all duration-200">
                         <div class="text-2xl font-bold text-blue-600 dark:text-blue-300 mb-1 transition-colors duration-200">{{ $archive->data['total_schools'] ?? 0 }}</div>
                         <div class="text-xs font-medium text-blue-700 dark:text-blue-200 transition-colors duration-200">🏫 Schulen</div>
                     </div>
-                    <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-500/18 dark:to-green-400/6 p-4 rounded-lg text-center border border-green-200 dark:border-green-400/40 hover:shadow-md transition-all duration-200">
+                    <div class="bg-gradient-to-br from-gray-50 to-indigo-50 dark:from-slate-900/70 dark:to-sky-500/10 p-4 rounded-lg text-center border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all duration-200">
                         <div class="text-2xl font-bold text-green-600 dark:text-green-300 mb-1 transition-colors duration-200">{{ $archive->data['total_klasses'] ?? 0 }}</div>
                         <div class="text-xs font-medium text-green-700 dark:text-green-200 transition-colors duration-200">📚 Klassen</div>
                     </div>
-                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-500/18 dark:to-orange-400/6 p-4 rounded-lg text-center border border-orange-200 dark:border-orange-400/40 hover:shadow-md transition-all duration-200">
+                    <div class="bg-gradient-to-br from-gray-50 to-indigo-50 dark:from-slate-900/70 dark:to-sky-500/10 p-4 rounded-lg text-center border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all duration-200">
                         <div class="text-2xl font-bold text-orange-600 dark:text-orange-300 mb-1 transition-colors duration-200">{{ $archive->data['total_teams'] ?? 0 }}</div>
                         <div class="text-xs font-medium text-orange-700 dark:text-orange-200 transition-colors duration-200">👥 Teams</div>
                     </div>
-                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-500/18 dark:to-purple-400/6 p-4 rounded-lg text-center border border-purple-200 dark:border-purple-400/40 hover:shadow-md transition-all duration-200">
+                    <div class="bg-gradient-to-br from-gray-50 to-indigo-50 dark:from-slate-900/70 dark:to-sky-500/10 p-4 rounded-lg text-center border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all duration-200">
                         <div class="text-2xl font-bold text-purple-600 dark:text-purple-300 mb-1 transition-colors duration-200">{{ $archive->data['total_students'] ?? 0 }}</div>
                         <div class="text-xs font-medium text-purple-700 dark:text-purple-200 transition-colors duration-200">👤 Schüler</div>
                     </div>
@@ -179,11 +179,11 @@
                     @if(isset($archive->data['best_teams_per_discipline']) && count($archive->data['best_teams_per_discipline']) > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach($archive->data['best_teams_per_discipline'] as $discipline)
-                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-500/18 dark:to-blue-400/6 p-4 rounded-lg border border-purple-200 dark:border-purple-400/40 hover:shadow-md transition-all duration-200">
+                                <div class="bg-gradient-to-br from-gray-50 to-indigo-50 dark:from-slate-900/70 dark:to-sky-500/10 p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all duration-200">
                                     <h4 class="font-semibold text-base text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-200">{{ $discipline['discipline_name'] }}</h4>
 
 
-                                    <div class="text-xs text-purple-600 dark:text-purple-300 mb-3 transition-colors duration-200">
+                                    <div class="text-xs mb-3 transition-colors duration-200 {{ $discipline['higher_is_better'] ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
                                         @if($discipline['higher_is_better'])
                                             📈 Höher ist besser
                                         @else
@@ -191,10 +191,10 @@
                                         @endif
                                     </div>
 
-                                    <div class="pt-2 border-t border-purple-200 dark:border-purple-700 transition-colors duration-200">
+                                    <div class="pt-2 border-t border-gray-200 dark:border-gray-600 transition-colors duration-200">
                                         <div class="font-bold text-sm text-yellow-700 dark:text-amber-200 mb-1 transition-colors duration-200">🥇 Beste Leistung: {{ $discipline['best_score'] }}</div>
 
-                                        <div class="text-purple-700 dark:text-purple-200 font-bold transition-colors duration-200">TEAM: {{ $discipline['team_name'] }}</div>
+                                        <div class="text-gray-800 dark:text-gray-100 font-bold transition-colors duration-200">TEAM: {{ $discipline['team_name'] }}</div>
                                         <div class="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-200">{{ $discipline['klasse_name'] }} - {{ $discipline['school_name'] }}</div>
                                     </div>
                                 </div>
