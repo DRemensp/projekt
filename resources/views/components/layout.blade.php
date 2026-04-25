@@ -4,6 +4,13 @@
     <meta charset="utf-8">
     <title>CampusOlympiade</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="CampusOlympiade">
+    <link rel="apple-touch-icon" href="{{ asset('img.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -490,6 +497,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('{{ asset('sw.js') }}');
+            });
+        }
+
         const openCookiePreferencesButton = document.getElementById('openCookiePreferences');
         if (openCookiePreferencesButton) {
             openCookiePreferencesButton.addEventListener('click', function () {
