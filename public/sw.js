@@ -1,10 +1,8 @@
 const CACHE_NAME = 'campusolympiade-v1';
 const APP_SHELL = [
-    '/',
     '/manifest.json',
     '/favicon.ico',
-    '/img.png',
-    '/img.webp'
+    '/img.png'
 ];
 
 self.addEventListener('install', (event) => {
