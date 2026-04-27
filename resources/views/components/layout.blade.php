@@ -5,7 +5,6 @@
     <title>CampusOlympiade</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#2563eb">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
