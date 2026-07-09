@@ -1,8 +1,12 @@
-const CACHE_NAME = 'campusolympiade-v1';
+const CACHE_NAME = 'campusolympiade-v4';
 
 const STATIC_ASSETS = [
     '/img.png',
     '/img.webp',
+    '/logo.png',
+    '/logo.webp',
+    '/logo-dark.png',
+    '/logo-dark.webp',
     '/favicon.ico',
 ];
 

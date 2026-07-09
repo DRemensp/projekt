@@ -64,16 +64,22 @@
 
 <nav id="navbar"
      class="fixed md:fixed top-0 w-full z-50 bg-transparent dark:bg-transparent shadow-none md:bg-white md:dark:bg-gray-800 md:shadow-sm transition-colors duration-300">
-    <div class="container mx-auto px-4">
+    <div class="w-full px-4">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center pr-2">
                 <a id="mobileBrandLink" href="{{ url('/') }}"
                    class="group flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200">
                     <div id="mobileBrandLogoWrap"
-                         class="w-11 h-11 border border-2 border-blue-400 dark:border-blue-500 rounded-full flex items-center justify-center transition-colors duration-200 overflow-hidden">
-                        <picture>
-                            <source srcset="{{ asset('img.webp') }}" type="image/webp">
-                            <img src="{{ asset('img.png') }}" alt="CampusOlympiade Logo" class="w-12 h-12 object-cover">
+                         class="w-[4.9rem] h-[4.2rem] py-1 flex items-center justify-center transition-colors duration-200">
+                        <picture class="block w-full h-full dark:hidden">
+                            <source srcset="{{ asset('logo.webp') }}" type="image/webp">
+                            <img src="{{ asset('logo.png') }}" alt="CampusOlympiade Logo"
+                                 class="w-full h-full object-contain">
+                        </picture>
+                        <picture class="hidden w-full h-full dark:block">
+                            <source srcset="{{ asset('logo-dark.webp') }}" type="image/webp">
+                            <img src="{{ asset('logo-dark.png') }}" alt="CampusOlympiade Logo"
+                                 class="w-full h-full object-contain">
                         </picture>
                     </div>
                     <span id="mobileBrandText"
