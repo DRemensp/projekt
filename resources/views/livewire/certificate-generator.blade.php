@@ -12,6 +12,7 @@
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Schule</label>
                 <select wire:model.live="selectedSchool" name="school_id" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-teal-500">
                     <option value="">-- Schule wählen --</option>
+                    <option value="all">★ Alle Schulen (Sammel-PDF)</option>
                     @foreach($schools as $school)
                         <option value="{{ $school->id }}">{{ $school->name }}</option>
                     @endforeach
@@ -23,6 +24,7 @@
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Klasse (Optional)</label>
                 <select wire:model.live="selectedKlasse" name="klasse_id" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-teal-500">
                     <option value="">-- Gesamte Schule --</option>
+                    <option value="all">★ Alle Klassen (Sammel-PDF)</option>
                     @foreach($klasses as $schoolKlasse)
                         <option value="{{ $schoolKlasse->id }}">{{ $schoolKlasse->name }}</option>
                     @endforeach
@@ -34,11 +36,18 @@
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Team (Optional)</label>
                 <select wire:model.live="selectedTeam" name="team_id" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-teal-500">
                     <option value="">-- Gesamte Klasse --</option>
+                    <option value="all">★ Alle Teams (Sammel-PDF)</option>
                     @foreach($teams as $team)
                         <option value="{{ $team->id }}">{{ $team->name }}</option>
                     @endforeach
                 </select>
             </div>
+
+            @if($this->isBulk)
+                <p class="text-xs text-gray-600 dark:text-gray-400">
+                    Erzeugt <strong>ein PDF</strong> mit einer Urkunde pro Seite, sortiert nach Platzierung.
+                </p>
+            @endif
 
             {{-- Schullogos Auswahl --}}
             <div>
@@ -70,7 +79,9 @@
                             ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white hover:from-teal-600 hover:to-emerald-600 hover:scale-105'
                             : 'bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed'
                         }}">
-                    @if($selectedTeam)
+                    @if($this->isBulk)
+                        🖨️ {{ $this->bulkLabel }} drucken
+                    @elseif($selectedTeam)
                         📄 Urkunde für Team drucken
                     @elseif($selectedKlasse)
                         📄 Urkunde für Klasse drucken
