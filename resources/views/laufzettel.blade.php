@@ -780,6 +780,43 @@
                 return dot;
             }
 
+            const lpIsAdmin = typeof isAdmin !== 'undefined' && isAdmin;
+
+            function lpStyleBonusBtn(btn, hasBonus) {
+                btn.className = 'shrink-0 px-2.5 py-1 rounded-full border-2 lp-bord text-[0.62rem] font-extrabold uppercase tracking-[0.12em] cursor-pointer transition-colors whitespace-nowrap';
+                btn.style.background = hasBonus ? 'var(--lp-gold)' : '#fff';
+                btn.textContent = hasBonus ? '⭐ Bonus' : '⭕ Kein Bonus';
+            }
+
+            function lpToggleBonus(team, btn) {
+                btn.disabled = true;
+                btn.textContent = '⏳';
+
+                fetch('/team/' + team.id + '/toggle-bonus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            team.bonus = data.bonus;
+                        } else {
+                            alert('Fehler beim Aktualisieren des Bonus-Status');
+                        }
+                        lpStyleBonusBtn(btn, team.bonus);
+                    })
+                    .catch(() => {
+                        alert('Fehler beim Aktualisieren des Bonus-Status');
+                        lpStyleBonusBtn(btn, team.bonus);
+                    })
+                    .finally(() => {
+                        btn.disabled = false;
+                    });
+            }
+
             input.addEventListener('input', function () {
                 const query = this.value.trim().toLowerCase();
                 results.innerHTML = '';
@@ -798,32 +835,49 @@
                 }
 
                 matches.forEach((team) => {
-                    const link = document.createElement('a');
-                    link.href = laufzettelBase + '/' + team.id;
-                    link.className = 'lp-card lp-shadow block p-4 transition-transform duration-200 hover:-translate-y-0.5';
+                    const card = document.createElement('div');
+                    card.className = 'lp-card lp-shadow block p-4 transition-transform duration-200 hover:-translate-y-0.5 cursor-pointer';
+                    card.addEventListener('click', function () {
+                        window.location.href = laufzettelBase + '/' + team.id;
+                    });
 
                     const top = document.createElement('div');
-                    top.className = 'flex items-center justify-between gap-3';
+                    top.className = 'flex flex-wrap items-center justify-between gap-2';
 
                     const name = document.createElement('span');
-                    name.className = 'font-extrabold break-words min-w-0';
+                    name.className = 'font-extrabold break-words min-w-0 flex-1 basis-40';
                     name.appendChild(lpSchoolDot(team.school_id));
                     name.appendChild(document.createTextNode(team.name));
+
+                    const right = document.createElement('span');
+                    right.className = 'flex items-center gap-2 shrink-0';
+
+                    if (lpIsAdmin) {
+                        const bonusBtn = document.createElement('button');
+                        bonusBtn.type = 'button';
+                        lpStyleBonusBtn(bonusBtn, team.bonus);
+                        bonusBtn.addEventListener('click', function (event) {
+                            event.stopPropagation();
+                            lpToggleBonus(team, bonusBtn);
+                        });
+                        right.appendChild(bonusBtn);
+                    }
 
                     const arrow = document.createElement('span');
                     arrow.className = 'text-lg font-extrabold shrink-0';
                     arrow.textContent = '→';
+                    right.appendChild(arrow);
 
                     top.appendChild(name);
-                    top.appendChild(arrow);
+                    top.appendChild(right);
 
                     const sub = document.createElement('p');
                     sub.className = 'lp-muted text-xs mt-1 break-words';
-                    sub.textContent = team.klasse_name + ' – ' + team.school_name + (team.bonus ? ' · ⭐ Bonus' : '');
+                    sub.textContent = team.klasse_name + ' – ' + team.school_name + (team.bonus && !lpIsAdmin ? ' · ⭐ Bonus' : '');
 
-                    link.appendChild(top);
-                    link.appendChild(sub);
-                    results.appendChild(link);
+                    card.appendChild(top);
+                    card.appendChild(sub);
+                    results.appendChild(card);
                 });
             });
         });

@@ -61,10 +61,10 @@ function initLaufzettelSearch() {
 
                     // Button-Status aktualisieren
                     if (data.bonus) {
-                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40 dark:hover:bg-emerald-500/30 transition-colors cursor-pointer';
+                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40 dark:hover:bg-emerald-500/30 transition-colors cursor-pointer';
                         buttonElement.innerHTML = '✅ Bonus';
                     } else {
-                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 dark:bg-slate-500/15 dark:text-slate-200 dark:border-slate-500/40 dark:hover:bg-slate-500/25 transition-colors cursor-pointer';
+                        buttonElement.className = 'px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 dark:bg-slate-500/15 dark:text-slate-200 dark:border-slate-500/40 dark:hover:bg-slate-500/25 transition-colors cursor-pointer';
                         buttonElement.innerHTML = '⭕ Kein Bonus';
                     }
 
@@ -123,8 +123,8 @@ function initLaufzettelSearch() {
                 let bonusButtonHtml = '';
                 if (typeof isAdmin !== 'undefined' && isAdmin) {
                     const bonusButtonClass = team.bonus
-                        ? 'px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40 dark:hover:bg-emerald-500/30 transition-colors cursor-pointer'
-                        : 'px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 dark:bg-slate-500/15 dark:text-slate-200 dark:border-slate-500/40 dark:hover:bg-slate-500/25 transition-colors cursor-pointer';
+                        ? 'px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40 dark:hover:bg-emerald-500/30 transition-colors cursor-pointer'
+                        : 'px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 dark:bg-slate-500/15 dark:text-slate-200 dark:border-slate-500/40 dark:hover:bg-slate-500/25 transition-colors cursor-pointer';
 
                     const bonusButtonText = team.bonus ? '✅ Bonus' : '⭕ Kein Bonus';
 
@@ -137,7 +137,7 @@ function initLaufzettelSearch() {
                 } else if (team.bonus) {
                     // Für Nicht-Admins: Bonus-Status nur anzeigen (nicht klickbar)
                     bonusButtonHtml = `
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-green-100 text-green-800 border border-green-200 dark:bg-emerald-500/20 dark:text-emerald-200 dark:border-emerald-400/40">
                             ✅ Bonus
                         </span>
                     `;
@@ -145,14 +145,14 @@ function initLaufzettelSearch() {
 
                 resultsHtml += `
                     <div class="team-card bg-white night-card rounded-lg shadow-md p-4 hover:${hoverClass} hover:shadow-lg dark:hover:bg-slate-800/70 transition-all duration-200 border border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <div class="flex-1 cursor-pointer" onclick="selectTeam(${team.id})">
-                                <h3 class="text-lg font-semibold ${textClass}">${escapeHtml(team.name)}</h3>
-                                <p class="text-sm text-gray-600 dark:text-slate-400">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <div class="flex-1 min-w-0 basis-40 cursor-pointer" onclick="selectTeam(${team.id})">
+                                <h3 class="text-lg font-semibold break-words ${textClass}">${escapeHtml(team.name)}</h3>
+                                <p class="text-sm text-gray-600 dark:text-slate-400 break-words">
                                     ${escapeHtml(team.klasse_name)} - ${escapeHtml(team.school_name)}
                                 </p>
                             </div>
-                            <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-3 shrink-0">
                                 <!-- Bonus Button/Anzeige -->
                                 ${bonusButtonHtml}
                                 <!-- Pfeil für Team-Auswahl -->
