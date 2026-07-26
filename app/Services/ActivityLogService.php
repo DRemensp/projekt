@@ -162,6 +162,8 @@ class ActivityLogService
             'created_at'          => now(),
         ]);
 
-        event(new ActivityLogUpdated());
+        // Live-update is best-effort: a broken/unreachable websocket server
+        // must not turn a successful save into a 500 response.
+        rescue(fn () => event(new ActivityLogUpdated()));
     }
 }

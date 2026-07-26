@@ -79,7 +79,7 @@ class ModerationController extends Controller
             'moderated_at' => now(),
         ]);
 
-        event(new CommentPosted());
+        rescue(fn () => event(new CommentPosted()));
 
         return redirect()->route('moderation.index')
             ->with('success', 'Kommentar wurde freigegeben!');

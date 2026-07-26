@@ -149,7 +149,7 @@ class Comments extends Component
             $this->authorName = '';
 
             if ($moderationStatus === 'approved') {
-                event(new CommentPosted());
+                rescue(fn () => event(new CommentPosted()));
                 session()->flash('comment_success', 'Kommentar erfolgreich hinzugefügt!');
             } elseif ($moderationStatus === 'pending') {
                 session()->flash('comment_pending', 'Ihr Kommentar wird überprüft und dann freigeschaltet.');

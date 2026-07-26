@@ -19,7 +19,14 @@ class AdminBroadcastController extends Controller
             'targets.*' => ['in:teachers,klasses,guests'],
         ]);
 
-        event(new AdminBroadcastMessage($validated['message'], $validated['targets']));
+        // Here the broadcast IS the feature — report failure instead of lying.
+        try {
+            event(new AdminBroadcastMessage($validated['message'], $validated['targets']));
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->with('error', 'Nachricht konnte nicht gesendet werden (Websocket-Server nicht erreichbar).');
+        }
 
         return back()->with('success', 'Nachricht wurde gesendet.');
     }
