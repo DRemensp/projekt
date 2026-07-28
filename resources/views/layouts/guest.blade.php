@@ -19,7 +19,8 @@
         (function() {
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || ((savedTheme === null || savedTheme === 'system') && prefersDark)) {
+            // Ohne eigene Wahl immer Light Mode (System nur, wenn bewusst gewählt)
+            if (savedTheme === 'dark' || (savedTheme === 'system' && prefersDark)) {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');

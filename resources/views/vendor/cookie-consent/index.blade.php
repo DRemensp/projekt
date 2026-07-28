@@ -28,7 +28,7 @@
                             <h3 class="text-base font-semibold text-slate-900 dark:text-white">Designmodus</h3>
                         </div>
                         <div class="mt-2">
-                            <input id="themePreferenceSlider" type="range" min="0" max="2" step="1" value="1" class="w-full accent-blue-600">
+                            <input id="themePreferenceSlider" type="range" min="0" max="2" step="1" value="2" class="w-full accent-blue-600">
                             <div class="mt-1 grid grid-cols-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
                                 <span class="text-left">Dark</span>
                                 <span class="text-center">System</span>
@@ -191,9 +191,11 @@
 
             const initThemeSlider = function() {
                 if (!themePreferenceSlider) return;
-                const savedTheme = localStorage.getItem('theme');
+                let savedTheme = localStorage.getItem('theme');
                 if (savedTheme === null) {
-                    localStorage.setItem('theme', 'system');
+                    // Standard ohne eigene Wahl: Light Mode
+                    savedTheme = 'light';
+                    localStorage.setItem('theme', savedTheme);
                 }
                 if (savedTheme === 'dark') themePreferenceSlider.value = '0';
                 else if (savedTheme === 'light') themePreferenceSlider.value = '2';

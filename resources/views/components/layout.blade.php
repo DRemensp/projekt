@@ -26,11 +26,10 @@
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
-            } else if (savedTheme === 'light') {
-                document.documentElement.classList.remove('dark');
-            } else if (prefersDark) {
+            } else if (savedTheme === 'system' && prefersDark) {
                 document.documentElement.classList.add('dark');
             } else {
+                // Ohne eigene Wahl immer Light Mode (System nur, wenn bewusst gewählt)
                 document.documentElement.classList.remove('dark');
             }
         }
